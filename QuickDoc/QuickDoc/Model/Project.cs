@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace QuickDoc.Model
@@ -10,5 +11,11 @@ namespace QuickDoc.Model
         public string Description;
         public List<Unit> Units;
         public List<Document> Documents;
+
+        public Project(int projectNumber, string description)
+        {
+            ProjectNumber = projectNumber;
+            Description = description;
+        }
     }
 }
