@@ -12,7 +12,7 @@ namespace QuickDoc.Repository
         private Project project;
         private readonly string ConnectionString;
 
-        ProjectRepository()
+        public ProjectRepository()
         {
             IConfigurationRoot config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")

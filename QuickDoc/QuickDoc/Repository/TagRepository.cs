@@ -20,9 +20,9 @@ namespace QuickDoc.Repository
             ConnectionString = config.GetConnectionString("MyDBConnection");
         }
 
-        public List<Item> GetItems()
+        public Tag GetTag(string tagNumber)
         {
-            return null;
+            return tags.Where(x => x.TagNumber == tagNumber).First();
         }
 
         public void ReadFromDatabase(int projectNum, ItemRepository ItemRepo)

@@ -44,7 +44,7 @@ namespace QuickDoc.Repository
             return sections = sections.Where(x => x.SectionNumber == sectionNr).ToList();
         }
 
-        public void readFromDatabase(int projectNum , ItemRepository itemRepo)
+        public void ReadFromDatabase(int projectNum , ItemRepository itemRepo)
         {
             List<Section> result = new List<Section>();
             List<Item> ResultChildren;

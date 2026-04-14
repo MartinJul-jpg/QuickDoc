@@ -36,7 +36,7 @@ namespace QuickDoc.Repository
             return items.Where(x => x.SectionParentKey == sectionNr).ToList(); 
         }
 
-        public void readFromDatabase(int projectNum)
+        public void ReadFromDatabase(int projectNum)
         {
             List<Item> result = new List<Item>();
             using (SqlConnection con = new SqlConnection(ConnectionString))

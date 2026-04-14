@@ -4,25 +4,44 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace QuickDoc.ViewModel //mayhaps
+namespace QuickDoc.ViewModel
 {
-    public class SectionViewModel : NodeViewModel // Perchance.
+    public class SectionViewModel : NodeViewModel
     {
-        private Section section; // Tweaaekers, Could Be
-        public int SectionNumber; // this is public and an int // You sure?
-        public string OldSectionNumber; // on goon, Perhaps
-        public string Title; //you can use this for titles
-        public List<Document> Documents; //Some Documents I ain't sure
+        private Section section;
+
+        public int SectionNumber
+        {
+            get { return section.SectionNumber; }
+            set { section.SectionNumber = value; }
+        }
+        public int OldSectionNumber
+        {
+            get { return section.OldSecTionNumber; }
+            set { section.OldSecTionNumber = value; }
+        }
+        public string Title
+        {
+            get { return section.Title; }
+            set { section.Title = value; }
+        }
+        public List<Document> Documents
+        {
+            get { return section.Documents; }
+            set { section.Documents = value; }
+        }
+        public List<Item> Children
+        {
+            get { return section.Items; }
+            set { section.Items = value; }
+        }
+
+        public SectionViewModel(Section section)
+        {
+            this.section = section;
+        }
     }
 }
-// dont go here 
-// Hank don't delete "The White space"
-// 
-
-/*
-lmao  
-*/
-
 
 
 
