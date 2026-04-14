@@ -5,8 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuickDoc"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="400">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Blue bar at the top -->
+        <Grid x:Name="PentairLogo" Grid.Row="0" Background="#014e99">
+            <Image Margin="260,5,5,3" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="31*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Criteria boxes -->
+            <StackPanel Grid.Row="0" Grid.Column="0">
+                <StackPanel Margin="20,15,20,15">
+                    <Label Content="Project" HorizontalAlignment="Left"/>
+                    <TextBox TextWrapping="Wrap" Text="Input project number..." VerticalAlignment="Top" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Margin="20,15,20,15">
+                    <Label Content="Unit" HorizontalAlignment="Left"/>
+                    <TextBox TextWrapping="Wrap" Text="Input unit number..." VerticalAlignment="Top" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Margin="20,15,20,15">
+                    <Label Content="Section" HorizontalAlignment="Left"/>
+                    <TextBox TextWrapping="Wrap" Text="Input section number..." VerticalAlignment="Top" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Margin="20,15,20,15">
+                    <Label Content="Tag" HorizontalAlignment="Left"/>
+                    <TextBox TextWrapping="Wrap" Text="Input tag number..." VerticalAlignment="Top" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Margin="20,15,20,15">
+                    <Label Content="Item" HorizontalAlignment="Left"/>
+                    <TextBox TextWrapping="Wrap" Text="Input item number..." VerticalAlignment="Top" FontSize="16"/>
+                </StackPanel>
+            </StackPanel>
+
+            <Button Grid.Column="1" Content="Enter" Grid.Row="1" Margin="20,20,20,20" Background="#5cbb4e" FontWeight="Bold" FontSize="14"/>
+
+        </Grid>
     </Grid>
 </Window>

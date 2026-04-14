@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using QuickDoc.Model;
 
 namespace QuickDoc.Repository
 {
@@ -10,7 +11,7 @@ namespace QuickDoc.Repository
 
         public List<Item> GetItems()
         {
-
+            return null;
         } 
 
         private void readFromDatabase()

@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Style of button -->
+    <Style TargetType="{x:Type Button}">
+        
+    </Style>
+    
+    <!-- Style of border -->
+    
+    <!-- Style of listbox -->
+    
+    <!-- Style of textbox -->
+    
+</ResourceDictionary>
