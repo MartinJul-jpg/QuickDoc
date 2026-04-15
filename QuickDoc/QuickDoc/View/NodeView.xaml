@@ -32,16 +32,23 @@
             </Border>
 
             <Border BorderBrush="#014e99" BorderThickness="2" Margin="20,20,20,20">
-                <StackPanel Grid.Row="0" Name="NodeAttributes">
-                    <Label Content="Node:" FontSize="18"/>
-                    <UniformGrid>
-                        <Label Content="Project: 12345" FontSize="12"/>
-                        <Label Content="Project: 12345" FontSize="12"/>
-                        <Label Content="Project: 12345" FontSize="12"/>
-                        <Label Content="Project: 12345" FontSize="12"/>
-                        <Label Content="Project: 12345" FontSize="12"/>
-                        <Label Content="Project: 12345" FontSize="12"/>
-                    </UniformGrid>
+                <StackPanel Grid.Row="0" Name="NodeAttributeParent">
+                    <Label Content="Node:" FontSize="16"/>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel x:Name="NodeAttributeChildLeft" Grid.Column="0">
+                            <Label Content="Attribute: 63837bhs"/>
+                            <Label Content="Attribute: 63837bhs"/>
+                        </StackPanel>
+                        <StackPanel x:Name="NodeAttributeChildRight" Grid.Column="1">
+                            <Label Content="Attribute: 63837bhs"/>
+                            <Label Content="Attribute: 63837bhs"/>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
             </Border>
 
