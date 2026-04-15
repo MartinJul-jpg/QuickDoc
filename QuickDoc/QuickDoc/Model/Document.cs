@@ -9,5 +9,14 @@ namespace QuickDoc.Model
         public string Title;
         public string Description;
         public string FilePath;
+
+
+    public Document(string title, string description, string filepath)
+        {
+            Title = title;
+            Description = description;
+            FilePath = filepath;
+
+        }
     }
 }

@@ -7,9 +7,33 @@ namespace QuickDoc.ViewModel
 {
     public class UnitViewModel : NodeViewModel
     {
-        public int me_bombaclaat;
-        public string UnitNumber;
-        public string Description;
-        public List<Document> Documents;
+        private Unit unit;
+
+        public string UnitNumber
+        {
+            get { return unit.UnitNumber; }
+            set { unit.UnitNumber = value; }
+        }
+        public string Description
+        {
+            get { return unit.Description; }
+            set { unit.Description = value; }
+        }
+        public List<Section> Children
+        {
+            get { return unit.Sections; }
+            set { unit.Sections = value; }
+        }
+
+        public List<Document> Documents
+        {
+            get { return unit.Documents; }
+            set { unit.Documents = value; }
+        }
+
+        public UnitViewModel(Unit unit)
+        {
+            this.unit = unit;
+        }
     }
 }
