@@ -10,6 +10,8 @@ namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
+        private int currentProjectNumber;
+
         private ItemRepository _itemRepo;
         private TagRepository _tagRepo;
         private SectionRepository _sectionRepo;
@@ -67,12 +69,6 @@ namespace QuickDoc.ViewModel
 
         public void GetByCriteria()
         {
-            _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
-            _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
-            _sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _tagRepo);
-            _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
-            _projectRepo.readFromDatabase(Criteria.ProjectCriteria, _unitRepo);
-
             bool projectFull = Criteria.ProjectCriteria != 0; 
             bool unitFull = Criteria.UnitCriteria != string.Empty;
             bool sectionFull = Criteria.SectionCriteria != 0;
@@ -81,6 +77,17 @@ namespace QuickDoc.ViewModel
 
             if (projectFull)
             {
+                if ( !(currentProjectNumber == criteria.ProjectCriteria) )
+                {
+                    _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
+                    _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
+                    _sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _tagRepo);
+                    _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
+                    _projectRepo.readFromDatabase(Criteria.ProjectCriteria, _unitRepo);
+
+                    currentProjectNumber = criteria.ProjectCriteria;
+                }
+
                 if ( !(unitFull || sectionFull || tagFull || itemFull) ) //Looking for a specific project
                 {
                     CurrentNode = new ProjectViewModel(_projectRepo.GetProject());
@@ -171,15 +178,24 @@ namespace QuickDoc.ViewModel
                             Documents.Add(new DocumentViewModel(document));
                         }
                     }
-                    else if (!unitFull && sectionFull) //Looking for a section type ???
+                    else if (!unitFull && sectionFull) //Looking for several specific sections
                     {
-                        CurrentNode = new SectionViewModel(_sectionRepo.getSections(criteria.SectionCriteria).First());
+                        List<SectionViewModel> sections = new List<SectionViewModel>();
+                        foreach (var section in _sectionRepo.getSections(criteria.SectionCriteria))
+                        {
+                            sections.Add(new SectionViewModel(section));
+                        }
+
+                        CurrentNode = sections.First();
                         Children.Clear();
                         Documents = new List<DocumentViewModel>();
 
-                        foreach (var document in (CurrentNode as SectionViewModel).Documents)
+                        foreach (SectionViewModel section in sections)
                         {
-                            Documents.Add(new DocumentViewModel(document));
+                            foreach (var document in section.Documents)
+                            {
+                                Documents.Add(new DocumentViewModel(document));
+                            }
                         }
                     }
                 }
