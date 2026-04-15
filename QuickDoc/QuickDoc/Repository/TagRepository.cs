@@ -25,6 +25,11 @@ namespace QuickDoc.Repository
             return tags.Where(x => x.TagNumber == tagNumber).First();
         }
 
+        public List<Tag> GetSectionsChildren(int sectionNr)
+        {
+            return tags.Where(x => x.SectionParentKey == sectionNr).ToList();
+        }
+
         public void ReadFromDatabase(int projectNum, ItemRepository ItemRepo)
         {
             List<Item> ResultChildren;
@@ -32,8 +37,10 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT TagNumber, UnionTagNumber, TagLineNumber, TagDescription, HaffmanTag, CustomerTag, VendorTag, BelongsTo " 
-                                                + "FROM TAG WHERE ProjectNumber = @projectNum", con);
+                SqlCommand cmd = new SqlCommand(@"SELECT TG.TagNumber, TG.UnionTagNumber, TG.TagLineNumber, TG.TagDescription, TG.HaffmanTag, TG.CustomerTag, TG.VendorTag, TG.BelongsTo, TG.SectionNumber 
+                                                TGD.TTitle, TGD.TDocDescription, TGD.TFile,
+                                                FROM TAG TG
+                                                INNER JOIN TAGDOCUMENT TGD WHERE ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -47,13 +54,18 @@ namespace QuickDoc.Repository
                         string customerTag = (string)dr["CustomerTag"];
                         string vendorTag = (string)dr["VendorTag"];
                         string belongsTo = (string)dr["BelongsTo"];
+                        int sectionNr = (int)dr["SectionNumber"];
+                        //FILE
+                        string title = (string)dr["TTitle"];
+                        string fileDescription = (string)dr["TDocDescription"];
+                        string filepath = (string)dr["TFile"];
 
-                        Tag tag = new Tag(tagNum, unionTag, lineNum, description, haffmanTag, customerTag, vendorTag, belongsTo);
+                        Tag tag = new Tag(tagNum, unionTag, lineNum, description, haffmanTag, customerTag, vendorTag, belongsTo, sectionNr);
                         //For Children
 
                         ResultChildren = ItemRepo.GetTagsChildren(tagNum);
-
                         tag.Items = ResultChildren;
+                        tag.Documents.Add(new Document(title, fileDescription, filepath));
                         result.Add(tag);
 
                     }

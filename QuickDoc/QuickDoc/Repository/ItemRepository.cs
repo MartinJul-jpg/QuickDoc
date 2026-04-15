@@ -31,10 +31,6 @@ namespace QuickDoc.Repository
             return items.Where(x => x.TagParentKey == TagNumber).ToList();
         }
         
-        public List<Item> GetSectionsChildren(int sectionNr )
-        {
-            return items.Where(x => x.SectionParentKey == sectionNr).ToList(); 
-        }
 
         public void ReadFromDatabase(int projectNum)
         {
@@ -42,17 +38,17 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                // 2 joins 
+                // 3 joins 
                 SqlCommand cmd = new SqlCommand(
                      @"SELECT IT.ItemVariantID, IT.ItemNumber, IT.ItemDescription, 
-                        IM.ItemID, IM.ProjectNumber, IM.ItemLineNumber, 
-                        IM.UnitOfMeasure, IM.Quantity, IM.TagNumber
-                        PR.ProcurementID, PR.ProcurementStatus, PR.PurchaseOrderNumber, TG.SectionNumber
+                        IM.ItemID, IM.ProjectNumber, IM.ItemLineNumber, IM.UnitOfMeasure, IM.Quantity, IM.TagNumber,
+                        PR.ProcurementID, PR.ProcurementStatus, PR.PurchaseOrderNumber,
+                        IMD.ITitle, IMD.IDocDescription, IMD.IFile,
                     FROM ITEMVARIANT IT
                     INNER JOIN ITEM IM ON IT.ItemVariantID = IM.ItemVariantID
                     INNER JOIN PROCUREMENT PR ON IM.ItemID = PR.ItemID
                     INNER JOIN TAG TG ON IM.TagNumber = TG.TagNumber
-                    INNER JOIN SECTION SC ON TG.SectionNumber = SC.SectionNumber 
+                    INNER JOIN ITEMVARIANTDOCUMENT IMD ON IT.ItemVariantID = IMD.ItemVariantID 
                     WHERE IM.ProjectNumber = @projectNum",
                      con
                  );
@@ -74,14 +70,18 @@ namespace QuickDoc.Repository
                         string UnitOfMeasure = (string)dr["UnitOfMeasure"];
                         //ParentKey So the item in software level knows who its parent is + to avoid multiple sql searches
                         string TagParentKey = (string)dr["TagNumber"];
-                        int SectionParentKey = (int)dr["SectionNumber"];
+                        //Procurement
                         int ProcurementID = (int)dr["ProcurementID"];
                         string PurchaseOrderNumber = (string)dr["PurchaseOrderNumber"];
                         string ProcurementStatus = (string)dr["ProcurementStatus"];
+                        //FILE DATA
+                        string title = (string)dr["ITitle"];
+                        string description = (string)dr["ItemVariantID"];
+                        string filepath = (string)dr["IFile"];
 
-                        Item item = new Item(ItemID, ItemVariantID, ItemNumber, LineNumber, Description, Quantity, UnitOfMeasure, TagParentKey, SectionParentKey);
+                        Item item = new Item(ItemID, ItemVariantID, ItemNumber, LineNumber, Description, Quantity, UnitOfMeasure, TagParentKey);
                         item.ItemProcurement = new Procurement(ProcurementID, PurchaseOrderNumber, ProcurementStatus);
-
+                        item.Documents.Add(new Document(title, description, filepath));
                         result.Add(item);
                     }
                 }

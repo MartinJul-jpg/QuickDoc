@@ -44,14 +44,18 @@ namespace QuickDoc.Repository
             return sections = sections.Where(x => x.SectionNumber == sectionNr).ToList();
         }
 
-        public void ReadFromDatabase(int projectNum , ItemRepository itemRepo)
+        public void ReadFromDatabase(int projectNum , TagRepository tagRepo)
         {
             List<Section> result = new List<Section>();
-            List<Item> ResultChildren;
+            List<Tag> ResultChildren;
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT SectionNumber, OldSectionNumber, Title, UnitNumber, FROM SECTION WHERE ProjectNumber = @projectNum", con);
+                SqlCommand cmd = new SqlCommand(@"SELECT SC.SectionNumber, SC.OldSectionNumber, SC.Title, SC.UnitNumber,
+                                                SCD.STitle, SCD.SDocDescription, SCDSFile   
+                                                FROM SECTION SC
+                                                INNER JOIN SECTIONDOCUMENT SCD ON SCD.SectionNumber = SD.SectionNumber
+                                                WHERE ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
@@ -62,12 +66,17 @@ namespace QuickDoc.Repository
                         int OldSecTionNumber = (int)dr["OldSecTionNumber"];
                         string Title = (string)dr["Title"];
                         string ParentKey = (string)dr["UnitNumber"];
+                        //FILE
+                        string title = (string)dr["STitle"];
+                        string description = (string)dr["SDocDescription"];
+                        string filepath = (string)dr["SCDSFile"];
+
 
                         Section section = new Section(SectionNumber, OldSecTionNumber, Title, ParentKey);
 
-                        ResultChildren = itemRepo.GetSectionsChildren(SectionNumber);
-
-                        section.Items = ResultChildren;
+                        ResultChildren = tagRepo.GetSectionsChildren(SectionNumber);
+                        section.Documents.Add(new Document(title, description, filepath));
+                        section.Tags = ResultChildren;
                         result.Add(section);
                     }
                 }

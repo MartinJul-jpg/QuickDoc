@@ -69,7 +69,7 @@ namespace QuickDoc.ViewModel
         {
             _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
             _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
-            _sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
+            _sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _tagRepo);
             _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
             _projectRepo.readFromDatabase(Criteria.ProjectCriteria, _unitRepo);
 

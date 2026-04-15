@@ -31,7 +31,10 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT ProjectNumber, ProjectDescription FROM PROJECT WHERE ProjectNumber = @projectNum", con);
+                SqlCommand cmd = new SqlCommand(@" PR.SELECT PR.ProjectNumber, PR.ProjectDescription 
+                                                PRD.PTitle, PRD.PDocDescription, PRD.PFile
+                                                INNER JOIN PROJECTDOCUMENT PRD
+                                                FROM PROJECT PR WHERE ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -39,10 +42,16 @@ namespace QuickDoc.Repository
                     {
                         int ProjectNum = (int)dr["ProjectNumber"];
                         string description = (string)dr["ProjectDescription"];
+                        //FILE
+                        string title = (string)dr["TTitle"];
+                        string fileDescription = (string)dr["TDocDescription"];
+                        string filepath = (string)dr["TFile"];
+
 
                         Project project = new Project(ProjectNum, description);
                         project.Units = unitRepo.GetAllUnits();
                         this.project = project;
+                        project.Documents.Add(new Document(title, fileDescription, filepath));
                     }
                 }
             }

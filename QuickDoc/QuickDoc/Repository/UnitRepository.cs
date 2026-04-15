@@ -43,7 +43,10 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT UnitNumber, UnitDescription, FROM UNIT WHERE ProjectNumber = @projectNum", con);
+                SqlCommand cmd = new SqlCommand(@"SELECT UN.UnitNumber, UN.UnitDescription,
+                                                UND.UTitle, UND.UDocDescription, UND.UFile
+                                                FROM UNIT UN
+                                                INNER JOIN UNITDOCUMENT UND WHERE ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -51,12 +54,16 @@ namespace QuickDoc.Repository
                     {
                         string UnitNumber = (string)dr["UnitNumber"];
                         string UnitDescription = (string)dr["UnitDescription"];
+                        //FILE DATA
+                        string title = (string)dr["UTitle"];
+                        string description = (string)dr["UDocDescription"];
+                        string filepath = (string)dr["UFile"];
 
                         Unit unit = new Unit(UnitNumber, UnitDescription);
                         //For Children
 
                         ResultChildren = secRepo.GetUnitsChildren(UnitNumber);
-
+                        unit.Documents.Add(new Document(title, description, filepath));
                         unit.Sections = ResultChildren;
                         result.Add(unit);
                    
