@@ -1,7 +1,10 @@
-﻿using QuickDoc.ViewModel;
+﻿using QuickDoc.Stores;
+using QuickDoc.View;
+using QuickDoc.ViewModel;
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace QuickDoc
 {
@@ -10,15 +13,23 @@ namespace QuickDoc
     /// </summary>
     public partial class App : Application
     {
-        MainNodeViewModel mainNodeVM;
+        //MainNodeViewModel mainNodeVM;
+        NavigationStore navigationStore;
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            mainNodeVM = new MainNodeViewModel();
+            navigationStore = new NavigationStore();
+            navigationStore.CurrentView = new SearchView();
+
+            //mainNodeVM = new MainNodeViewModel();
 
             // Create and show the main window
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow()
+            {
+                DataContext = navigationStore
+            };
             mainWindow.Show();
+
             base.OnStartup(e);
         }
     }
