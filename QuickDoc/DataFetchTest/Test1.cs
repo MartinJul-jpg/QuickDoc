@@ -1,6 +1,8 @@
-﻿using QuickDoc.Model;
+﻿using FluentAssertions;
+using QuickDoc.Model;
 using QuickDoc.ViewModel;
 using System.Threading.Tasks;
+using FluentAssertions;
 namespace DataFetchTest
 {
     [TestClass]
@@ -18,9 +20,9 @@ namespace DataFetchTest
                 new Unit("120", "Knock out drum Unit No."),
                 new Unit("122", "Booster blower Unit No."),
                 new Unit("123", "Water scrubber Unit No."),
-                new Unit("123 - 1", "Water scrubber pump Unit No."),
+                new Unit("123-1", "Water scrubber pump Unit No."),
                 new Unit("1700", "General Plant DK"),
-                new Unit("201 - 2", "CO2 Compressor Cooling Water Shunt Unit No."),
+                new Unit("201-2", "CO2 Compressor Cooling Water Shunt Unit No."),
                 new Unit("201A", "CO2 Compressor A Unit No."),
                 new Unit("201B", "CO2 Compressor B Unit No."),
                 new Unit("342", "HP Carbon filter unit, lead-lag Unit No."),
@@ -44,6 +46,21 @@ namespace DataFetchTest
 
 
         [TestMethod]
+        public void GetProjectChildrenCount()
+        {
+            //Arrange
+            mainNodeViewModel.Criteria.ProjectCriteria = "P-0368486";
+
+            //ACT
+            mainNodeViewModel.GetByCriteria();
+            
+
+
+            //Assert
+            // CHILDREN ARE NULL PLEASE FIX
+            Assert.AreEqual(mainNodeViewModel.Children.Count, units.Count);
+        }
+        [TestMethod]
         public void GetProjectChildren()
         {
             //Arrange
@@ -51,13 +68,15 @@ namespace DataFetchTest
 
             //ACT
             mainNodeViewModel.GetByCriteria();
-            var children = mainNodeViewModel.Children; // Access Children as a property
+
 
 
             //Assert
-            // CHILDREN ARE NULL PLEASE FIX
-            Assert.AreEqual(children.Count, units.Count);
+            // CHILDREN ARE NULL 
+            mainNodeViewModel.Children.Should().BeEquivalentTo(units);
+
 
         }
+
     }
 }

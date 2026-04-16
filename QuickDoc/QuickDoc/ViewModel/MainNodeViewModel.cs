@@ -69,11 +69,11 @@ namespace QuickDoc.ViewModel
 
         public void GetByCriteria()
         {
-            bool projectFull = Criteria.ProjectCriteria != string.Empty; 
-            bool unitFull = Criteria.UnitCriteria != string.Empty;
+            bool projectFull = !string.IsNullOrEmpty(Criteria.ProjectCriteria);
+            bool unitFull = !string.IsNullOrEmpty(Criteria.UnitCriteria);
+            bool tagFull = !string.IsNullOrEmpty(Criteria.TagCriteria);
+            bool itemFull = !string.IsNullOrEmpty(Criteria.ItemCriteria);
             bool sectionFull = Criteria.SectionCriteria != 0;
-            bool tagFull = Criteria.TagCriteria != string.Empty;
-            bool itemFull = Criteria.ItemCriteria != string.Empty;
 
             if (projectFull)
             {
