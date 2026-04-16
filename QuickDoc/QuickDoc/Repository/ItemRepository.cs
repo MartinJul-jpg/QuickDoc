@@ -43,7 +43,7 @@ namespace QuickDoc.Repository
                      @"SELECT IT.ItemVariantID, IT.ItemNumber, IT.ItemDescription, 
                         IM.ItemID, IM.ProjectNumber, IM.ItemLineNumber, IM.UnitOfMeasure, IM.Quantity, IM.TagNumber,
                         PR.ProcurementID, PR.ProcurementStatus, PR.PurchaseOrderNumber,
-                        IMD.ITitle, IMD.IDocDescription, IMD.IFile,
+                        IMD.ITitle, IMD.IDocDescription, IMD.IFile
                     FROM ITEMVARIANT IT
                     INNER JOIN ITEM IM ON IT.ItemVariantID = IM.ItemVariantID
                     INNER JOIN PROCUREMENT PR ON IM.ItemID = PR.ItemID

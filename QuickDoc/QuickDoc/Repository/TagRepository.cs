@@ -37,10 +37,11 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT TG.TagNumber, TG.UnionTagNumber, TG.TagLineNumber, TG.TagDescription, TG.HaffmanTag, TG.CustomerTag, TG.VendorTag, TG.BelongsTo, TG.SectionNumber 
-                                                TGD.TTitle, TGD.TDocDescription, TGD.TFile,
+                SqlCommand cmd = new SqlCommand(@"SELECT TG.TagNumber, TG.UnionTagNumber, TG.TagLineNumber, TG.TagDescription, TG.HaffmanTag, TG.CustomerTag, TG.VendorTag, TG.BelongsTo, TG.SectionNumber, 
+                                                TGD.TTitle, TGD.TDocDescription, TGD.TFile
                                                 FROM TAG TG
-                                                INNER JOIN TAGDOCUMENT TGD WHERE ProjectNumber = @projectNum", con);
+                                                INNER JOIN TAGDOCUMENT TGD ON TG.TagNumber = TGD.TagNumber
+                                                WHERE ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {

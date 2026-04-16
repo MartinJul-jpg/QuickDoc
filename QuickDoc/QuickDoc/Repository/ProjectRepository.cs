@@ -9,7 +9,7 @@ namespace QuickDoc.Repository
 {
     public class ProjectRepository
     {
-        private Project project;
+        private Project _project;
         private readonly string ConnectionString;
 
         public ProjectRepository()
@@ -22,7 +22,8 @@ namespace QuickDoc.Repository
 
         public Project GetProject()
         {
-            return project;
+            Project newProject = new Project(null,null);
+            return newProject = _project;
         }
 
         public void readFromDatabase(string projectNum, UnitRepository unitRepo)
@@ -31,7 +32,7 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@" PR.SELECT PR.ProjectNumber, PR.ProjectDescription 
+                SqlCommand cmd = new SqlCommand(@" SELECT PR.ProjectNumber, PR.ProjectDescription 
                                                 PRD.PTitle, PRD.PDocDescription, PRD.PFile
                                                 INNER JOIN PROJECTDOCUMENT PRD
                                                 FROM PROJECT PR WHERE ProjectNumber = @projectNum", con);
@@ -50,7 +51,7 @@ namespace QuickDoc.Repository
 
                         Project project = new Project(ProjectNum, description);
                         project.Units = unitRepo.GetAllUnits();
-                        this.project = project;
+                        _project = project;
                         project.Documents.Add(new Document(title, fileDescription, filepath));
                     }
                 }

@@ -19,7 +19,7 @@ namespace DataFetchTest
 
 
             //Arrange
-            mainNodeViewModel.Criteria.ProjectCriteria = "P - 0368486";
+            mainNodeViewModel.Criteria.ProjectCriteria = "P-0368486";
 
             //ACT
             mainNodeViewModel.GetByCriteria();
