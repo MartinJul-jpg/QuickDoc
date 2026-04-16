@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using QuickDoc.View;
 
 namespace QuickDoc.Styles
 {
@@ -25,6 +26,11 @@ namespace QuickDoc.Styles
         {
             this.navigationStore = navigationStore;
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            navigationStore.CurrentView = new SearchView(navigationStore);
         }
     }
 }

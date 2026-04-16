@@ -32,31 +32,31 @@
             <StackPanel Grid.Row="0" Grid.Column="0">
                 <StackPanel Margin="20,15,20,15">
                     <Label Content="Project" HorizontalAlignment="Left"/>
-                    <TextBox TextWrapping="Wrap" Text="Input project number..." VerticalAlignment="Top" FontSize="16"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding Criteria.ProjectCriteria}" VerticalAlignment="Top" FontSize="16"/>
                 </StackPanel>
 
                 <StackPanel Margin="20,15,20,15">
                     <Label Content="Unit" HorizontalAlignment="Left"/>
-                    <TextBox TextWrapping="Wrap" Text="Input unit number..." VerticalAlignment="Top" FontSize="16"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding Criteria.UnitCriteria}" VerticalAlignment="Top" FontSize="16"/>
                 </StackPanel>
 
                 <StackPanel Margin="20,15,20,15">
                     <Label Content="Section" HorizontalAlignment="Left"/>
-                    <TextBox TextWrapping="Wrap" Text="Input section number..." VerticalAlignment="Top" FontSize="16"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding Criteria.SectionCriteria}" VerticalAlignment="Top" FontSize="16"/>
                 </StackPanel>
 
                 <StackPanel Margin="20,15,20,15">
                     <Label Content="Tag" HorizontalAlignment="Left"/>
-                    <TextBox TextWrapping="Wrap" Text="Input tag number..." VerticalAlignment="Top" FontSize="16"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding Criteria.TagCriteria}" VerticalAlignment="Top" FontSize="16"/>
                 </StackPanel>
 
                 <StackPanel Margin="20,15,20,15">
                     <Label Content="Item" HorizontalAlignment="Left"/>
-                    <TextBox TextWrapping="Wrap" Text="Input item number..." VerticalAlignment="Top" FontSize="16"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding Criteria.ItemCriteria}" VerticalAlignment="Top" FontSize="16"/>
                 </StackPanel>
             </StackPanel>
 
-            <Button Name="EnterButton" Grid.Column="1" Content="Enter" Grid.Row="1" Margin="20,20,20,20" Background="#5cbb4e" FontWeight="Bold" FontSize="14" Click="EnterButton_Click"/>
+            <Button Name="EnterButton" Grid.Column="1" Content="Enter" Grid.Row="1" Margin="20,20,20,20" Background="#5cbb4e" FontWeight="Bold" FontSize="14" Command="{Binding GETBYCRITERIA}" Click="EnterButton_Click"/>
 
         </Grid>
     </Grid>

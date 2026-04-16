@@ -15,7 +15,11 @@ namespace QuickDoc.Model
         {
             UnitNumber = unitNumber;
             Description = description;
+        }
 
+        public override string ToString()
+        {
+            return $"Unit: {UnitNumber} - {Description}";
         }
     }
 }
