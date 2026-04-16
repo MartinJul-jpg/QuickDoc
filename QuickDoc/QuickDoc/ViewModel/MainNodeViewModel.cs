@@ -1,47 +1,216 @@
-﻿using QuickDoc.Stores;
-using System.ComponentModel;
+﻿using QuickDoc.Command;
+using QuickDoc.Repository;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using QuickDoc.Model;
+using System.Text;
+using System.Windows.Input;
 
 namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
-        public NavigationStore NavigationStore { get; set; }
+        private string currentProjectNumber;
 
-        private NodeViewModel? _currentNode;
-        public NodeViewModel? CurrentNode
-        {
-            get => _currentNode;
-            set
-            {
-                if (ReferenceEquals(_currentNode, value))
-                {
-                    return;
-                }
-
-                _currentNode = value;
-                OnPropertyChanged();
-            }
-        }
-        public List<Document> Documents { get; set; }
-        public string ProjectCriteria { get; set; }
-        public int UnitCriteria { get; set; }
-        public int SectionCriteria { get; set; }
-        public string TagCriteria { get; set; }
-        public string ItemCriteria { get; set; }
+        private ItemRepository _itemRepo;
+        private TagRepository _tagRepo;
+        private SectionRepository _sectionRepo;
+        private UnitRepository _unitRepo;
+        private ProjectRepository _projectRepo;
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        private CriteriaViewModel criteria;
+        public CriteriaViewModel Criteria
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get { return criteria; }
+            set 
+            { 
+                criteria = value;
+                OnPropertyChanged("Criteria");
+            }
         }
 
-        public void GetNodesByCriteria()
+        private NodeViewModel currentNode;
+        public NodeViewModel CurrentNode
         {
+            get { return currentNode; }
+            set 
+            { 
+                currentNode = value;
+                OnPropertyChanged("CurrentNode");
+            }
+        }
 
+        private List<NodeViewModel> children;
+        public List<NodeViewModel> Children
+        {
+            get { return children; }
+            set
+            {
+                children = value;
+                OnPropertyChanged("Children");
+            }
+        }
+
+        private List<DocumentViewModel> documents;
+        public List<DocumentViewModel> Documents
+        {
+            get { return documents; }
+            set 
+            { 
+                documents = value;
+                OnPropertyChanged("Documents");
+            }
+        }
+
+        public ICommand GETBYCRITERIA { get; } = new GetByCriteriaCommand();
+
+        public void GetByCriteria()
+        {
+            bool projectFull = Criteria.ProjectCriteria != string.Empty; 
+            bool unitFull = Criteria.UnitCriteria != string.Empty;
+            bool sectionFull = Criteria.SectionCriteria != 0;
+            bool tagFull = Criteria.TagCriteria != string.Empty;
+            bool itemFull = Criteria.ItemCriteria != string.Empty;
+
+            if (projectFull)
+            {
+                if ( !(currentProjectNumber == criteria.ProjectCriteria) )
+                {
+                    _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
+                    _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
+                    _sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _tagRepo);
+                    _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
+                    _projectRepo.readFromDatabase(Criteria.ProjectCriteria, _unitRepo);
+
+                    currentProjectNumber = criteria.ProjectCriteria;
+                }
+
+                if ( !(unitFull || sectionFull || tagFull || itemFull) ) //Looking for a specific project
+                {
+                    CurrentNode = new ProjectViewModel(_projectRepo.GetProject());
+                    Children = new List<NodeViewModel>();
+                    Documents = new List<DocumentViewModel>();
+
+                    foreach (var unit in (CurrentNode as ProjectViewModel).Units)
+                    {
+                        Children.Add(new UnitViewModel(unit));
+
+                        foreach (var document in unit.Documents)
+                        {
+                            Documents.Add(new DocumentViewModel(document));
+                        }
+                    }
+
+                    foreach (var document in (CurrentNode as ProjectViewModel).Documents)
+                    {
+                        Documents.Add(new DocumentViewModel(document));
+                    }
+                }
+                else if (tagFull || itemFull)
+                {
+                    if (tagFull && !itemFull) //Looking for a tag type
+                    {
+                        CurrentNode = new TagViewModel(_tagRepo.GetTag(criteria.TagCriteria));
+                        Children.Clear();
+                        Documents = new List<DocumentViewModel>();
+
+                        foreach (var document in (CurrentNode as TagViewModel).Documents)
+                        {
+                            Documents.Add(new DocumentViewModel(document));
+                        }
+                    }
+                    else if (!tagFull && itemFull) //Looking for an item type
+                    {
+                        CurrentNode = new ItemViewModel(_itemRepo.GetItem(criteria.ItemCriteria));
+                        Children.Clear();
+                        Documents = new List<DocumentViewModel>();
+
+                        foreach (var document in (CurrentNode as ItemViewModel).Documents)
+                        {
+                            Documents.Add(new DocumentViewModel(document));
+                        }
+                    }
+                }
+                else
+                {
+                    if (unitFull && sectionFull) //Looking for a specific section
+                    {
+                        CurrentNode = new SectionViewModel(_sectionRepo.getSection(criteria.SectionCriteria, criteria.UnitCriteria, _unitRepo));
+                        Children = new List<NodeViewModel>();
+                        Documents = new List<DocumentViewModel>();
+
+                        foreach (var tag in (CurrentNode as SectionViewModel).Children)
+                        {
+                            Children.Add(new TagViewModel(tag));
+
+                            foreach (var document in tag.Documents)
+                            {
+                                Documents.Add(new DocumentViewModel(document));
+                            }
+                        }
+
+                        foreach (var document in (CurrentNode as SectionViewModel).Documents)
+                        {
+                            Documents.Add(new DocumentViewModel(document));
+                        }
+                    }
+                    else if (unitFull && !sectionFull) //Looking for a specific unit
+                    {
+                        CurrentNode = new UnitViewModel(_unitRepo.GetUnit(criteria.UnitCriteria));
+                        Children = new List<NodeViewModel>();
+                        Documents = new List<DocumentViewModel>();
+
+                        foreach (var section in (CurrentNode as UnitViewModel).Children)
+                        {
+                            Children.Add(new SectionViewModel(section));
+
+                            foreach (var document in section.Documents)
+                            {
+                                Documents.Add(new DocumentViewModel(document));
+                            }
+                        }
+
+                        foreach (var document in (CurrentNode as UnitViewModel).Documents)
+                        {
+                            Documents.Add(new DocumentViewModel(document));
+                        }
+                    }
+                    else if (!unitFull && sectionFull) //Looking for several specific sections
+                    {
+                        List<SectionViewModel> sections = new List<SectionViewModel>();
+                        foreach (var section in _sectionRepo.getSections(criteria.SectionCriteria))
+                        {
+                            sections.Add(new SectionViewModel(section));
+                        }
+
+                        CurrentNode = sections.First();
+                        Children.Clear();
+                        Documents = new List<DocumentViewModel>();
+
+                        foreach (SectionViewModel section in sections)
+                        {
+                            foreach (var document in section.Documents)
+                            {
+                                Documents.Add(new DocumentViewModel(document));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public MainNodeViewModel()
+        {
+            _itemRepo = new ItemRepository();
+            _tagRepo = new TagRepository();
+            _sectionRepo = new SectionRepository();
+            _unitRepo = new UnitRepository();
+            _projectRepo = new ProjectRepository();
+
+            criteria = new CriteriaViewModel();
         }
     }
 }

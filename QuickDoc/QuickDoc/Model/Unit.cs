@@ -10,5 +10,12 @@ namespace QuickDoc.Model
         public string Description;
         public List<Section> Sections;
         public List<Document> Documents;
+
+        public Unit(string unitNumber, string description)
+        {
+            UnitNumber = unitNumber;
+            Description = description;
+
+        }
     }
 }

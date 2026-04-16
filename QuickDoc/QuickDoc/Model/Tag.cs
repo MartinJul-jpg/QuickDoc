@@ -16,10 +16,12 @@ namespace QuickDoc.Model
         public string CustomerTag { get; set; }
         public string BelongsTo { get; set; }
 
+        public int SectionParentKey; // SectionNumber
+
         public List<Item> Items { get; set; }
         public List<Document> Documents { get; set; }
 
-        public Tag(string tagNumber, string unionTagNumber, string description, string lineNumber, string haffmanTag, string vendorTag, string customerTag, string belongsTo) // Big LINE //How long? just to suffer
+        public Tag(string tagNumber, string unionTagNumber, string description, string lineNumber, string haffmanTag, string vendorTag, string customerTag, string belongsTo, int sectionParentKey) // Big LINE //How long? just to suffer
         {
             TagNumber = tagNumber;
             UnionTagNumber = unionTagNumber;
@@ -29,6 +31,7 @@ namespace QuickDoc.Model
             VendorTag = vendorTag;
             CustomerTag = customerTag;
             BelongsTo = belongsTo;
+            SectionParentKey = sectionParentKey;
         }
     }
 }

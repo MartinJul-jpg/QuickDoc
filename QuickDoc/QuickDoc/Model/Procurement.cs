@@ -9,5 +9,12 @@ namespace QuickDoc.Model
         public int ProcurementID;
         public string PurchaseOrderNumber;
         public string ProcurementStatus;
+
+        public Procurement(int procurementID, string purchaseOrderNumber, string procurementStatus)
+        {
+            ProcurementID = procurementID;
+            this.PurchaseOrderNumber = purchaseOrderNumber;
+            ProcurementStatus = procurementStatus;
+        }
     }
 }
