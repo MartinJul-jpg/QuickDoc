@@ -8,9 +8,9 @@ namespace QuickDoc.ViewModel
     public class ProjectViewModel : NodeViewModel
     {
         private Project project;
-        public int ProjectNumber;
-        public string Description;
-        public List<Unit> Units;
-        public List<Document> Documents;
+        public string ProjectNumber { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public List<Unit> Units { get; set; } = new();
+        public List<Document> Documents { get; set; } = new();
     }
 }

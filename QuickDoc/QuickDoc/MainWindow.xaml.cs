@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using QuickDoc.Stores;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,8 +18,11 @@ namespace QuickDoc
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public NavigationStore navigationStore { get; set; }
+
+        public MainWindow(NavigationStore navigationStore)
         {
+            this.navigationStore = navigationStore;
             InitializeComponent();
         }
     }

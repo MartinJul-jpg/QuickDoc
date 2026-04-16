@@ -9,10 +9,10 @@ namespace QuickDoc.ViewModel //mayhaps
     public class SectionViewModel : NodeViewModel // Perchance.
     {
         private Section section; // Tweaaekers, Could Be
-        public int SectionNumber; // this is public and an int // You sure?
-        public string OldSectionNumber; // on goon, Perhaps
-        public string Title; //you can use this for titles
-        public List<Document> Documents; //Some Documents I ain't sure
+        public int SectionNumber { get; set; }
+        public string OldSectionNumber { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public List<Document> Documents { get; set; } = new();
     }
 }
 // dont go here 

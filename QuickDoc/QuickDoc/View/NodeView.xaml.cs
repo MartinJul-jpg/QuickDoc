@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuickDoc.Stores;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,8 +19,11 @@ namespace QuickDoc.Styles
     /// </summary>
     public partial class NodeView : UserControl
     {
-        public NodeView()
+        public NavigationStore navigationStore { get; set; }
+
+        public NodeView(NavigationStore navigationStore)
         {
+            this.navigationStore = navigationStore;
             InitializeComponent();
         }
     }

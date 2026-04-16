@@ -1,4 +1,6 @@
-﻿using System;
+﻿using QuickDoc.Stores;
+using QuickDoc.Styles;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,9 +20,17 @@ namespace QuickDoc.View
     /// </summary>
     public partial class SearchView : UserControl
     {
-        public SearchView()
+        public NavigationStore navigationStore { get; set; }
+
+        public SearchView(NavigationStore navigationStore)
         {
+            this.navigationStore = navigationStore;
             InitializeComponent();
+        }
+
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        {
+            navigationStore.CurrentView = new NodeView(navigationStore);
         }
     }
 }

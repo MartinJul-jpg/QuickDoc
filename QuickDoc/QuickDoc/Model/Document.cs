@@ -6,8 +6,8 @@ namespace QuickDoc.Model
 {
     public class Document
     {
-        public string Title;
-        public string Description;
-        public string FilePath;
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string FilePath { get; set; }
     }
 }

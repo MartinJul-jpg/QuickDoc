@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="400">
     <Grid>
-        <ContentControl Grid.Row="1" Content="{Binding CurrentView}" />
+        <ContentControl Content="{Binding NavigationStore.CurrentView}" />
     </Grid>
 </Window>
