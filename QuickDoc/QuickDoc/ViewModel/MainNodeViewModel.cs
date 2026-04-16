@@ -10,7 +10,8 @@ namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
-        private int currentProjectNumber;
+
+        private string currentProjectNumber;
 
         private ItemRepository _itemRepo;
         private TagRepository _tagRepo;
@@ -69,7 +70,14 @@ namespace QuickDoc.ViewModel
 
         public void GetByCriteria()
         {
-            bool projectFull = Criteria.ProjectCriteria != 0; 
+
+            _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
+            _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
+            _sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _tagRepo);
+            _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
+            _projectRepo.readFromDatabase(Criteria.ProjectCriteria, _unitRepo);
+
+            bool projectFull = Criteria.ProjectCriteria != string.Empty; 
             bool unitFull = Criteria.UnitCriteria != string.Empty;
             bool sectionFull = Criteria.SectionCriteria != 0;
             bool tagFull = Criteria.TagCriteria != string.Empty;
@@ -138,15 +146,15 @@ namespace QuickDoc.ViewModel
                 {
                     if (unitFull && sectionFull) //Looking for a specific section
                     {
-                        CurrentNode = new SectionViewModel(_sectionRepo.getSection(criteria.ProjectCriteria, criteria.SectionCriteria, criteria.UnitCriteria, _unitRepo));
+                        CurrentNode = new SectionViewModel(_sectionRepo.getSection(criteria.SectionCriteria, criteria.UnitCriteria, _unitRepo));
                         Children = new List<NodeViewModel>();
                         Documents = new List<DocumentViewModel>();
 
-                        foreach (var item in (CurrentNode as SectionViewModel).Children)
+                        foreach (var tag in (CurrentNode as SectionViewModel).Children)
                         {
-                            Children.Add(new ItemViewModel(item));
+                            Children.Add(new TagViewModel(tag));
 
-                            foreach (var document in item.Documents)
+                            foreach (var document in tag.Documents)
                             {
                                 Documents.Add(new DocumentViewModel(document));
                             }
