@@ -10,7 +10,6 @@ namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
-
         private string currentProjectNumber;
 
         private ItemRepository _itemRepo;
@@ -70,13 +69,6 @@ namespace QuickDoc.ViewModel
 
         public void GetByCriteria()
         {
-
-            _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
-            _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
-            _sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _tagRepo);
-            _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
-            _projectRepo.readFromDatabase(Criteria.ProjectCriteria, _unitRepo);
-
             bool projectFull = Criteria.ProjectCriteria != string.Empty; 
             bool unitFull = Criteria.UnitCriteria != string.Empty;
             bool sectionFull = Criteria.SectionCriteria != 0;
@@ -217,6 +209,8 @@ namespace QuickDoc.ViewModel
             _sectionRepo = new SectionRepository();
             _unitRepo = new UnitRepository();
             _projectRepo = new ProjectRepository();
+
+            criteria = new CriteriaViewModel();
         }
     }
 }
