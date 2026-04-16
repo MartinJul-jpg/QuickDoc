@@ -30,7 +30,7 @@ namespace QuickDoc.Repository
             return tags.Where(x => x.SectionParentKey == sectionNr).ToList();
         }
 
-        public void ReadFromDatabase(int projectNum, ItemRepository ItemRepo)
+        public void ReadFromDatabase(string projectNum, ItemRepository ItemRepo)
         {
             List<Item> ResultChildren;
             List<Tag> result = new List<Tag>();

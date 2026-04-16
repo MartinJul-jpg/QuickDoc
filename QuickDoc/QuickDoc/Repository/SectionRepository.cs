@@ -28,7 +28,7 @@ namespace QuickDoc.Repository
             ConnectionString = config.GetConnectionString("MyDBConnection");
         }
         //TO FIND THE PARENT
-        public Section getSection(int projectNr, int sectionNr, string unitNr, UnitRepository unitRepo)
+        public Section getSection(int sectionNr, string unitNr, UnitRepository unitRepo)
         {
            return unitRepo.GetSpecificChild(unitNr, sectionNr);
         }
@@ -44,7 +44,7 @@ namespace QuickDoc.Repository
             return sections = sections.Where(x => x.SectionNumber == sectionNr).ToList();
         }
 
-        public void ReadFromDatabase(int projectNum , TagRepository tagRepo)
+        public void ReadFromDatabase(string projectNum , TagRepository tagRepo)
         {
             List<Section> result = new List<Section>();
             List<Tag> ResultChildren;

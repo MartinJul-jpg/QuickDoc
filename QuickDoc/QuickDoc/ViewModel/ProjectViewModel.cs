@@ -9,7 +9,7 @@ namespace QuickDoc.ViewModel
     {
         private Project project;
 
-        public int ProjectNumber
+        public string ProjectNumber
         { 
             get { return project.ProjectNumber; } 
             set { project.ProjectNumber = value; }

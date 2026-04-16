@@ -36,7 +36,7 @@ namespace QuickDoc.Repository
             Unit unit = units.Where(x => x.UnitNumber == unitNr).ToList().First();
             return unit.Sections.Where(x => x.SectionNumber == sectionNr).ToList().First();
         }
-        public void ReadFromDatabase(int projectNum, SectionRepository secRepo)
+        public void ReadFromDatabase(string projectNum, SectionRepository secRepo)
         {
             List<Section> ResultChildren;
             List<Unit> result = new List<Unit>();

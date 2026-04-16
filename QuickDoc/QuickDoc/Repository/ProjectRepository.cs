@@ -25,7 +25,7 @@ namespace QuickDoc.Repository
             return project;
         }
 
-        public void readFromDatabase(int projectNum, UnitRepository unitRepo)
+        public void readFromDatabase(string projectNum, UnitRepository unitRepo)
         {
             
             using (SqlConnection con = new SqlConnection(ConnectionString))
@@ -40,7 +40,7 @@ namespace QuickDoc.Repository
                 {
                     while (dr.Read())
                     {
-                        int ProjectNum = (int)dr["ProjectNumber"];
+                        string ProjectNum = (string)dr["ProjectNumber"];
                         string description = (string)dr["ProjectDescription"];
                         //FILE
                         string title = (string)dr["TTitle"];
