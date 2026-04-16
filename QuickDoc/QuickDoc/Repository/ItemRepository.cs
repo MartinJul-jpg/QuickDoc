@@ -32,7 +32,7 @@ namespace QuickDoc.Repository
         }
         
 
-        public void ReadFromDatabase(int projectNum)
+        public void ReadFromDatabase(string projectNum)
         {
             List<Item> result = new List<Item>();
             using (SqlConnection con = new SqlConnection(ConnectionString))
