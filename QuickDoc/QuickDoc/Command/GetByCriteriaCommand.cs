@@ -20,7 +20,7 @@ namespace QuickDoc.Command
 
             if (parameter is MainNodeViewModel mnvm)
             {
-                if (mnvm.Criteria.ProjectCriteria == 0)
+                if (mnvm.Criteria.ProjectCriteria == string.Empty)
                 {
                     check = false;
                 }
