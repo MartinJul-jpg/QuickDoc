@@ -34,8 +34,8 @@ namespace QuickDoc.Repository
                 con.Open();
                 SqlCommand cmd = new SqlCommand(@" SELECT PR.ProjectNumber, PR.ProjectDescription 
                                                 PRD.PTitle, PRD.PDocDescription, PRD.PFile
-                                                INNER JOIN PROJECTDOCUMENT PRD
-                                                FROM PROJECT PR WHERE ProjectNumber = @projectNum", con);
+                                                INNER JOIN PROJECTDOCUMENT PRD ON PR.ProjectNumber = PRD.ProjectNumber
+                                                FROM PROJECT PR WHERE PR.ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {

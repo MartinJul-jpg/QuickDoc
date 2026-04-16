@@ -52,10 +52,10 @@ namespace QuickDoc.Repository
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand(@"SELECT SC.SectionNumber, SC.OldSectionNumber, SC.Title, SC.UnitNumber,
-                                                SCD.STitle, SCD.SDocDescription, SCDSFile   
+                                                SCD.STitle, SCD.SDocDescription, SCD.SFile   
                                                 FROM SECTION SC
-                                                INNER JOIN SECTIONDOCUMENT SCD ON SCD.SectionNumber = SD.SectionNumber
-                                                WHERE ProjectNumber = @projectNum", con);
+                                                INNER JOIN SECTIONDOCUMENT SCD ON SCD.SectionNumber = SC.SectionNumber
+                                                WHERE SC.ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
 
                 using (SqlDataReader dr = cmd.ExecuteReader())

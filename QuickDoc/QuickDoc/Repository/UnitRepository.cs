@@ -46,7 +46,7 @@ namespace QuickDoc.Repository
                 SqlCommand cmd = new SqlCommand(@"SELECT UN.UnitNumber, UN.UnitDescription,
                                                 UND.UTitle, UND.UDocDescription, UND.UFile
                                                 FROM UNIT UN
-                                                INNER JOIN UNITDOCUMENT UND WHERE ProjectNumber = @projectNum", con);
+                                                INNER JOIN UNITDOCUMENT UND WHERE UN.ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
