@@ -209,6 +209,8 @@ namespace QuickDoc.ViewModel
             _sectionRepo = new SectionRepository();
             _unitRepo = new UnitRepository();
             _projectRepo = new ProjectRepository();
+
+            criteria = new CriteriaViewModel();
         }
     }
 }
