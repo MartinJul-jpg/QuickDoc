@@ -33,14 +33,5 @@ namespace QuickDoc.Model
             BelongsTo = belongsTo;
             SectionParentKey = sectionParentKey;
         }
-
-        public Tag(string tagNumber, string unionTagNumber, string description, string lineNumber, int sectionParentKey) // Big LINE //How long? just to suffer
-        {
-            TagNumber = tagNumber;
-            UnionTagNumber = unionTagNumber;
-            Description = description;
-            LineNumber = lineNumber;
-            SectionParentKey = sectionParentKey;
-        }
     }
 }

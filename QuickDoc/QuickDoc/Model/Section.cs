@@ -18,7 +18,8 @@ namespace QuickDoc.Model
             SectionNumber = sectionNumber;
             OldSecTionNumber = oldSecTionNumber;
             Title = title;
-            ParentKey = parentKey; 
+            ParentKey = parentKey;
+            Documents = new List<Document>(); // <- prevents the NullReferenceException
         }
     }
 }

@@ -4,6 +4,7 @@ using QuickDoc.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Documents;
 
 namespace QuickDoc.Repository
 {
@@ -32,27 +33,29 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@" SELECT PR.ProjectNumber, PR.ProjectDescription 
+                SqlCommand cmd = new SqlCommand(@" SELECT PR.ProjectNumber, PR.ProjectDescription,
                                                 PRD.PTitle, PRD.PDocDescription, PRD.PFile
-                                                INNER JOIN PROJECTDOCUMENT PRD ON PR.ProjectNumber = PRD.ProjectNumber
-                                                FROM PROJECT PR WHERE PR.ProjectNumber = @projectNum", con);
+                                                FROM PROJECT PR
+                                                LEFT JOIN PROJECTDOCUMENT PRD ON PR.ProjectNumber = PRD.ProjectNumber
+                                                WHERE PR.ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        string ProjectNum = (string)dr["ProjectNumber"];
-                        string description = (string)dr["ProjectDescription"];
-                        //FILE
-                        string title = (string)dr["TTitle"];
-                        string fileDescription = (string)dr["TDocDescription"];
-                        string filepath = (string)dr["TFile"];
+                        string ProjectNum = dr["ProjectNumber"] == DBNull.Value ? "" : Convert.ToString(dr["ProjectNumber"]);
+                        string description = dr["ProjectDescription"]  == DBNull.Value ? "" : Convert.ToString(dr["ProjectDescription"]);  
+                        //PTitle
+                        string title = dr["PTitle"] == DBNull.Value ? "" : Convert.ToString(dr["PTitle"]);
+                        string fileDescription = dr["PDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["PDocDescription"]);  
+                        string filepath = dr["PFile"] == DBNull.Value ? "" : Convert.ToString(dr["PFile"]);
 
 
                         Project project = new Project(ProjectNum, description);
                         project.Units = unitRepo.GetAllUnits();
                         _project = project;
                         project.Documents.Add(new Document(title, fileDescription, filepath));
+
                     }
                 }
             }

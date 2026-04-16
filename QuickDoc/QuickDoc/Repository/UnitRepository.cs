@@ -46,18 +46,19 @@ namespace QuickDoc.Repository
                 SqlCommand cmd = new SqlCommand(@"SELECT UN.UnitNumber, UN.UnitDescription,
                                                 UND.UTitle, UND.UDocDescription, UND.UFile
                                                 FROM UNIT UN
-                                                INNER JOIN UNITDOCUMENT UND WHERE UN.ProjectNumber = @projectNum", con);
+                                                LEFT JOIN UNITDOCUMENT UND ON UN.UnitNumber = UND.UnitNumber
+                                                WHERE UN.ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        string UnitNumber = (string)dr["UnitNumber"];
-                        string UnitDescription = (string)dr["UnitDescription"];
+                        string UnitNumber = dr["UnitNumber"] == DBNull.Value ? "" : Convert.ToString(dr["UnitNumber"]);
+                        string UnitDescription = dr["UnitDescription"] == DBNull.Value ? "" : Convert.ToString(dr["UnitDescription"]);
                         //FILE DATA
-                        string title = (string)dr["UTitle"];
-                        string description = (string)dr["UDocDescription"];
-                        string filepath = (string)dr["UFile"];
+                        string title = dr["UTitle"] == DBNull.Value ? "" : Convert.ToString(dr["UTitle"]);
+                        string description = dr["UDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["UDocDescription"]);
+                        string filepath = dr["UFile"] == DBNull.Value ? "" : Convert.ToString(dr["UFile"]);
 
                         Unit unit = new Unit(UnitNumber, UnitDescription);
                         //For Children
