@@ -1,7 +1,6 @@
 ﻿using QuickDoc.Command;
 using QuickDoc.Repository;
 using QuickDoc.Stores;
-using QuickDoc.View;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
