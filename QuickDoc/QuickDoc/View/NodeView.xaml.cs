@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuickDoc.View;
 
-namespace QuickDoc.Styles
+namespace QuickDoc.View
 {
     /// <summary>
     /// Interaction logic for NodeView.xaml
