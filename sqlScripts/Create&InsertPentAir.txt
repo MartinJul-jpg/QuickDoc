@@ -11,6 +11,14 @@ DROP TABLE IF EXISTS UNIT
 DROP TABLE IF EXISTS ITEMVARIANT
 DROP TABLE IF EXISTS PROJECT
 
+GO 
+IF EXISTS(
+SELECT * 
+FROM sys.objects
+WHERE TYPE = 'P' AND NAME = 'sp_ReadTagFromDatabase')
+DROP PROCEDURE sp_ReadTagFromDatabase
+
+GO
 
 CREATE TABLE PROJECT( 
 ProjectNumber NVARCHAR(50),
@@ -3059,4 +3067,29 @@ VALUES
     ('36150', 'pcs', '8', NULL, 997, 'P-0368486', NULL),
     ('36102', 'pcs', '1', NULL, 999, 'P-0368486', NULL),
     ('36103', 'pcs', '1', NULL, 999, 'P-0368486', NULL);
+
+GO
+
+INSERT INTO TAGDOCUMENT(TTitle, TDocDescription, TFile, TagNumber,ProjectNumber) VALUES 
+('testTitle', 'testDesc', 'pathToTestfile', 'A-12300-01', 'P-0368486') ;
+
+GO
+
+CREATE PROCEDURE sp_ReadTagFromDatabase
+	@projectNum NVARCHAR (50)
+AS 
+BEGIN
+SELECT TG.TagNumber, TG.UnionTagNumber, TG.TagLineNumber, TG.TagDescription, TG.HaffmanTag, TG.CustomerTag, TG.VendorTag, TG.BelongsTo, TG.SectionNumber, 
+TGD.TTitle, TGD.TDocDescription, TGD.TFile
+FROM TAG TG
+INNER JOIN TAGDOCUMENT TGD 
+	ON TG.ProjectNumber = TGD.ProjectNumber 
+WHERE TG.ProjectNumber = @projectNum
+END;
+
+
+
+
+
+
 
