@@ -36,29 +36,31 @@ namespace QuickDoc.Repository
             List<Tag> result = new List<Tag>();
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
-                con.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT TG.TagNumber, TG.UnionTagNumber, TG.TagLineNumber, TG.TagDescription, TG.HaffmanTag, TG.CustomerTag, TG.VendorTag, TG.BelongsTo, TG.SectionNumber 
-                                                TGD.TTitle, TGD.TDocDescription, TGD.TFile,
+                con.Open();                
+                SqlCommand cmd = new SqlCommand(@"SELECT TG.TagNumber, TG.UnionTagNumber, TG.TagLineNumber, TG.TagDescription, TG.HaffmanTag, TG.CustomerTag, TG.VendorTag, TG.BelongsTo, TG.SectionNumber, 
+                                                TGD.TTitle, TGD.TDocDescription, TGD.TFile
                                                 FROM TAG TG
-                                                INNER JOIN TAGDOCUMENT TGD WHERE ProjectNumber = @projectNum", con);
+                                                LEFT JOIN TAGDOCUMENT TGD ON TG.TagNumber = TGD.TagNumber
+                                                WHERE TG.ProjectNumber = @projectNum", con);
+
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        string tagNum = (string)dr["TagNumber"];
-                        string unionTag = (string)dr["UnionTagNumber"];
-                        string lineNum = (string)dr["TagLineNumber"];
-                        string description = (string)dr["TagDescription"];
-                        string haffmanTag = (string)dr["HaffmanTag"];
-                        string customerTag = (string)dr["CustomerTag"];
-                        string vendorTag = (string)dr["VendorTag"];
-                        string belongsTo = (string)dr["BelongsTo"];
+                        string tagNum = dr["TagNumber"] == DBNull.Value ? "" : Convert.ToString(dr["TagNumber"]);         
+                        string unionTag = dr["UnionTagNumber"] == DBNull.Value ? "" : Convert.ToString(dr["UnionTagNumber"]);
+                        string lineNum = dr["TagLineNumber"] == DBNull.Value ? "" : Convert.ToString(dr["TagLineNumber"]);
+                        string description = dr["TagDescription"] == DBNull.Value ? "" : Convert.ToString(dr["TagDescription"]);
+                        string haffmanTag = dr["HaffmanTag"] == DBNull.Value ? "" : Convert.ToString(dr["HaffmanTag"]);
+                        string customerTag = dr["CustomerTag"] == DBNull.Value ? "" : Convert.ToString(dr["CustomerTag"]);
+                        string vendorTag = dr["VendorTag"] == DBNull.Value ? "" : Convert.ToString(dr["VendorTag"]);
+                        string belongsTo = dr["BelongsTo"] == DBNull.Value ? "" : Convert.ToString(dr["BelongsTo"]);
                         int sectionNr = (int)dr["SectionNumber"];
                         //FILE
-                        string title = (string)dr["TTitle"];
-                        string fileDescription = (string)dr["TDocDescription"];
-                        string filepath = (string)dr["TFile"];
+                        string title = dr["TTitle"] == DBNull.Value ? "" : Convert.ToString(dr["TTitle"]);
+                        string fileDescription = dr["TDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["TDocDescription"]);
+                        string filepath = dr["TFile"] == DBNull.Value ? "" : Convert.ToString(dr["TFile"]);
 
                         Tag tag = new Tag(tagNum, unionTag, lineNum, description, haffmanTag, customerTag, vendorTag, belongsTo, sectionNr);
                         //For Children

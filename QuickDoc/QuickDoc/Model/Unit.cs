@@ -15,6 +15,7 @@ namespace QuickDoc.Model
         {
             UnitNumber = unitNumber;
             Description = description;
+            Documents = new List<Document>();
         }
 
         public override string ToString()
