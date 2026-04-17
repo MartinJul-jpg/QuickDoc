@@ -1,13 +1,13 @@
-﻿using QuickDoc.ViewModel;
+﻿using QuickDoc.View;
+using QuickDoc.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
-using QuickDoc.View;
 
 namespace QuickDoc.Command
 {
-    public class GetByCriteriaCommand : ICommand
+    public class GoBackCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {
@@ -21,9 +21,7 @@ namespace QuickDoc.Command
 
             if (parameter is MainNodeViewModel mnvm)
             {
-
-                if (mnvm.Criteria.ProjectCriteria == string.Empty)
-
+                if (mnvm.CurrentNode == null)
                 {
                     check = false;
                 }
@@ -38,7 +36,7 @@ namespace QuickDoc.Command
         {
             if (parameter is MainNodeViewModel mnvm)
             {
-                mnvm.GetByCriteria();
+                mnvm.GoBack();
                 mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
             }
         }

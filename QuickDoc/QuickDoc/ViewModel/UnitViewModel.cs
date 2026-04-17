@@ -19,7 +19,7 @@ namespace QuickDoc.ViewModel
             get { return unit.Description; }
             set { unit.Description = value; }
         }
-        public List<Section> Children
+        public List<Section> Sections
         {
             get { return unit.Sections; }
             set { unit.Sections = value; }

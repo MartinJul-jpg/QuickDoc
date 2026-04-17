@@ -30,7 +30,7 @@ namespace QuickDoc.ViewModel
             get { return section.Documents; }
             set { section.Documents = value; }
         }
-        public List<Tag> Children
+        public List<Tag> Tags
         {
             get { return section.Tags; }
             set { section.Tags = value; }
