@@ -32,6 +32,7 @@ namespace QuickDoc.Model
             CustomerTag = customerTag;
             BelongsTo = belongsTo;
             SectionParentKey = sectionParentKey;
+            Documents = new List<Document>();
         }
 
         public override string ToString()
