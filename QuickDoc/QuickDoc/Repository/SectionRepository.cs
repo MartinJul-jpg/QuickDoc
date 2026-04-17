@@ -52,30 +52,32 @@ namespace QuickDoc.Repository
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand(@"SELECT SC.SectionNumber, SC.OldSectionNumber, SC.Title, SC.UnitNumber,
-                                                SCD.STitle, SCD.SDocDescription, SCDSFile   
+                                                SCD.STitle, SCD.SDocDescription, SCD.SFile   
                                                 FROM SECTION SC
-                                                INNER JOIN SECTIONDOCUMENT SCD ON SCD.SectionNumber = SD.SectionNumber
-                                                WHERE ProjectNumber = @projectNum", con);
+                                                LEFT JOIN SECTIONDOCUMENT SCD ON SCD.SectionNumber = SC.SectionNumber
+                                                WHERE SC.ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        int SectionNumber = (int)dr["SectionNumber"];
-                        int OldSecTionNumber = (int)dr["OldSecTionNumber"];
-                        string Title = (string)dr["Title"];
-                        string ParentKey = (string)dr["UnitNumber"];
-                        //FILE
-                        string title = (string)dr["STitle"];
-                        string description = (string)dr["SDocDescription"];
-                        string filepath = (string)dr["SCDSFile"];
+                        //CANNOT CAST CAUSE IT CANNOT HANDLE NULL VALUES FROM DATABASE!!! TERINARY OPERATOR TO CHECK FOR NULL 
+                        int SectionNumber = dr["SectionNumber"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SectionNumber"]);
+                        int OldSectionNumber = dr["OldSectionNumber"] == DBNull.Value ? 0 : Convert.ToInt32(dr["OldSectionNumber"]);
+                        string Title = dr["Title"] == DBNull.Value ? "" : Convert.ToString(dr["Title"]);
+                        string ParentKey = dr["UnitNumber"] == DBNull.Value ? "" : Convert.ToString(dr["UnitNumber"]);
+
+                        // FILE
+                        string title = dr["STitle"] == DBNull.Value ? "" : Convert.ToString(dr["STitle"]);
+                        string description = dr["SDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["SDocDescription"]);
+                        string filepath = dr["SFile"] == DBNull.Value ? "" : Convert.ToString(dr["SFile"]);
 
 
-                        Section section = new Section(SectionNumber, OldSecTionNumber, Title, ParentKey);
+                        Section section = new Section(SectionNumber, OldSectionNumber, Title, ParentKey);
 
                         ResultChildren = tagRepo.GetSectionsChildren(SectionNumber);
-                        section.Documents.Add(new Document(title, description, filepath));
+                            section.Documents.Add(new Document(title, description, filepath));
                         section.Tags = ResultChildren;
                         result.Add(section);
                     }

@@ -34,7 +34,7 @@ namespace QuickDoc.ViewModel
             get { return item.Description; }
             set { item.Description = value; }
         }
-        public float Quantity
+        public string Quantity
         {
             get { return item.Quantity; }
             set { item.Quantity = value; }

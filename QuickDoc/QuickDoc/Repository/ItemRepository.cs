@@ -43,7 +43,7 @@ namespace QuickDoc.Repository
                      @"SELECT IT.ItemVariantID, IT.ItemNumber, IT.ItemDescription, 
                         IM.ItemID, IM.ProjectNumber, IM.ItemLineNumber, IM.UnitOfMeasure, IM.Quantity, IM.TagNumber,
                         PR.ProcurementID, PR.ProcurementStatus, PR.PurchaseOrderNumber,
-                        IMD.ITitle, IMD.IDocDescription, IMD.IFile,
+                        IMD.ITitle, IMD.IDocDescription, IMD.IFile
                     FROM ITEMVARIANT IT
                     INNER JOIN ITEM IM ON IT.ItemVariantID = IM.ItemVariantID
                     INNER JOIN PROCUREMENT PR ON IM.ItemID = PR.ItemID
@@ -60,27 +60,29 @@ namespace QuickDoc.Repository
                 {
                     while (dr.Read())
                     {
+                        //CANNOT CAST CAUSE IT CANNOT HANDLE NULL VALUES FROM DATABASE!!!
                         //Procurement Item and VariantItem
-                        int ItemID = (int)dr["ItemID"];
-                        int ItemVariantID = (int)dr["ItemVariantID"];
-                        string ItemNumber = (string)dr["ItemNumber"];
-                        string LineNumber = (string)dr["ItemLineNumber"];
-                        string Description = (string)dr["ItemDescription"];
-                        float Quantity = (float)dr["Quantity"];
-                        string UnitOfMeasure = (string)dr["UnitOfMeasure"];
-                        //ParentKey So the item in software level knows who its parent is + to avoid multiple sql searches
-                        string TagParentKey = (string)dr["TagNumber"];
-                        //Procurement
-                        int ProcurementID = (int)dr["ProcurementID"];
-                        string PurchaseOrderNumber = (string)dr["PurchaseOrderNumber"];
-                        string ProcurementStatus = (string)dr["ProcurementStatus"];
-                        //FILE DATA
-                        string title = (string)dr["ITitle"];
-                        string description = (string)dr["ItemVariantID"];
-                        string filepath = (string)dr["IFile"];
+                        int ItemID = dr["ItemID"] == DBNull.Value ? 0 : Convert.ToInt32(dr["ItemID"]);
+                        int ItemVariantID = dr["ItemVariantID"] == DBNull.Value ? 0 : Convert.ToInt32(dr["ItemVariantID"]);
+                        string ItemNumber = dr["ItemNumber"] == DBNull.Value ? "" : Convert.ToString(dr["ItemNumber"]);
+                        string LineNumber = dr["ItemLineNumber"] == DBNull.Value ? "" : Convert.ToString(dr["ItemLineNumber"]);
+                        string Description = dr["ItemDescription"] == DBNull.Value ? "" : Convert.ToString(dr["ItemDescription"]);
+                        string Quantity = dr["Quantity"] == DBNull.Value ? "" : Convert.ToString(dr["Quantity"]);
+                        string UnitOfMeasure = dr["UnitOfMeasure"] == DBNull.Value ? "" : Convert.ToString(dr["UnitOfMeasure"]);
+                        string TagParentKey = dr["TagNumber"] == DBNull.Value ? "" : Convert.ToString(dr["TagNumber"]);
+
+                        // Procurement
+                        int ProcurementID = dr["ProcurementID"] == DBNull.Value ? 0 : Convert.ToInt32(dr["ProcurementID"]);
+                        string purchaseOrderNumber = dr["PurchaseOrderNumber"] == DBNull.Value ? "" : Convert.ToString(dr["PurchaseOrderNumber"]);
+                        string procurementStatus = dr["ProcurementStatus"] == DBNull.Value ? "" : Convert.ToString(dr["ProcurementStatus"]);
+                        // FILE DATA
+                        string title = dr["ITitle"] == DBNull.Value ? "" : Convert.ToString(dr["ITitle"]);
+                        string description = dr["IDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["IDocDescription"]);
+                        string filepath = dr["IFile"] == DBNull.Value ? "" : Convert.ToString(dr["IFile"]);
+
 
                         Item item = new Item(ItemID, ItemVariantID, ItemNumber, LineNumber, Description, Quantity, UnitOfMeasure, TagParentKey);
-                        item.ItemProcurement = new Procurement(ProcurementID, PurchaseOrderNumber, ProcurementStatus);
+                        item.ItemProcurement = new Procurement(ProcurementID, purchaseOrderNumber, procurementStatus);
                         item.Documents.Add(new Document(title, description, filepath));
                         result.Add(item);
                     }
