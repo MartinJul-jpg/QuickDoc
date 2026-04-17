@@ -17,5 +17,10 @@ namespace QuickDoc.Model
             ProjectNumber = projectNumber;
             Description = description;
         }
+
+        public override string ToString()
+        {
+            return $"Project: {ProjectNumber} - {Description}";
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using QuickDoc.Stores;
-using System.Security.Cryptography.X509Certificates;
+using QuickDoc.Styles;
+using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,19 +13,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QuickDoc
+namespace QuickDoc.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SearchView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SearchView : UserControl
     {
         public NavigationStore navigationStore { get; set; }
 
-        public MainWindow(NavigationStore navigationStore)
+        public SearchView(NavigationStore navigationStore)
         {
             this.navigationStore = navigationStore;
             InitializeComponent();
+        }
+
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        {
+            navigationStore.CurrentView = new NodeView(navigationStore);
         }
     }
 }

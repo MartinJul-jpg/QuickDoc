@@ -1,10 +1,12 @@
 ﻿using QuickDoc.Command;
 using QuickDoc.Repository;
+using QuickDoc.Stores;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace QuickDoc.ViewModel
 {
@@ -17,6 +19,7 @@ namespace QuickDoc.ViewModel
         private SectionRepository _sectionRepo;
         private UnitRepository _unitRepo;
         private ProjectRepository _projectRepo;
+        public NavigationStore NavigationStore { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

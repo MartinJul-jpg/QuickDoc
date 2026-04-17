@@ -20,5 +20,10 @@ namespace QuickDoc.Model
             Title = title;
             ParentKey = parentKey; 
         }
+
+        public override string ToString()
+        {
+            return $"Section: {SectionNumber} - {Title}";
+        }
     }
 }
