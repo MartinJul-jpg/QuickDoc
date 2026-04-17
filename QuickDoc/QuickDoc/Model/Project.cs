@@ -18,5 +18,10 @@ namespace QuickDoc.Model
             Description = description;
             Documents = new List<Document>(); 
         }
+
+        public override string ToString()
+        {
+            return $"Project: {ProjectNumber} - {Description}";
+        }
     }
 }

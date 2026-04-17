@@ -30,5 +30,10 @@ namespace QuickDoc.Model
             TagParentKey = tagParentKey;
             Documents = new List<Document>();
         }
+
+        override public string ToString()
+        {
+            return $"Item: {ItemNumber} - {Description}";
+        }
     }
 }

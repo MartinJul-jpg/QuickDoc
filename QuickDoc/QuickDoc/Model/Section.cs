@@ -21,5 +21,10 @@ namespace QuickDoc.Model
             ParentKey = parentKey;
             Documents = new List<Document>(); // <- prevents the NullReferenceException
         }
+
+        public override string ToString()
+        {
+            return $"Section: {SectionNumber} - {Title}";
+        }
     }
 }

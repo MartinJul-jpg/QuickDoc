@@ -33,5 +33,10 @@ namespace QuickDoc.Model
             BelongsTo = belongsTo;
             SectionParentKey = sectionParentKey;
         }
+
+        public override string ToString()
+            {
+                return $"Tag: {TagNumber} - {Description}";
+        }
     }
 }
