@@ -12,11 +12,19 @@ DROP TABLE IF EXISTS ITEMVARIANT
 DROP TABLE IF EXISTS PROJECT
 
 GO 
+
 IF EXISTS(
 SELECT * 
 FROM sys.objects
 WHERE TYPE = 'P' AND NAME = 'sp_ReadTagFromDatabase')
 DROP PROCEDURE sp_ReadTagFromDatabase
+
+GO 
+IF EXISTS(
+SELECT * 
+FROM sys.objects
+WHERE TYPE = 'P' AND NAME = 'sp_ReadProjectFromDatabase')
+DROP PROCEDURE sp_ReadProjectFromDatabase
 
 GO
 
@@ -3087,9 +3095,18 @@ INNER JOIN TAGDOCUMENT TGD
 WHERE TG.ProjectNumber = @projectNum
 END;
 
+GO
 
-
-
+CREATE PROCEDURE sp_ReadProjectFromDatabase
+    @projectNum NVARCHAR(50)
+AS 
+BEGIN
+SELECT PR.ProjectNumber, PR.ProjectDescription,
+PRD.PTitle, PRD.PDocDescription, PRD.PFile
+FROM PROJECT PR
+LEFT JOIN PROJECTDOCUMENT PRD ON PR.ProjectNumber = PRD.ProjectNumber
+WHERE PR.ProjectNumber = @projectNum
+END;
 
 
 
