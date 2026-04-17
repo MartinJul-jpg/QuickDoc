@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using QuickDoc.View;
 
 namespace QuickDoc.Command
 {
@@ -36,6 +37,7 @@ namespace QuickDoc.Command
             if (parameter is MainNodeViewModel mnvm)
             {
                 mnvm.GetByCriteria();
+                mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
             }
         }
     }

@@ -56,7 +56,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <Button Name="EnterButton" Grid.Column="1" Content="Enter" Grid.Row="1" Margin="20,20,20,20" Background="#5cbb4e" FontWeight="Bold" FontSize="14" Command="{Binding GETBYCRITERIA}" Click="EnterButton_Click"/>
+            <Button Name="EnterButton" Grid.Column="1" Content="Enter" Grid.Row="1" Margin="20" Background="#5cbb4e" FontWeight="Bold" FontSize="14" Command="{Binding GETBYCRITERIA}" CommandParameter="{Binding}"/>
 
         </Grid>
     </Grid>

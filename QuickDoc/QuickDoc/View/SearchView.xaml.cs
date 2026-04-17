@@ -1,5 +1,5 @@
 ﻿using QuickDoc.Stores;
-using QuickDoc.Styles;
+using QuickDoc.View;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,11 +26,6 @@ namespace QuickDoc.View
         {
             this.navigationStore = navigationStore;
             InitializeComponent();
-        }
-
-        private void EnterButton_Click(object sender, RoutedEventArgs e)
-        {
-            navigationStore.CurrentView = new NodeView(navigationStore);
         }
     }
 }
