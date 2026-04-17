@@ -24,9 +24,6 @@ namespace QuickDoc.Command
 
                 switch (mnvm.SelectedChild)
                 {
-                    case ItemViewModel:
-                        check = false;
-                        break;
                     case null:
                         check = false;
                         break;
