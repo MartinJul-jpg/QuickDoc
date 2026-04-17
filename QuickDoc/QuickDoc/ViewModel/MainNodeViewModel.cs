@@ -207,11 +207,11 @@ namespace QuickDoc.ViewModel
 
         public MainNodeViewModel()
         {
-            //_itemRepo = new ItemRepository();
-            //_tagRepo = new TagRepository();
-            //_sectionRepo = new SectionRepository();
-            //_unitRepo = new UnitRepository();
-            //_projectRepo = new ProjectRepository();
+            _itemRepo = new ItemRepository();
+            _tagRepo = new TagRepository();
+            _sectionRepo = new SectionRepository();
+            _unitRepo = new UnitRepository();
+            _projectRepo = new ProjectRepository();
 
             criteria = new CriteriaViewModel();
         }
