@@ -1,22 +1,27 @@
-﻿using FluentAssertions;
-using QuickDoc.Model;
+﻿using QuickDoc.Model;
 using QuickDoc.ViewModel;
-using System.Threading.Tasks;
-using FluentAssertions;
+
 namespace DataFetchTest
 {
     [TestClass]
     public sealed class UnitTest1
     {
-        MainNodeViewModel mainNodeViewModel;
-        List<Unit> units;
+        MainNodeViewModel mnvm;
 
        [TestInitialize]
         public void TestInitialize()
         {
-            mainNodeViewModel = new MainNodeViewModel();
-            units = new List<Unit>
-                {
+            mnvm = new MainNodeViewModel();
+        }
+
+        [TestMethod]
+        public void LookingForSpecificProjectsChildren()
+        {
+            //Arrange
+            mnvm.Criteria.ProjectCriteria = "P-0368486";
+
+            List<Unit> expectedUnits = new List<Unit>
+            {
                 new Unit("120", "Knock out drum Unit No."),
                 new Unit("122", "Booster blower Unit No."),
                 new Unit("123", "Water scrubber Unit No."),
@@ -41,42 +46,45 @@ namespace DataFetchTest
                 new Unit("611C", "Storage tank C Unit No."),
                 new Unit("641A", "Truck filling Unit No."),
                 new Unit("999", "Plant Auxiliary Unit No.")
-                };
-        }
-
-
-        [TestMethod]
-        public void GetProjectChildrenCount()
-        {
-            //Arrange
-            mainNodeViewModel.Criteria.ProjectCriteria = "P-0368486";
+            };
 
             //ACT
-            mainNodeViewModel.GetByCriteria();
-            
-
+            mnvm.GetByCriteria();
 
             //Assert
-            // CHILDREN ARE NULL PLEASE FIX
-            Assert.AreEqual(mainNodeViewModel.Children.Count, units.Count);
+            string expected = "";
+            string actual = "";
+
+            foreach (Unit unit in expectedUnits)
+            {
+                expected += unit.UnitNumber;
+            }
+
+            foreach (UnitViewModel unitVM in mnvm.Children)
+            {
+                actual += unitVM.UnitNumber;
+            }
+
+            Assert.AreEqual(expected, actual);
         }
+
         [TestMethod]
-        public void GetProjectChildren()
+        public void LookingForSpecificUnit()
         {
             //Arrange
-            mainNodeViewModel.Criteria.ProjectCriteria = "P-0368486";
+            mnvm.Criteria.ProjectCriteria = "P-0368486";
+            mnvm.Criteria.UnitCriteria = "";
+
+            Unit expectedUnit = new Unit();
 
             //ACT
-            mainNodeViewModel.GetByCriteria();
-
-
+            mnvm.GetByCriteria();
 
             //Assert
-            // CHILDREN ARE NULL 
-            mainNodeViewModel.Children.Should().BeEquivalentTo(units);
+            string expected = expectedUnit.UnitNumber;
+            string actual = (mnvm.CurrentNode as UnitViewModel).UnitNumber;
 
-
+            Assert.AreEqual(expected, actual);
         }
-
     }
 }

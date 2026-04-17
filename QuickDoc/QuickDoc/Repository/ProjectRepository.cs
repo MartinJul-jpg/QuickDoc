@@ -34,10 +34,11 @@ namespace QuickDoc.Repository
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand(@" SELECT PR.ProjectNumber, PR.ProjectDescription,
-                                                PRD.PTitle, PRD.PDocDescription, PRD.PFile
-                                                FROM PROJECT PR
-                                                LEFT JOIN PROJECTDOCUMENT PRD ON PR.ProjectNumber = PRD.ProjectNumber
-                                                WHERE PR.ProjectNumber = @projectNum", con);
+                                                   PRD.PTitle, PRD.PDocDescription, PRD.PFile
+                                                   FROM PROJECT PR
+                                                   LEFT JOIN PROJECTDOCUMENT PRD 
+                                                   ON PR.ProjectNumber = PRD.ProjectNumber
+                                                   WHERE PR.ProjectNumber = @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
