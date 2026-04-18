@@ -87,10 +87,12 @@ namespace QuickDoc.ViewModel
             if (priorNode != null)
             {
                 MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(priorNode, CurrentNode, Children, Documents);
+                priorNode = priorNodeUnderConstruction;
             }
             else
             {
                 MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(CurrentNode, Children, Documents);
+                priorNode = priorNodeUnderConstruction;
             }
 
             CurrentNode = SelectedChild;
