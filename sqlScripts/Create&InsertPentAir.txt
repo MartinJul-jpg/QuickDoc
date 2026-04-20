@@ -20,6 +20,7 @@ WHERE TYPE = 'P' AND NAME = 'sp_ReadTagFromDatabase')
 DROP PROCEDURE sp_ReadTagFromDatabase
 
 GO 
+
 IF EXISTS(
 SELECT * 
 FROM sys.objects
@@ -33,6 +34,22 @@ SELECT *
 FROM sys.objects
 WHERE TYPE = 'P' AND NAME = 'sp_ReadUnitFromDatabase')
 DROP PROCEDURE sp_ReadUnitFromDatabase 
+
+GO
+
+IF EXISTS(
+SELECT * 
+FROM sys.objects
+WHERE TYPE = 'P' AND NAME = 'sp_ReadItemFromDatabase')
+DROP PROCEDURE sp_ReadItemFromDatabase 
+
+GO
+
+IF EXISTS(
+SELECT * 
+FROM sys.objects
+WHERE TYPE = 'P' AND NAME = 'sp_ReadSectionFromDatabase')
+DROP PROCEDURE sp_ReadSectionFromDatabase 
 
 GO
 
@@ -6264,6 +6281,37 @@ UND.UTitle, UND.UDocDescription, UND.UFile
 FROM UNIT UN
 LEFT JOIN UNITDOCUMENT UND ON UN.UnitNumber = UND.UnitNumber
 WHERE UN.ProjectNumber = @projectNum
+END;
+
+GO
+
+
+CREATE PROCEDURE sp_ReadItemFromDatabase
+    @projectNum NVARCHAR(50)
+AS
+BEGIN
+SELECT IT.ItemNumber, IT.ItemDescription,
+ITD.ITitle, ITD.IDocDescription, ITD.IFile
+FROM ITEM IT
+LEFT JOIN ITEMDOCUMENT ITD ON UN.ItemNumber = ITD.ItemNumber
+LEFT JOIN PROCUREMENT PR ON IM.ItemID = PR.ItemID
+LEFT JOIN TAG TG ON IM.TagNumber = TG.TagNumber
+LEFT JOIN ITEMVARIANTDOCUMENT IMD ON IT.ItemVariantID = IMD.ItemVariantID 
+WHERE IT.ProjectNumber = @projectNum
+END;
+
+GO
+
+
+CREATE PROCEDURE sp_ReadSectionFromDatabase
+    @projectNum NVARCHAR(50)
+AS
+BEGIN
+SELECT SE.SectionNumber, SE.SectionDescription,
+SED.STitle, SED.SDocDescription, SED.SFile
+FROM SECTION SE
+LEFT JOIN SECTIONDOCUMENT SED ON SE.SectionNumber = SED.ItemNumber
+WHERE SE.ProjectNumber = @projectNum
 END;
 
 GO
