@@ -6,7 +6,7 @@ namespace QuickDoc.ViewModel
 {
     public class CriteriaViewModel
     {
-        public string ProjectCriteria { get; set; }
+        public string ProjectCriteria { get; set; } = string.Empty;
         public string UnitCriteria { get; set; }
         public int SectionCriteria { get; set; }
         public string TagCriteria { get; set; }
