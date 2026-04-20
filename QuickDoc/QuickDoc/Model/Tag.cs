@@ -21,7 +21,9 @@ namespace QuickDoc.Model
         public List<Item> Items { get; set; }
         public List<Document> Documents { get; set; }
 
-        public Tag(string tagNumber, string unionTagNumber, string description, string lineNumber, string haffmanTag, string vendorTag, string customerTag, string belongsTo, int sectionParentKey) // Big LINE //How long? just to suffer
+        public Tag(string tagNumber, string unionTagNumber, string description, string lineNumber, 
+            string haffmanTag, string vendorTag, string customerTag, 
+            string belongsTo, int sectionParentKey) // Big LINE //How long? just to suffer
         {
             TagNumber = tagNumber;
             UnionTagNumber = unionTagNumber;
@@ -33,6 +35,7 @@ namespace QuickDoc.Model
             BelongsTo = belongsTo;
             SectionParentKey = sectionParentKey;
             Documents = new List<Document>();
+            Items = new List<Item>();
         }
 
         public override string ToString()

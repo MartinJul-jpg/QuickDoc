@@ -22,7 +22,17 @@ namespace QuickDoc.Repository
 
         public Tag GetTag(string tagNumber)
         {
-            return tags.Where(x => x.TagNumber == tagNumber).First();
+            Tag tag;
+            bool exists = tags.Any(x => x.TagNumber == tagNumber); 
+            if (exists == false)
+            {
+                return new Tag("", "", "", "", "", "", "", "", 0);
+            }
+            else
+            {
+                return tags.Where(x => x.TagNumber == tagNumber).First();
+            }
+            
         }
 
         public List<Tag> GetSectionsChildren(int sectionNr)

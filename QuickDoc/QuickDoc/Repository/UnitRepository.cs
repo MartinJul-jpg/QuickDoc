@@ -22,8 +22,22 @@ namespace QuickDoc.Repository
         }
         public Unit GetUnit(string unitNr)
         {
-            Unit unit = units.Where(x => x.UnitNumber == unitNr).ToList().First();
+            Unit unit;
+            bool exists = units.Any(x => x.UnitNumber == unitNr);
+            if (exists == false)
+            {
+                return new Unit("", "") { Documents = new List<Document>(), Sections = new List<Section>() };
+
+            }
+            else
+            {
+                unit = units.Where(x => x.UnitNumber == unitNr).First();
+            }
+            
+
             return unit;
+
+
         } 
 
         public List<Unit> GetAllUnits()
