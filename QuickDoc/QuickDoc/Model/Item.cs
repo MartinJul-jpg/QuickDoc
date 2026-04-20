@@ -12,13 +12,13 @@ namespace QuickDoc.Model
         public string ItemNumber;
         public string LineNumber;
         public string Description;
-        public float Quantity;
+        public string Quantity;
         public string UnitOfMeasure;
         public string TagParentKey; // TagNumber
         public Procurement ItemProcurement;
         public List<Document> Documents;
 
-        public Item(int itemID, int itemVariantID, string itemNumber, string lineNumber, string description, float quantity, string unitOfMeasure, string tagParentKey)
+        public Item(int itemID ,int itemVariantID, string itemNumber, string lineNumber, string description , string quantity , string unitOfMeasure, string tagParentKey)
         {
             ItemID = itemID;
             ItemVariantID = itemVariantID;
@@ -28,6 +28,7 @@ namespace QuickDoc.Model
             Quantity = quantity;
             UnitOfMeasure = unitOfMeasure;
             TagParentKey = tagParentKey;
+            Documents = new List<Document>();
         }
 
         override public string ToString()

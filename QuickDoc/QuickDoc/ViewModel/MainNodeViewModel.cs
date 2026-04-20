@@ -1,17 +1,15 @@
 ﻿using QuickDoc.Command;
 using QuickDoc.Repository;
 using QuickDoc.Stores;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
+        private MainNodeStateContainer priorNode;
         private string currentProjectNumber;
 
         private ItemRepository _itemRepo;
@@ -19,6 +17,7 @@ namespace QuickDoc.ViewModel
         private SectionRepository _sectionRepo;
         private UnitRepository _unitRepo;
         private ProjectRepository _projectRepo;
+
         public NavigationStore NavigationStore { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -40,7 +39,7 @@ namespace QuickDoc.ViewModel
         {
             get { return currentNode; }
             set 
-            { 
+            {
                 currentNode = value;
                 OnPropertyChanged("CurrentNode");
             }
@@ -57,6 +56,17 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        private NodeViewModel selectedChild;
+        public NodeViewModel SelectedChild
+        {
+            get { return selectedChild; }
+            set
+            {
+                selectedChild = value;
+                OnPropertyChanged("SelectedChild");
+            }
+        }
+
         private List<DocumentViewModel> documents;
         public List<DocumentViewModel> Documents
         {
@@ -68,15 +78,119 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        public ICommand GOINTO { get; } = new GoIntoCommand();
+        public ICommand GOBACK { get; } = new GoBackCommand();
         public ICommand GETBYCRITERIA { get; } = new GetByCriteriaCommand();
+
+        public void GoInto()
+        {
+            if (priorNode != null)
+            {
+                MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(priorNode, CurrentNode, Children, Documents);
+                priorNode = priorNodeUnderConstruction;
+            }
+            else
+            {
+                MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(CurrentNode, Children, Documents);
+                priorNode = priorNodeUnderConstruction;
+            }
+
+            CurrentNode = SelectedChild;
+            Children = new List<NodeViewModel>();
+            Documents = new List<DocumentViewModel>();
+
+            switch (CurrentNode)
+            {
+                case ProjectViewModel:
+                    foreach (var unit in (CurrentNode as ProjectViewModel).Units)
+                    {
+                        foreach (var document in unit.Documents)
+                        {
+                            Documents.Add(new DocumentViewModel(document));
+                        }
+                    }
+
+                    foreach (var document in (CurrentNode as ProjectViewModel).Documents)
+                    {
+                        Documents.Add(new DocumentViewModel(document));
+                    }
+
+                    break;
+                case UnitViewModel:
+                    foreach (var section in (CurrentNode as UnitViewModel).Sections)
+                    {
+                        foreach (var document in section.Documents)
+                        {
+                            Documents.Add(new DocumentViewModel(document));
+                        }
+                    }
+
+                    foreach (var document in (CurrentNode as UnitViewModel).Documents)
+                    {
+                        Documents.Add(new DocumentViewModel(document));
+                    }
+
+                    break;
+                case SectionViewModel:
+                    foreach (var tag in (CurrentNode as SectionViewModel).Tags)
+                    {
+                        foreach (var document in tag.Documents)
+                        {
+                            Documents.Add(new DocumentViewModel(document));
+                        }
+                    }
+
+                    foreach (var document in (CurrentNode as SectionViewModel).Documents)
+                    {
+                        Documents.Add(new DocumentViewModel(document));
+                    }
+
+                    break;
+                case TagViewModel:
+                    foreach (var item in (CurrentNode as TagViewModel).Items)
+                    {
+                        foreach (var document in item.Documents)
+                        {
+                            Documents.Add(new DocumentViewModel(document));
+                        }
+                    }
+
+                    foreach (var document in (CurrentNode as TagViewModel).Documents)
+                    {
+                        Documents.Add(new DocumentViewModel(document));
+                    }
+
+                    break;
+                case ItemViewModel:
+                    foreach (var document in (CurrentNode as ItemViewModel).Documents)
+                    {
+                        Documents.Add(new DocumentViewModel(document));
+                    }
+
+                    break;
+            }
+        }
+
+        public void GoBack()
+        {
+            if (priorNode != null)
+            {
+                CurrentNode = priorNode.CurrentNode;
+                Children = priorNode.Children;
+                Documents = priorNode.Documents;
+                priorNode = priorNode.PriorNode;
+            }
+        }
 
         public void GetByCriteria()
         {
-            bool projectFull = Criteria.ProjectCriteria != string.Empty; 
-            bool unitFull = Criteria.UnitCriteria != string.Empty;
+            priorNode = null;
+
+            bool projectFull = !string.IsNullOrEmpty(Criteria.ProjectCriteria);
+            bool unitFull = !string.IsNullOrEmpty(Criteria.UnitCriteria);
+            bool tagFull = !string.IsNullOrEmpty(Criteria.TagCriteria);
+            bool itemFull = !string.IsNullOrEmpty(Criteria.ItemCriteria);
             bool sectionFull = Criteria.SectionCriteria != 0;
-            bool tagFull = Criteria.TagCriteria != string.Empty;
-            bool itemFull = Criteria.ItemCriteria != string.Empty;
 
             if (projectFull)
             {
@@ -145,7 +259,7 @@ namespace QuickDoc.ViewModel
                         Children = new List<NodeViewModel>();
                         Documents = new List<DocumentViewModel>();
 
-                        foreach (var tag in (CurrentNode as SectionViewModel).Children)
+                        foreach (var tag in (CurrentNode as SectionViewModel).Tags)
                         {
                             Children.Add(new TagViewModel(tag));
 
@@ -166,7 +280,7 @@ namespace QuickDoc.ViewModel
                         Children = new List<NodeViewModel>();
                         Documents = new List<DocumentViewModel>();
 
-                        foreach (var section in (CurrentNode as UnitViewModel).Children)
+                        foreach (var section in (CurrentNode as UnitViewModel).Sections)
                         {
                             Children.Add(new SectionViewModel(section));
 
