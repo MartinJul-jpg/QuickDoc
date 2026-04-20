@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuickDoc.ViewModel
 {
-    internal class MainNodeStateContainer
+    public class MainNodeStateContainer
     {
         public MainNodeStateContainer PriorNode { get; set; }
         public NodeViewModel CurrentNode { get; set; }

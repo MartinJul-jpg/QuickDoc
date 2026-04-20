@@ -36,8 +36,16 @@ namespace QuickDoc.Command
         {
             if (parameter is MainNodeViewModel mnvm)
             {
-                mnvm.GoBack();
-                mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
+                if (mnvm.priorNode != null)
+                {
+                    mnvm.GoBack();
+                    mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
+                }
+                else
+                {
+                    mnvm.GoBack();
+                    mnvm.NavigationStore.CurrentView = new SearchView(mnvm.NavigationStore);
+                }
             }
         }
     }
