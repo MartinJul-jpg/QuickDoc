@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using QuickDoc.View;
 
 namespace QuickDoc.ViewModel
 {
@@ -12,7 +13,11 @@ namespace QuickDoc.ViewModel
         public string ProjectNumber
         { 
             get { return project.ProjectNumber; } 
-            set { project.ProjectNumber = value; }
+            set { if (project.ProjectNumber == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else { project.ProjectNumber = value; }  }
         }
         public string Description
         {
@@ -21,6 +26,7 @@ namespace QuickDoc.ViewModel
         }
         public List<Unit> Units
         {
+
             get { return project.Units; }
             set { project.Units = value; }
         }
@@ -32,6 +38,14 @@ namespace QuickDoc.ViewModel
 
         public ProjectViewModel(Project project)
         {
+            if (project == null)
+            {
+                project = new Project(string.Empty, string.Empty)
+                {
+                    Units = new List<Unit>(),
+                    Documents = new List<Document>()
+                };
+            }
             this.project = project;
         }
     }
