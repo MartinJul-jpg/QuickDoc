@@ -18,6 +18,7 @@ namespace QuickDoc.Repository
                 .AddJsonFile("appsettings.json")
                 .Build();
              ConnectionString = config.GetConnectionString("MyDBConnection");
+            units = new List<Unit>();
         }
         public Unit GetUnit(string unitNr)
         {
@@ -64,7 +65,12 @@ namespace QuickDoc.Repository
                         //For Children
 
                         ResultChildren = secRepo.GetUnitsChildren(UnitNumber);
-                        unit.Documents.Add(new Document(title, description, filepath));
+
+                        if (!(title == "" && description == "" && filepath == ""))
+                        {
+                            unit.Documents.Add(new Document(title, description, filepath));
+                        }
+                        
                         unit.Sections = ResultChildren;
                         result.Add(unit);
                    

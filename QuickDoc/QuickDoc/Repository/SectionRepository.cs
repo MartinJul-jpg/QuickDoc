@@ -77,7 +77,12 @@ namespace QuickDoc.Repository
                         Section section = new Section(SectionNumber, OldSectionNumber, Title, ParentKey);
 
                         ResultChildren = tagRepo.GetSectionsChildren(SectionNumber);
+
+                        if (!(title == "" && description == "" && filepath == ""))
+                        {
                             section.Documents.Add(new Document(title, description, filepath));
+                        }
+
                         section.Tags = ResultChildren;
                         result.Add(section);
                     }
