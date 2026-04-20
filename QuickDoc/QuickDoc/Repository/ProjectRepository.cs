@@ -51,12 +51,14 @@ namespace QuickDoc.Repository
                         string fileDescription = dr["PDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["PDocDescription"]);  
                         string filepath = dr["PFile"] == DBNull.Value ? "" : Convert.ToString(dr["PFile"]);
 
-
                         Project project = new Project(ProjectNum, description);
                         project.Units = unitRepo.GetAllUnits();
                         _project = project;
-                        project.Documents.Add(new Document(title, fileDescription, filepath));
 
+                        if (!(title == "" && fileDescription == "" && filepath == ""))
+                        {
+                            project.Documents.Add(new Document(title, fileDescription, filepath));
+                        }
                     }
                 }
             }

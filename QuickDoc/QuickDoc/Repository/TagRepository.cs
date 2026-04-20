@@ -67,7 +67,12 @@ namespace QuickDoc.Repository
 
                         ResultChildren = ItemRepo.GetTagsChildren(tagNum);
                         tag.Items = ResultChildren;
-                        tag.Documents.Add(new Document(title, fileDescription, filepath));
+
+                        if (!(title == "" && fileDescription == "" && filepath == ""))
+                        {
+                            tag.Documents.Add(new Document(title, fileDescription, filepath));
+                        }
+                        
                         result.Add(tag);
 
                     }

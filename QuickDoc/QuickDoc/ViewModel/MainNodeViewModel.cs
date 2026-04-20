@@ -196,10 +196,10 @@ namespace QuickDoc.ViewModel
             {
                 if ( !(currentProjectNumber == criteria.ProjectCriteria) )
                 {
-                    _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
-                    _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
-                    _sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _tagRepo);
-                    _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
+                    //_itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
+                    //_tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
+                    //_sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _tagRepo);
+                    //_unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
                     _projectRepo.readFromDatabase(Criteria.ProjectCriteria, _unitRepo);
 
                     currentProjectNumber = criteria.ProjectCriteria;
