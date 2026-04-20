@@ -236,11 +236,21 @@ namespace QuickDoc.ViewModel
                 }
                 else if (tagFull || itemFull)
                 {
-                    if (tagFull && !itemFull) //Looking for a tag type
+                    if (tagFull && !itemFull) //Looking for a specific tag
                     {
                         CurrentNode = new TagViewModel(_tagRepo.GetTag(criteria.TagCriteria));
-                        Children.Clear();
+                        Children = new ObservableCollection<NodeViewModel>();
                         Documents = new ObservableCollection<DocumentViewModel>();
+
+                        foreach (var item in (CurrentNode as TagViewModel).Items)
+                        {
+                            Children.Add(new ItemViewModel(item));
+
+                            foreach (var document in (item.Documents))
+                            {
+                                Documents.Add(new DocumentViewModel(document));
+                            }
+                        }
 
                         foreach (var document in (CurrentNode as TagViewModel).Documents)
                         {
