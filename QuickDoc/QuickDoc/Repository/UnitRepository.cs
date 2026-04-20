@@ -64,7 +64,12 @@ namespace QuickDoc.Repository
                         //For Children
 
                         ResultChildren = secRepo.GetUnitsChildren(UnitNumber);
-                        unit.Documents.Add(new Document(title, description, filepath));
+
+                        if (!(title == "" && description == "" && filepath == ""))
+                        {
+                            unit.Documents.Add(new Document(title, description, filepath));
+                        }
+                        
                         unit.Sections = ResultChildren;
                         result.Add(unit);
                    
