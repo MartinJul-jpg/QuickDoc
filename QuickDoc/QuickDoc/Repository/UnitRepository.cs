@@ -18,6 +18,7 @@ namespace QuickDoc.Repository
                 .AddJsonFile("appsettings.json")
                 .Build();
              ConnectionString = config.GetConnectionString("MyDBConnection");
+            units = new List<Unit>();
         }
         public Unit GetUnit(string unitNr)
         {
