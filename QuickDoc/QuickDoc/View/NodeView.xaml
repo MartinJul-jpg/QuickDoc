@@ -110,7 +110,13 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Items: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding DataContext.Children}" />
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </Border>
             </StackPanel>
