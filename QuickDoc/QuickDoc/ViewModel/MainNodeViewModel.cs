@@ -309,18 +309,27 @@ namespace QuickDoc.ViewModel
                         {
                             sections.Add(new SectionViewModel(section));
                         }
-
-                        CurrentNode = sections.First();
-                        Children.Clear();
-                        Documents = new List<DocumentViewModel>();
-
-                        foreach (SectionViewModel section in sections)
+                        if (sections.Count == 0)
                         {
-                            foreach (var document in section.Documents)
+                            currentNode = null;
+                        } 
+
+                        else
+                        {
+                            CurrentNode = sections.First();
+                            Children.Clear();
+                            Documents = new List<DocumentViewModel>();
+
+                            foreach (SectionViewModel section in sections)
                             {
-                                Documents.Add(new DocumentViewModel(document));
+                                foreach (var document in section.Documents)
+                                {
+                                    Documents.Add(new DocumentViewModel(document));
+                                }
                             }
+
                         }
+                        
                     }
                 }
             }
@@ -335,6 +344,7 @@ namespace QuickDoc.ViewModel
             _projectRepo = new ProjectRepository();
 
             criteria = new CriteriaViewModel();
+            Children = new List<NodeViewModel>();
         }
     }
 }
