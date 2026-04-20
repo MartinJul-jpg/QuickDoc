@@ -59,5 +59,10 @@ namespace QuickDoc.ViewModel
         {
             this.item = item;
         }
+
+        public override string ToString()
+        {
+            return $"{ItemNumber} - {Description}";
+        }
     }
 }
