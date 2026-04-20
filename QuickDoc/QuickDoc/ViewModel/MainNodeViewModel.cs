@@ -9,7 +9,7 @@ namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
-        private MainNodeStateContainer priorNode;
+        public MainNodeStateContainer priorNode;
         private string currentProjectNumber;
 
         private ItemRepository _itemRepo;
@@ -179,6 +179,13 @@ namespace QuickDoc.ViewModel
                 Children = priorNode.Children;
                 Documents = priorNode.Documents;
                 priorNode = priorNode.PriorNode;
+            }
+            else
+            {
+                CurrentNode = null;
+                Children = null;
+                Documents = null;
+                priorNode = null;
             }
         }
 
