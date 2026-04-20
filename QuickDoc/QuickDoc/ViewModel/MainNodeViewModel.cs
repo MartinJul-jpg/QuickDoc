@@ -10,7 +10,7 @@ namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
-        private MainNodeStateContainer priorNode;
+        public MainNodeStateContainer priorNode;
         private string currentProjectNumber;
 
         private ItemRepository _itemRepo;
@@ -181,6 +181,13 @@ namespace QuickDoc.ViewModel
                 Documents = priorNode.Documents;
                 priorNode = priorNode.PriorNode;
             }
+            else
+            {
+                CurrentNode = null;
+                Children = null;
+                Documents = null;
+                priorNode = null;
+            }
         }
 
         public void GetByCriteria()
@@ -303,18 +310,27 @@ namespace QuickDoc.ViewModel
                         {
                             sections.Add(new SectionViewModel(section));
                         }
-
-                        CurrentNode = sections.First();
-                        Children.Clear();
-                        Documents = new ObservableCollection<DocumentViewModel>();
-
-                        foreach (SectionViewModel section in sections)
+                        if (sections.Count == 0)
                         {
-                            foreach (var document in section.Documents)
+                            currentNode = null;
+                        } 
+
+                        else
+                        {
+                            CurrentNode = sections.First();
+                            Children.Clear();
+                            Documents = new ObservableCollection<DocumentViewModel>();
+
+                            foreach (SectionViewModel section in sections)
                             {
-                                Documents.Add(new DocumentViewModel(document));
+                                foreach (var document in section.Documents)
+                                {
+                                    Documents.Add(new DocumentViewModel(document));
+                                }
                             }
+
                         }
+                        
                     }
                 }
             }

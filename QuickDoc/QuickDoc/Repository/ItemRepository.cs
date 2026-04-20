@@ -23,6 +23,12 @@ namespace QuickDoc.Repository
         // To Find a specific item
         public Item GetItem(string itemNumber)
         {
+            Item item;
+            bool exists = items.Any(x => x.ItemNumber == itemNumber);
+            if (exists == false)
+            {
+                return new Item(0, 0, "", "", "", "", "", "");
+            }
             return items.Where(x => x.ItemNumber == itemNumber).First();
         }
         // To find which tags own the item
