@@ -69,5 +69,10 @@ namespace QuickDoc.ViewModel
         {
             this.tag = tag;
         }
+
+        public override string ToString()
+        {
+            return $"{TagNumber} - {Description}";
+        }
     }
 }

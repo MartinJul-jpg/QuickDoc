@@ -11,19 +11,6 @@
 
     <!-- Defines  -->
     <UserControl.Resources>
-
-        <!-- Empty node attribute template -->
-        <DataTemplate DataType="{x:Type viewmodel:NodeViewModel}">
-            <StackPanel>
-                <Border BorderBrush="#014e99" BorderThickness="2" Margin="20">
-                    <StackPanel Margin="10">
-                        <TextBlock Text="No nodes found" FontSize="14" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Border>
-            </StackPanel>
-        </DataTemplate>
-
-
         <!-- Section attribute template -->
         <DataTemplate DataType="{x:Type viewmodel:SectionViewModel}">
             <StackPanel>
@@ -40,7 +27,13 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Tags: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding Tags}"/>
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </Border>
             </StackPanel>
@@ -62,7 +55,13 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Sections: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding Sections}"/>
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </Border>
             </StackPanel>
@@ -78,54 +77,40 @@
                             <TextBlock Text="{Binding TagNumber}" FontSize="16" />
                         </StackPanel>
                         <TextBlock Text="{Binding Description}" FontSize="14" Margin="10,0,10,5"/>
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.ColumnSpan="2">
-                                <StackPanel x:Name="NodeAttributeChildFirstRow" Orientation="Horizontal" Grid.ColumnSpan="2">
-                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0">
-                                        <TextBlock Text="Line number: "/>
-                                        <TextBlock Text="{Binding LineNumber}" TextWrapping="Wrap" Width="80" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1">
-                                        <TextBlock Text="Haffman Tag: "/>
-                                        <TextBlock Text="{Binding HaffmanTag}" TextWrapping="Wrap" Width="80" />
-                                    </StackPanel>
-                                </StackPanel>
-
-                                <StackPanel x:Name="NodeAttributeChildSecoundRow" Orientation="Horizontal" Grid.ColumnSpan="2">
-                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0">
-                                        <TextBlock Text="Belongs to: "/>
-                                        <TextBlock Text="{Binding BelongsTo}" TextWrapping="Wrap" Width="80" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1">
-                                        <TextBlock Text="Vendor Tag: "/>
-                                        <TextBlock Text="{Binding VendorTag}" TextWrapping="Wrap" Width="80" />
-                                    </StackPanel>
-                                </StackPanel>
-
-                                <StackPanel x:Name="NodeAttributeChildThridRow" Orientation="Horizontal" Grid.ColumnSpan="2">
-                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0">
-                                        <TextBlock Text="Union Tag number: "/>
-                                        <TextBlock Text="{Binding UnionTagNumber}" TextWrapping="Wrap" Width="80" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1">
-                                        <TextBlock Text="Customer Tag: "/>
-                                        <TextBlock Text="{Binding CustomerTag}" TextWrapping="Wrap" Width="80" />
-                                    </StackPanel>
-                                </StackPanel>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0">
+                                <TextBlock Text="Line number: " Width="130"/>
+                                <TextBlock Text="{Binding LineNumber}" TextWrapping="Wrap" Width="200" />
                             </StackPanel>
-                        </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1">
+                                <TextBlock Text="Haffman Tag: " Width="130"/>
+                                <TextBlock Text="{Binding HaffmanTag}" TextWrapping="Wrap" Width="200"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0">
+                                <TextBlock Text="Belongs to: " Width="130"/>
+                                <TextBlock Text="{Binding BelongsTo}" TextWrapping="Wrap" Width="200" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1">
+                                <TextBlock Text="Vendor Tag: " Width="130"/>
+                                <TextBlock Text="{Binding VendorTag}" TextWrapping="Wrap" Width="200" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0">
+                                <TextBlock Text="Union Tag number: " Width="130"/>
+                                <TextBlock Text="{Binding UnionTagNumber}" TextWrapping="Wrap" Width="200" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5,5,5,10" Grid.Column="1">
+                                <TextBlock Text="Customer Tag: " Width="130"/>
+                                <TextBlock Text="{Binding CustomerTag}" TextWrapping="Wrap" Width="200" />
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
 
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Items: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding Items}"/>
+                        <ListBox ItemsSource="{Binding DataContext.Children}" />
                     </StackPanel>
                 </Border>
             </StackPanel>
@@ -160,14 +145,20 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Units: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding Units}"/>
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </Border>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
 
-    
+
     <!-- Window -->
     <Grid>
         <Grid.RowDefinitions>

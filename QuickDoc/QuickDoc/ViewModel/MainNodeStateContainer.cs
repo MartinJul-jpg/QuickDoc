@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 
 namespace QuickDoc.ViewModel
 {
@@ -8,17 +6,17 @@ namespace QuickDoc.ViewModel
     {
         public MainNodeStateContainer PriorNode { get; set; }
         public NodeViewModel CurrentNode { get; set; }
-        public List<NodeViewModel> Children { get; set; }
-        public List<DocumentViewModel> Documents { get; set; }
+        public ObservableCollection<NodeViewModel> Children { get; set; }
+        public ObservableCollection<DocumentViewModel> Documents { get; set; }
 
-        public MainNodeStateContainer(NodeViewModel currentNode, List<NodeViewModel> children, List<DocumentViewModel> documents)
+        public MainNodeStateContainer(NodeViewModel currentNode, ObservableCollection<NodeViewModel> children, ObservableCollection<DocumentViewModel> documents)
         {
             CurrentNode = currentNode;
             Children = children;
             Documents = documents;
         }
 
-        public MainNodeStateContainer(MainNodeStateContainer priorNode, NodeViewModel currentNode, List<NodeViewModel> children, List<DocumentViewModel> documents) : this(currentNode, children, documents)
+        public MainNodeStateContainer(MainNodeStateContainer priorNode, NodeViewModel currentNode, ObservableCollection<NodeViewModel> children, ObservableCollection<DocumentViewModel> documents) : this(currentNode, children, documents)
         {
             PriorNode = priorNode;
         }

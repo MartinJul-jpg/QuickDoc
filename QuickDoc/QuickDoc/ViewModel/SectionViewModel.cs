@@ -40,6 +40,11 @@ namespace QuickDoc.ViewModel
         {
             this.section = section;
         }
+
+        public override string ToString()
+        {
+            return $"{SectionNumber} - {Title}";
+        }
     }
 }
 

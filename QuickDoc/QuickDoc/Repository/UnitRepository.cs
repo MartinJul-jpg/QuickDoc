@@ -20,6 +20,7 @@ namespace QuickDoc.Repository
              ConnectionString = config.GetConnectionString("MyDBConnection");
             units = new List<Unit>();
         }
+
         public Unit GetUnit(string unitNr)
         {
             Unit unit = units.Where(x => x.UnitNumber == unitNr).ToList().First();
@@ -37,6 +38,7 @@ namespace QuickDoc.Repository
             Unit unit = units.Where(x => x.UnitNumber == unitNr).ToList().First();
             return unit.Sections.Where(x => x.SectionNumber == sectionNr).ToList().First();
         }
+
         public void ReadFromDatabase(string projectNum, SectionRepository secRepo)
         {
             List<Section> ResultChildren;

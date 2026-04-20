@@ -35,5 +35,9 @@ namespace QuickDoc.ViewModel
         {
             this.unit = unit;
         }
+        public override string ToString()
+        {
+            return $"{UnitNumber} - {Description}";
+        }
     }
 }

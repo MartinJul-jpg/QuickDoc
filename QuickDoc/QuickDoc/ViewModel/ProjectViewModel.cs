@@ -48,5 +48,10 @@ namespace QuickDoc.ViewModel
             }
             this.project = project;
         }
+
+        public override string ToString()
+        {
+            return $"{ProjectNumber} - {Description}";
+        }
     }
 }

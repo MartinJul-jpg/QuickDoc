@@ -1,6 +1,7 @@
 ﻿using QuickDoc.Command;
 using QuickDoc.Repository;
 using QuickDoc.Stores;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -45,8 +46,8 @@ namespace QuickDoc.ViewModel
             }
         }
 
-        private List<NodeViewModel> children;
-        public List<NodeViewModel> Children
+        private ObservableCollection<NodeViewModel> children;
+        public ObservableCollection<NodeViewModel> Children
         {
             get { return children; }
             set
@@ -67,8 +68,8 @@ namespace QuickDoc.ViewModel
             }
         }
 
-        private List<DocumentViewModel> documents;
-        public List<DocumentViewModel> Documents
+        private ObservableCollection<DocumentViewModel> documents;
+        public ObservableCollection<DocumentViewModel> Documents
         {
             get { return documents; }
             set 
@@ -96,8 +97,8 @@ namespace QuickDoc.ViewModel
             }
 
             CurrentNode = SelectedChild;
-            Children = new List<NodeViewModel>();
-            Documents = new List<DocumentViewModel>();
+            Children = new ObservableCollection<NodeViewModel>();
+            Documents = new ObservableCollection<DocumentViewModel>();
 
             switch (CurrentNode)
             {
@@ -208,8 +209,8 @@ namespace QuickDoc.ViewModel
                 if ( !(unitFull || sectionFull || tagFull || itemFull) ) //Looking for a specific project
                 {
                     CurrentNode = new ProjectViewModel(_projectRepo.GetProject());
-                    Children = new List<NodeViewModel>();
-                    Documents = new List<DocumentViewModel>();
+                    Children = new ObservableCollection<NodeViewModel>();
+                    Documents = new ObservableCollection<DocumentViewModel>();
 
                     foreach (var unit in (CurrentNode as ProjectViewModel).Units)
                     {
@@ -232,7 +233,7 @@ namespace QuickDoc.ViewModel
                     {
                         CurrentNode = new TagViewModel(_tagRepo.GetTag(criteria.TagCriteria));
                         Children.Clear();
-                        Documents = new List<DocumentViewModel>();
+                        Documents = new ObservableCollection<DocumentViewModel>();
 
                         foreach (var document in (CurrentNode as TagViewModel).Documents)
                         {
@@ -243,7 +244,7 @@ namespace QuickDoc.ViewModel
                     {
                         CurrentNode = new ItemViewModel(_itemRepo.GetItem(criteria.ItemCriteria));
                         Children.Clear();
-                        Documents = new List<DocumentViewModel>();
+                        Documents = new ObservableCollection<DocumentViewModel>();
 
                         foreach (var document in (CurrentNode as ItemViewModel).Documents)
                         {
@@ -256,8 +257,8 @@ namespace QuickDoc.ViewModel
                     if (unitFull && sectionFull) //Looking for a specific section
                     {
                         CurrentNode = new SectionViewModel(_sectionRepo.getSection(criteria.SectionCriteria, criteria.UnitCriteria, _unitRepo));
-                        Children = new List<NodeViewModel>();
-                        Documents = new List<DocumentViewModel>();
+                        Children = new ObservableCollection<NodeViewModel>();
+                        Documents = new ObservableCollection<DocumentViewModel>();
 
                         foreach (var tag in (CurrentNode as SectionViewModel).Tags)
                         {
@@ -277,8 +278,8 @@ namespace QuickDoc.ViewModel
                     else if (unitFull && !sectionFull) //Looking for a specific unit
                     {
                         CurrentNode = new UnitViewModel(_unitRepo.GetUnit(criteria.UnitCriteria));
-                        Children = new List<NodeViewModel>();
-                        Documents = new List<DocumentViewModel>();
+                        Children = new ObservableCollection<NodeViewModel>();
+                        Documents = new ObservableCollection<DocumentViewModel>();
 
                         foreach (var section in (CurrentNode as UnitViewModel).Sections)
                         {
@@ -305,7 +306,7 @@ namespace QuickDoc.ViewModel
 
                         CurrentNode = sections.First();
                         Children.Clear();
-                        Documents = new List<DocumentViewModel>();
+                        Documents = new ObservableCollection<DocumentViewModel>();
 
                         foreach (SectionViewModel section in sections)
                         {
@@ -328,6 +329,9 @@ namespace QuickDoc.ViewModel
             _projectRepo = new ProjectRepository();
 
             criteria = new CriteriaViewModel();
+
+            children = new ObservableCollection<NodeViewModel>();
+            documents = new ObservableCollection<DocumentViewModel>();
         }
     }
 }

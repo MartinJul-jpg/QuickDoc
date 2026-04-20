@@ -45,10 +45,10 @@ namespace QuickDoc.Repository
                         PR.ProcurementID, PR.ProcurementStatus, PR.PurchaseOrderNumber,
                         IMD.ITitle, IMD.IDocDescription, IMD.IFile
                     FROM ITEMVARIANT IT
-                    INNER JOIN ITEM IM ON IT.ItemVariantID = IM.ItemVariantID
-                    INNER JOIN PROCUREMENT PR ON IM.ItemID = PR.ItemID
-                    INNER JOIN TAG TG ON IM.TagNumber = TG.TagNumber
-                    INNER JOIN ITEMVARIANTDOCUMENT IMD ON IT.ItemVariantID = IMD.ItemVariantID 
+                    LEFT JOIN ITEM IM ON IT.ItemVariantID = IM.ItemVariantID
+                    LEFT JOIN PROCUREMENT PR ON IM.ItemID = PR.ItemID
+                    LEFT JOIN TAG TG ON IM.TagNumber = TG.TagNumber
+                    LEFT JOIN ITEMVARIANTDOCUMENT IMD ON IT.ItemVariantID = IMD.ItemVariantID 
                     WHERE IM.ProjectNumber = @projectNum",
                      con
                  );

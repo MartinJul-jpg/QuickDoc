@@ -62,7 +62,7 @@ namespace QuickDoc.Repository
                         string fileDescription = dr["TDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["TDocDescription"]);
                         string filepath = dr["TFile"] == DBNull.Value ? "" : Convert.ToString(dr["TFile"]);
 
-                        Tag tag = new Tag(tagNum, unionTag, lineNum, description, haffmanTag, customerTag, vendorTag, belongsTo, sectionNr);
+                        Tag tag = new Tag(tagNum, unionTag, description, lineNum, haffmanTag, customerTag, vendorTag, belongsTo, sectionNr);
                         //For Children
 
                         ResultChildren = ItemRepo.GetTagsChildren(tagNum);
