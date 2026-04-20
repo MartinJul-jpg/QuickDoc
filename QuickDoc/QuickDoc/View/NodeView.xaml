@@ -28,7 +28,7 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Tags: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding Children}"/>
+                        <ListBox ItemsSource="{Binding Tags}"/>
                     </StackPanel>
                 </Border>
             </StackPanel>
@@ -50,7 +50,7 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Sections: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding Children}"/>
+                        <ListBox ItemsSource="{Binding Sections}"/>
                     </StackPanel>
                 </Border>
             </StackPanel>
