@@ -80,10 +80,14 @@ namespace QuickDoc.Repository
                         string description = dr["IDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["IDocDescription"]);
                         string filepath = dr["IFile"] == DBNull.Value ? "" : Convert.ToString(dr["IFile"]);
 
-
                         Item item = new Item(ItemID, ItemVariantID, ItemNumber, LineNumber, Description, Quantity, UnitOfMeasure, TagParentKey);
                         item.ItemProcurement = new Procurement(ProcurementID, purchaseOrderNumber, procurementStatus);
-                        item.Documents.Add(new Document(title, description, filepath));
+                        
+                        if ( !(title == "" && description == "" && filepath == "") )
+                        {
+                            item.Documents.Add(new Document(title, description, filepath));
+                        }
+
                         result.Add(item);
                     }
                 }
