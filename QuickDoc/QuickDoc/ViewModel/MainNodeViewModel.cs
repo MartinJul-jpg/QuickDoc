@@ -257,7 +257,7 @@ namespace QuickDoc.ViewModel
                             Documents.Add(new DocumentViewModel(document));
                         }
                     }
-                    else if (!tagFull && itemFull) //Looking for an item type
+                    else if ( (!tagFull && itemFull) || (tagFull && itemFull) ) //Looking for an item type (also catches the silly event where someone fills out tag at the same time)
                     {
                         CurrentNode = new ItemViewModel(_itemRepo.GetItem(criteria.ItemCriteria));
                         Children.Clear();

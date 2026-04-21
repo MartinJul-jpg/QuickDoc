@@ -19,6 +19,7 @@ namespace QuickDoc.Model
             OldSecTionNumber = oldSecTionNumber;
             Title = title;
             ParentKey = parentKey;
+            Tags = new List<Tag>(); // <- prevents another NullReferenceException
             Documents = new List<Document>(); // <- prevents the NullReferenceException
         }
 
