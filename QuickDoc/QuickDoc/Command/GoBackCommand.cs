@@ -21,10 +21,12 @@ namespace QuickDoc.Command
 
             if (parameter is MainNodeViewModel mnvm)
             {
-                if (mnvm.CurrentNode == null)
+                /*some relevant check at some point
+                if (true)
                 {
                     check = false;
                 }
+                */
             }
 
             CommandManager.InvalidateRequerySuggested();

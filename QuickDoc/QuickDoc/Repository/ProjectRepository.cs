@@ -23,8 +23,14 @@ namespace QuickDoc.Repository
 
         public Project GetProject()
         {
-            Project newProject = new Project(null,null);
-            return newProject = _project;
+            if (_project == null)
+            {
+                return new Project(null, null);
+            }
+            else
+            {
+                return _project;
+            }
         }
 
         public void readFromDatabase(string projectNum, UnitRepository unitRepo)

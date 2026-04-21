@@ -27,7 +27,7 @@ namespace QuickDoc.Repository
             bool exists = items.Any(x => x.ItemNumber == itemNumber);
             if (exists == false)
             {
-                return new Item(0, 0, "", "", "", "", "", "");
+                return new Item(0, 0, null, null, null, null, null, null);
             }
             return items.Where(x => x.ItemNumber == itemNumber).First();
         }
