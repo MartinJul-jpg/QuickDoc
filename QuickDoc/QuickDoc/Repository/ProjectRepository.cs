@@ -29,7 +29,8 @@ namespace QuickDoc.Repository
 
         public void readFromDatabase(string projectNum, UnitRepository unitRepo)
         {
-            
+            _project = null;
+
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
