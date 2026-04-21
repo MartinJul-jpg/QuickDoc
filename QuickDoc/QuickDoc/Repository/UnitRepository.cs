@@ -49,8 +49,15 @@ namespace QuickDoc.Repository
         // FIND A SPECIFIC CHILD
         public Section GetSpecificChild(string unitNr, int sectionNr)
         {
-            Unit unit = units.Where(x => x.UnitNumber == unitNr).ToList().First();
-            return unit.Sections.Where(x => x.SectionNumber == sectionNr).ToList().First();
+            if (units.Count == 0)
+            {
+                return new Section(0, 0, null, null);
+            }
+            else
+            {
+                Unit unit = units.Where(x => x.UnitNumber == unitNr).ToList().First();
+                return unit.Sections.Where(x => x.SectionNumber == sectionNr).ToList().First();
+            }
         }
 
         public void ReadFromDatabase(string projectNum, SectionRepository secRepo)
