@@ -30,7 +30,9 @@
                         <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
+                                    <Button Command="{Binding GOINTO}" CommandParameter="{Binding}">
+                                        <TextBlock Text="{Binding}" Margin="5"/>
+                                    </Button>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -58,7 +60,9 @@
                         <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
+                                    <Button Command="{Binding GOINTO}" CommandParameter="{Binding}">
+                                        <TextBlock Text="{Binding}" Margin="5"/>
+                                    </Button>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -110,10 +114,19 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Items: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                        <ListBox Name="ChildListBox" ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
+                                    <Border BorderThickness="2" BorderBrush="DarkSlateBlue" Width="280">
+                                        <StackPanel Margin="5">
+                                            <Button Command="{Binding GOINTO}" CommandParameter="{Binding}">
+                                                <TextBlock Text="{Binding}" Margin="5"/>
+                                            </Button>
+                                            <Button Margin="5">
+                                                <TextBlock Text="✍" Margin="5"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Border>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -154,7 +167,9 @@
                         <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
+                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=viewmodel:MainNodeViewModel}}" CommandParameter="{Binding DataContext}">
+                                        <TextBlock Text="{Binding}" Margin="5"/>
+                                    </Button>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
