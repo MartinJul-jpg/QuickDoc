@@ -26,7 +26,7 @@ namespace QuickDoc.Repository
             bool exists = tags.Any(x => x.TagNumber == tagNumber); 
             if (exists == false)
             {
-                return new Tag("", "", "", "", "", "", "", "", 0);
+                return new Tag(null, null, null, null, null, null, null, null, 0);
             }
             else
             {

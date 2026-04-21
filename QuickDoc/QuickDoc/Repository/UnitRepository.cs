@@ -27,7 +27,7 @@ namespace QuickDoc.Repository
             bool exists = units.Any(x => x.UnitNumber == unitNr);
             if (exists == false)
             {
-                return new Unit("", "") { Documents = new List<Document>(), Sections = new List<Section>() };
+                return new Unit(null, null);
 
             }
             else
@@ -56,7 +56,16 @@ namespace QuickDoc.Repository
             else
             {
                 Unit unit = units.Where(x => x.UnitNumber == unitNr).ToList().First();
-                return unit.Sections.Where(x => x.SectionNumber == sectionNr).ToList().First();
+                List<Section> sections = unit.Sections.Where(x => x.SectionNumber == sectionNr).ToList();
+
+                if (sections.Count == 0)
+                {
+                    return new Section(0, 0, null, null);
+                }
+                else
+                {
+                    return sections.First();
+                }
             }
         }
 

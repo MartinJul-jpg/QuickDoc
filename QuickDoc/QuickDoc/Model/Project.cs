@@ -16,6 +16,7 @@ namespace QuickDoc.Model
         {
             ProjectNumber = projectNumber;
             Description = description;
+            Units = new List<Unit>();
             Documents = new List<Document>(); 
         }
 

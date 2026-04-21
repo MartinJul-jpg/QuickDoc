@@ -322,7 +322,7 @@ namespace QuickDoc.ViewModel
                         }
                         if (sections.Count == 0)
                         {
-                            currentNode = null;
+                            currentNode = new SectionViewModel(_sectionRepo.getSection(criteria.SectionCriteria, criteria.UnitCriteria, _unitRepo));
                         } 
 
                         else

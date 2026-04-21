@@ -38,14 +38,6 @@ namespace QuickDoc.ViewModel
 
         public ProjectViewModel(Project project)
         {
-            if (project == null)
-            {
-                project = new Project(string.Empty, string.Empty)
-                {
-                    Units = new List<Unit>(),
-                    Documents = new List<Document>()
-                };
-            }
             this.project = project;
         }
 
