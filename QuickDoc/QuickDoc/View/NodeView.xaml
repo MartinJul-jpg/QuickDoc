@@ -27,10 +27,11 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Tags: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}"
+                                 SelectedItem="{Binding DataContext.SelectedChild, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Command="{Binding GOINTO}" CommandParameter="{Binding}">
+                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                                         <TextBlock Text="{Binding}" Margin="5"/>
                                     </Button>
                                 </DataTemplate>
@@ -57,10 +58,11 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Sections: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}"
+                                 SelectedItem="{Binding DataContext.SelectedChild, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Command="{Binding GOINTO}" CommandParameter="{Binding}">
+                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                                         <TextBlock Text="{Binding}" Margin="5"/>
                                     </Button>
                                 </DataTemplate>
@@ -114,12 +116,13 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Items: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox Name="ChildListBox" ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                        <ListBox Name="ChildListBox" ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}"
+                                 SelectedItem="{Binding DataContext.SelectedChild, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Border BorderThickness="2" BorderBrush="DarkSlateBlue" Width="280">
                                         <StackPanel Margin="5">
-                                            <Button Command="{Binding GOINTO}" CommandParameter="{Binding}">
+                                            <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                                                 <TextBlock Text="{Binding}" Margin="5"/>
                                             </Button>
                                             <Button Margin="5">
@@ -164,10 +167,11 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Units: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}"
+                                 SelectedItem="{Binding DataContext.SelectedChild, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=viewmodel:MainNodeViewModel}}" CommandParameter="{Binding DataContext}">
+                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                                         <TextBlock Text="{Binding}" Margin="5"/>
                                     </Button>
                                 </DataTemplate>
@@ -223,6 +227,7 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
+                            <Button Content="Button" Command="{Binding GOINTO}" CommandParameter="{Binding}"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>
