@@ -31,7 +31,12 @@
                                  HorizontalContentAlignment="Stretch">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
+                                    <Button Background="BlueViolet" Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
+                                        <Button.Resources>
+                                            <SolidColorBrush x:Key="Button.HoverBackground" Color="#FF9BC9F5" />
+                                            <SolidColorBrush x:Key="Button.PressedBackground" Color="#FF2F6FAE" />
+                                            <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
+                                        </Button.Resources>
                                         <TextBlock Text="{Binding}" Margin="5"/>
                                     </Button>
                                 </DataTemplate>
@@ -62,7 +67,12 @@
                                  HorizontalContentAlignment="Stretch">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
+                                    <Button Background="BlueViolet" Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
+                                        <Button.Resources>
+                                            <SolidColorBrush x:Key="Button.HoverBackground" Color="#FF9BC9F5" />
+                                            <SolidColorBrush x:Key="Button.PressedBackground" Color="#FF2F6FAE" />
+                                            <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
+                                        </Button.Resources>
                                         <TextBlock Text="{Binding}" Margin="5"/>
                                     </Button>
                                 </DataTemplate>
@@ -122,10 +132,15 @@
                                 <DataTemplate>
                                     <Border BorderThickness="2" BorderBrush="DarkSlateBlue" Width="280">
                                         <StackPanel Margin="5">
-                                            <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
-                                                <TextBlock Text="{Binding}" Margin="5"/>
+                                            <Button Background="#FF3D8AD5" Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
+                                                <Button.Resources>
+                                                    <SolidColorBrush x:Key="Button.HoverBackground" Color="#FF9BC9F5" />
+                                                    <SolidColorBrush x:Key="Button.PressedBackground" Color="#FF2F6FAE" />
+                                                    <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
+                                                </Button.Resources>
+                                                <TextBlock Text="{Binding}" Margin="5" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             </Button>
-                                            <Button Margin="5">
+                                            <Button Background="BlueViolet" Margin="5">
                                                 <TextBlock Text="✍" Margin="5"/>
                                             </Button>
                                         </StackPanel>
@@ -171,8 +186,13 @@
                                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
-                                        <TextBlock Text="{Binding}" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Button Background="#FF3D8AD5" Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
+                                        <Button.Resources>
+                                            <SolidColorBrush x:Key="Button.HoverBackground" Color="#FF9BC9F5" />
+                                            <SolidColorBrush x:Key="Button.PressedBackground" Color="#FF2F6FAE" />
+                                            <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
+                                        </Button.Resources>
+                                        <TextBlock Text="{Binding}" Margin="5" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     </Button>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -184,6 +204,7 @@
     </UserControl.Resources>
 
 
+
     <!-- Window -->
     <Grid>
         <Grid.RowDefinitions>
@@ -192,8 +213,30 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="PentairLogo" Grid.Row="0" Background="#014e99">
-            <Image Margin="0,20,20,20" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png" HorizontalAlignment="Right" Height="35"/>
-            <Button Content="↩" HorizontalAlignment="Left" Margin="20,20,20,20" VerticalAlignment="Center" Width="40" Height="40" Background="#FF538CC5" Foreground="Black" Command="{Binding GOBACK}" CommandParameter="{Binding}"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="2" Margin="0,20,20,20" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png" HorizontalAlignment="Right" Height="35"/>
+            <Button Content="↩"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    Margin="20"
+                    VerticalAlignment="Center"
+                    Width="40"
+                    Height="40"
+                    Background="#FF538CC5"
+                    Foreground="Black"
+                    Command="{Binding GOBACK}"
+                    CommandParameter="{Binding}">
+                <Button.Resources>
+                    <SolidColorBrush x:Key="Button.HoverBackground" Color="#FF9BC9F5" />
+                    <SolidColorBrush x:Key="Button.PressedBackground" Color="#FF2F6FAE" />
+                    <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
+                </Button.Resources>
+            </Button>
         </Grid>
 
         <Grid Grid.Row="1">
