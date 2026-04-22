@@ -15,7 +15,7 @@
 
         <!-- Blue bar at the top -->
         <Grid x:Name="PentairLogo" Grid.Row="0" Background="#014e99">
-            <Image Margin="260,5,5,3" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png"/>
+            <Image Margin="0,20,20,20" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png" HorizontalAlignment="Right" Height="35"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -55,9 +55,15 @@
                     <TextBox TextWrapping="Wrap"  Text="{Binding Criteria.ItemCriteria, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="16"/>
                 </StackPanel>
             </StackPanel>
-            
-            <Button Name="EnterButton" Grid.Column="1" Content="Enter" Grid.Row="1" Margin="20" Background="#5cbb4e" FontWeight="Bold" FontSize="14" Command="{Binding GETBYCRITERIA}" CommandParameter="{Binding}"/>
-           
+
+            <Button Style="{StaticResource ButtonDefault}"
+                    Name="EnterButton"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Margin="20"
+                    Content="Enter"
+                    Command="{Binding GETBYCRITERIA}"
+                    CommandParameter="{Binding}" />
         </Grid>
     </Grid>
 </UserControl>

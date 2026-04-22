@@ -17,21 +17,7 @@ namespace QuickDoc.Command
 
         public bool CanExecute(object parameter)
         {
-            bool check = true;
-
-            if (parameter is MainNodeViewModel mnvm)
-            {
-                /*some relevant check at some point
-                if (true)
-                {
-                    check = false;
-                }
-                */
-            }
-
-            CommandManager.InvalidateRequerySuggested();
-
-            return check;
+            return true;
         }
 
         public void Execute(object parameter)
