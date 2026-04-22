@@ -21,7 +21,9 @@ namespace QuickDoc.ViewModel
             }
             set
             {
-                if ((value.Split(';') is string[] scanCriteria) && scanCriteria.Count() == 5)
+                string[] scanCriteria = value.Split(';');
+
+                if (scanCriteria.Count() == 5)
                 {
                     ProjectCriteria = scanCriteria[0];
                     UnitCriteria = scanCriteria[1];
