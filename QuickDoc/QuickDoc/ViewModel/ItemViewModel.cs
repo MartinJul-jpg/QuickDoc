@@ -55,10 +55,19 @@ namespace QuickDoc.ViewModel
             get { return item.ItemProcurement; }
             set { item.ItemProcurement = value; }
         }
-        public List<Document> Documents
+        public List<DocumentViewModel> Documents
         {
-            get { return item.Documents; }
-            set { item.Documents = value; }
+            get
+            {
+                List<DocumentViewModel> documents = new List<DocumentViewModel>();
+
+                foreach (Document document in item.Documents)
+                {
+                    documents.Add(new DocumentViewModel(document));
+                }
+
+                return documents;
+            }
         }
 
         public ItemViewModel(Item item)
