@@ -224,7 +224,7 @@ namespace QuickDoc.ViewModel
                     _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
                     _sectionRepo.ReadFromDatabase(Criteria.ProjectCriteria, _tagRepo);
                     _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
-                    _projectRepo.readFromDatabase(Criteria.ProjectCriteria, _unitRepo);
+                    _projectRepo.ReadFromDatabase(Criteria.ProjectCriteria, _unitRepo);
 
                     currentProjectNumber = criteria.ProjectCriteria;
                 }
@@ -332,7 +332,7 @@ namespace QuickDoc.ViewModel
                     else if (!unitFull && sectionFull) //Looking for several specific sections
                     {
                         List<SectionViewModel> sections = new List<SectionViewModel>();
-                        foreach (var section in _sectionRepo.getSections(criteria.SectionCriteria))
+                        foreach (var section in _sectionRepo.GetSections(criteria.SectionCriteria))
                         {
                             sections.Add(new SectionViewModel(section));
                         }

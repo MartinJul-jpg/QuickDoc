@@ -76,11 +76,7 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT UN.UnitNumber, UN.UnitDescription,
-                                                UND.UTitle, UND.UDocDescription, UND.UFile
-                                                FROM UNIT UN
-                                                LEFT JOIN UNITDOCUMENT UND ON UN.UnitNumber = UND.UnitNumber
-                                                WHERE UN.ProjectNumber = @projectNum", con);
+                SqlCommand cmd = new SqlCommand(@"EXEC sp_ReadUnitFromDatabase @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
