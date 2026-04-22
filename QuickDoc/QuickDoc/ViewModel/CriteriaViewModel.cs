@@ -11,5 +11,6 @@ namespace QuickDoc.ViewModel
         public int SectionCriteria { get; set; }
         public string TagCriteria { get; set; }
         public string ItemCriteria { get; set; }
+        public string ScanCriteria { get; set; }
     }
 }
