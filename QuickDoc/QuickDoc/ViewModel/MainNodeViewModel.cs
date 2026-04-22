@@ -221,7 +221,7 @@ namespace QuickDoc.ViewModel
 
             if (projectFull)
             {
-                if ( !(currentProjectNumber == criteria.ProjectCriteria) )
+                if ( !(currentProjectNumber == Criteria.ProjectCriteria) )
                 {
                     _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
                     _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
@@ -229,7 +229,7 @@ namespace QuickDoc.ViewModel
                     _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
                     _projectRepo.ReadFromDatabase(Criteria.ProjectCriteria, _unitRepo);
 
-                    currentProjectNumber = criteria.ProjectCriteria;
+                    currentProjectNumber = Criteria.ProjectCriteria;
                 }
 
                 if ( !(unitFull || sectionFull || tagFull || itemFull) ) //Looking for a specific project
@@ -257,7 +257,7 @@ namespace QuickDoc.ViewModel
                 {
                     if (tagFull && !itemFull) //Looking for a specific tag
                     {
-                        CurrentNode = new TagViewModel(_tagRepo.GetTag(criteria.TagCriteria));
+                        CurrentNode = new TagViewModel(_tagRepo.GetTag(Criteria.TagCriteria));
                         Children = new List<NodeViewModel>();
                         Documents = new List<DocumentViewModel>();
 
@@ -278,7 +278,7 @@ namespace QuickDoc.ViewModel
                     }
                     else if ( (!tagFull && itemFull) || (tagFull && itemFull) ) //Looking for an item type (also catches the silly event where someone fills out tag at the same time)
                     {
-                        CurrentNode = new ItemViewModel(_itemRepo.GetItem(criteria.ItemCriteria));
+                        CurrentNode = new ItemViewModel(_itemRepo.GetItem(Criteria.ItemCriteria));
                         Children.Clear();
                         Documents = new List<DocumentViewModel>();
 
@@ -292,7 +292,7 @@ namespace QuickDoc.ViewModel
                 {
                     if (unitFull && sectionFull) //Looking for a specific section
                     {
-                        CurrentNode = new SectionViewModel(_sectionRepo.getSection(criteria.SectionCriteria, criteria.UnitCriteria, _unitRepo));
+                        CurrentNode = new SectionViewModel(_sectionRepo.getSection(Criteria.SectionCriteria, Criteria.UnitCriteria, _unitRepo));
                         Children = new List<NodeViewModel>();
                         Documents = new List<DocumentViewModel>();
 
@@ -313,7 +313,7 @@ namespace QuickDoc.ViewModel
                     }
                     else if (unitFull && !sectionFull) //Looking for a specific unit
                     {
-                        CurrentNode = new UnitViewModel(_unitRepo.GetUnit(criteria.UnitCriteria));
+                        CurrentNode = new UnitViewModel(_unitRepo.GetUnit(Criteria.UnitCriteria));
                         Children = new List<NodeViewModel>();
                         Documents = new List<DocumentViewModel>();
 
@@ -335,13 +335,13 @@ namespace QuickDoc.ViewModel
                     else if (!unitFull && sectionFull) //Looking for several specific sections
                     {
                         List<SectionViewModel> sections = new List<SectionViewModel>();
-                        foreach (var section in _sectionRepo.GetSections(criteria.SectionCriteria))
+                        foreach (var section in _sectionRepo.GetSections(Criteria.SectionCriteria))
                         {
                             sections.Add(new SectionViewModel(section));
                         }
                         if (sections.Count == 0)
                         {
-                            currentNode = new SectionViewModel(_sectionRepo.getSection(criteria.SectionCriteria, criteria.UnitCriteria, _unitRepo));
+                            currentNode = new SectionViewModel(_sectionRepo.getSection(Criteria.SectionCriteria, Criteria.UnitCriteria, _unitRepo));
                         } 
 
                         else
@@ -365,7 +365,15 @@ namespace QuickDoc.ViewModel
         
         public void GetByScan()
         {
+            string[] scanCriteria = Criteria.ScanCriteria.Split(';');
 
+            Criteria.ProjectCriteria = scanCriteria[0];
+            Criteria.UnitCriteria = scanCriteria[1];
+            Criteria.SectionCriteria = int.Parse(scanCriteria[2]);
+            Criteria.TagCriteria = scanCriteria[3];
+            Criteria.ItemCriteria = scanCriteria[4];
+
+            GetByCriteria();
         }
     }
 }
