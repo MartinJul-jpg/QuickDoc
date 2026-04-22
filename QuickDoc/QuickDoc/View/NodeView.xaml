@@ -27,10 +27,13 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Tags: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}"
+                                 SelectedItem="{Binding DataContext.SelectedChild, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
+                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
+                                        <TextBlock Text="{Binding}" Margin="5"/>
+                                    </Button>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -55,10 +58,13 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Sections: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}"
+                                 SelectedItem="{Binding DataContext.SelectedChild, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
+                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
+                                        <TextBlock Text="{Binding}" Margin="5"/>
+                                    </Button>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -110,10 +116,20 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Items: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                        <ListBox Name="ChildListBox" ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}"
+                                 SelectedItem="{Binding DataContext.SelectedChild, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
+                                    <Border BorderThickness="2" BorderBrush="DarkSlateBlue" Width="280">
+                                        <StackPanel Margin="5">
+                                            <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
+                                                <TextBlock Text="{Binding}" Margin="5"/>
+                                            </Button>
+                                            <Button Margin="5">
+                                                <TextBlock Text="✍" Margin="5"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Border>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -151,10 +167,13 @@
                 <Border Grid.Row="1" BorderBrush="#014e99" BorderThickness="2" Margin="20">
                     <StackPanel Margin="10">
                         <TextBlock Text="Units: " FontSize="16" Margin="0,0,0,5"/>
-                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}" >
+                        <ListBox ItemsSource="{Binding DataContext.Children, RelativeSource={RelativeSource AncestorType=local:NodeView}}"
+                                 SelectedItem="{Binding DataContext.SelectedChild, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
+                                    <Button Command="{Binding DataContext.GOINTO, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:NodeView}}">
+                                        <TextBlock Text="{Binding}" Margin="5"/>
+                                    </Button>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -208,6 +227,7 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
+                            <Button Content="Button" Command="{Binding GOINTO}" CommandParameter="{Binding}"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>
