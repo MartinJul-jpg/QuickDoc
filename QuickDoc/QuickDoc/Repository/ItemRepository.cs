@@ -27,7 +27,7 @@ namespace QuickDoc.Repository
             bool exists = items.Any(x => x.ItemNumber == itemNumber);
             if (exists == false)
             {
-                return new Item(0, 0, null, null, null, null, null, null);
+                return new Item(0, 0, null, null, null, null, null, null, null);
             }
             return items.Where(x => x.ItemNumber == itemNumber).First();
         }
@@ -67,6 +67,7 @@ namespace QuickDoc.Repository
                         string Quantity = dr["Quantity"] == DBNull.Value ? "" : Convert.ToString(dr["Quantity"]);
                         string UnitOfMeasure = dr["UnitOfMeasure"] == DBNull.Value ? "" : Convert.ToString(dr["UnitOfMeasure"]);
                         string TagParentKey = dr["TagNumber"] == DBNull.Value ? "" : Convert.ToString(dr["TagNumber"]);
+                        string SerialNumber = dr["SerialNumber"] == DBNull.Value ? "" : Convert.ToString(dr["SerialNumber"]);
 
                         // Procurement
                         int ProcurementID = dr["ProcurementID"] == DBNull.Value ? 0 : Convert.ToInt32(dr["ProcurementID"]);
@@ -77,7 +78,7 @@ namespace QuickDoc.Repository
                         string description = dr["IDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["IDocDescription"]);
                         string filepath = dr["IFile"] == DBNull.Value ? "" : Convert.ToString(dr["IFile"]);
 
-                        Item item = new Item(ItemID, ItemVariantID, ItemNumber, LineNumber, Description, Quantity, UnitOfMeasure, TagParentKey);
+                        Item item = new Item(ItemID, ItemVariantID, ItemNumber, LineNumber, Description, Quantity, UnitOfMeasure, TagParentKey, SerialNumber);
                         item.ItemProcurement = new Procurement(ProcurementID, purchaseOrderNumber, procurementStatus);
                         
                         if ( !(title == "" && description == "" && filepath == "") )

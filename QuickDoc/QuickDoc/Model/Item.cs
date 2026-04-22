@@ -15,10 +15,11 @@ namespace QuickDoc.Model
         public string Quantity;
         public string UnitOfMeasure;
         public string TagParentKey; // TagNumber
+        public string SerialNumber;
         public Procurement ItemProcurement;
         public List<Document> Documents;
 
-        public Item(int itemID ,int itemVariantID, string itemNumber, string lineNumber, string description , string quantity , string unitOfMeasure, string tagParentKey)
+        public Item(int itemID ,int itemVariantID, string itemNumber, string lineNumber, string description , string quantity , string unitOfMeasure, string tagParentKey, string serialNumber)
         {
             ItemID = itemID;
             ItemVariantID = itemVariantID;
@@ -28,6 +29,7 @@ namespace QuickDoc.Model
             Quantity = quantity;
             UnitOfMeasure = unitOfMeasure;
             TagParentKey = tagParentKey;
+            SerialNumber = serialNumber;
             Documents = new List<Document>();
         }
 
