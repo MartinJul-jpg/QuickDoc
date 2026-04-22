@@ -79,7 +79,23 @@ namespace QuickDoc.ViewModel
             }
         }
 
-        public ICommand GOINTO { get; } = new GoIntoCommand();
+        public ICommand GOINTO { get; }
+
+        public MainNodeViewModel()
+        {
+            _itemRepo = new ItemRepository();
+            _tagRepo = new TagRepository();
+            _sectionRepo = new SectionRepository();
+            _unitRepo = new UnitRepository();
+            _projectRepo = new ProjectRepository();
+
+            criteria = new CriteriaViewModel();
+            children = new List<NodeViewModel>();
+            documents = new List<DocumentViewModel>();
+
+            GOINTO = new GoIntoCommand(this);
+        }
+
         public ICommand GOBACK { get; } = new GoBackCommand();
         public ICommand GETBYCRITERIA { get; } = new GetByCriteriaCommand();
 
@@ -346,18 +362,5 @@ namespace QuickDoc.ViewModel
             }
         }
 
-        public MainNodeViewModel()
-        {
-            _itemRepo = new ItemRepository();
-            _tagRepo = new TagRepository();
-            _sectionRepo = new SectionRepository();
-            _unitRepo = new UnitRepository();
-            _projectRepo = new ProjectRepository();
-
-            criteria = new CriteriaViewModel();
-
-            children = new List<NodeViewModel>();
-            documents = new List<DocumentViewModel>();
-        }
     }
 }

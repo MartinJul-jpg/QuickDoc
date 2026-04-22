@@ -3,30 +3,35 @@ using QuickDoc.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace QuickDoc.Command
 {
     public class GoIntoCommand : ICommand
     {
+        private MainNodeViewModel mnvm;
+
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
 
+        public GoIntoCommand(MainNodeViewModel mnvm)
+        {
+            this.mnvm = mnvm;
+        }
+
         public bool CanExecute(object parameter)
         {
             bool check = true;
 
-            if (parameter is MainNodeViewModel mnvm)
+            if (parameter is NodeViewModel nvm)
             {
-
-                switch (mnvm.SelectedChild)
+                if (nvm == null)
                 {
-                    case null:
-                        check = false;
-                        break;
+                    check = false;
                 }
             }
 
@@ -37,8 +42,9 @@ namespace QuickDoc.Command
 
         public void Execute(object parameter)
         {
-            if (parameter is MainNodeViewModel mnvm)
+            if (parameter is NodeViewModel nvm)
             {
+                mnvm.SelectedChild = nvm;
                 mnvm.GoInto();
                 mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
             }
