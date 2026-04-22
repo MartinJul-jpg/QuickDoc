@@ -14,7 +14,6 @@ namespace QuickDoc.ViewModel
             set
             {
                 _projectCriteria = value;
-                _scanCriteria = ScanCriteria;
             }
         }
 
@@ -25,7 +24,6 @@ namespace QuickDoc.ViewModel
             set
             {
                 _unitCriteria = value;
-                _scanCriteria = ScanCriteria;
             }
         }
 
@@ -36,7 +34,6 @@ namespace QuickDoc.ViewModel
             set
             {
                 _sectionCriteria = value;
-                _scanCriteria = ScanCriteria;
             }
         }
 
@@ -47,7 +44,6 @@ namespace QuickDoc.ViewModel
             set
             {
                 _tagCriteria = value;
-                _scanCriteria = ScanCriteria;
             }
         }
 
@@ -58,11 +54,9 @@ namespace QuickDoc.ViewModel
             set
             {
                 _itemCriteria = value;
-                _scanCriteria = ScanCriteria;
             }
         }
 
-        public string _scanCriteria;
         public string ScanCriteria 
         {
             get 
@@ -71,8 +65,6 @@ namespace QuickDoc.ViewModel
             }
             set
             {
-                _scanCriteria = value;
-
                 if ((value.Split(';') is string[] scanCriteria) && scanCriteria.Count() == 5)
                 {
                     _projectCriteria = scanCriteria[0];
