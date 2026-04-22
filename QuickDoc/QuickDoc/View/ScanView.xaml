@@ -52,7 +52,7 @@
 
             <!-- Scan input -->
             <UniformGrid Grid.Row="1" Grid.ColumnSpan="2">
-                <TextBox TextWrapping="Wrap" Margin="100,30,100,30" FontSize="20" MinHeight="20" MinWidth="50" Text="{Binding Criteria.ScanCriteria}"/>
+                <TextBox TextWrapping="Wrap" Margin="100,30,100,30" FontSize="20" MinHeight="20" MinWidth="50" Text="{Binding Criteria.ScanCriteria, UpdateSourceTrigger=PropertyChanged}"/>
             </UniformGrid>
 
             <!-- Button row -->

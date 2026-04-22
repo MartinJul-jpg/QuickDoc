@@ -369,9 +369,16 @@ namespace QuickDoc.ViewModel
         {
             string[] scanCriteria = Criteria.ScanCriteria.Split(';');
 
+            string sectionString = scanCriteria[2];
+
             Criteria.ProjectCriteria = scanCriteria[0];
             Criteria.UnitCriteria = scanCriteria[1];
-            Criteria.SectionCriteria = int.Parse(scanCriteria[2]);
+
+            if (int.TryParse(sectionString, out int sectionNumber))
+            {
+                Criteria.SectionCriteria = sectionNumber;
+            }
+
             Criteria.TagCriteria = scanCriteria[3];
             Criteria.ItemCriteria = scanCriteria[4];
 
