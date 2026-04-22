@@ -46,16 +46,7 @@ namespace QuickDoc.Repository
                 con.Open();
                 // 3 joins 
                 SqlCommand cmd = new SqlCommand(
-                     @"SELECT IT.ItemVariantID, IT.ItemNumber, IT.ItemDescription, 
-                        IM.ItemID, IM.ProjectNumber, IM.ItemLineNumber, IM.UnitOfMeasure, IM.Quantity, IM.TagNumber,
-                        PR.ProcurementID, PR.ProcurementStatus, PR.PurchaseOrderNumber,
-                        IMD.ITitle, IMD.IDocDescription, IMD.IFile
-                    FROM ITEMVARIANT IT
-                    LEFT JOIN ITEM IM ON IT.ItemVariantID = IM.ItemVariantID
-                    LEFT JOIN PROCUREMENT PR ON IM.ItemID = PR.ItemID
-                    LEFT JOIN TAG TG ON IM.TagNumber = TG.TagNumber
-                    LEFT JOIN ITEMVARIANTDOCUMENT IMD ON IT.ItemVariantID = IMD.ItemVariantID 
-                    WHERE IM.ProjectNumber = @projectNum",
+                     @"EXEC sp_ReadItemFromDatabase @projectNum",
                      con
                  );
 

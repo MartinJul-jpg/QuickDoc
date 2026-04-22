@@ -47,11 +47,7 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();                
-                SqlCommand cmd = new SqlCommand(@"SELECT TG.TagNumber, TG.UnionTagNumber, TG.TagLineNumber, TG.TagDescription, TG.HaffmanTag, TG.CustomerTag, TG.VendorTag, TG.BelongsTo, TG.SectionNumber, 
-                                                TGD.TTitle, TGD.TDocDescription, TGD.TFile
-                                                FROM TAG TG
-                                                LEFT JOIN TAGDOCUMENT TGD ON TG.TagNumber = TGD.TagNumber
-                                                WHERE TG.ProjectNumber = @projectNum", con);
+                SqlCommand cmd = new SqlCommand(@"EXEC sp_ReadTagFromDatabase @projectNum", con);
 
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
