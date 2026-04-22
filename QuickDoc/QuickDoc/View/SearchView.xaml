@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuickDoc.View"
              mc:Ignorable="d" 
              Background="White"
-             d:DesignHeight="650" d:DesignWidth="400">
+             d:DesignHeight="650" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -15,7 +15,7 @@
 
         <!-- Blue bar at the top -->
         <Grid x:Name="PentairLogo" Grid.Row="0" Background="#014e99">
-            <Image Margin="260,5,5,3" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png"/>
+            <Image Margin="0,20,20,20" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png" HorizontalAlignment="Right" Height="35"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -26,10 +26,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Criteria boxes -->
-            <StackPanel Grid.Row="0" Grid.Column="0">
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,92" Grid.RowSpan="2">
                 <StackPanel Margin="20,15,20,15">
                     <Label Content="Project" HorizontalAlignment="Left"/>
                     <TextBox TextWrapping="Wrap" Text="{Binding Criteria.ProjectCriteria, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="16"/>
@@ -55,9 +56,25 @@
                     <TextBox TextWrapping="Wrap"  Text="{Binding Criteria.ItemCriteria, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="16"/>
                 </StackPanel>
             </StackPanel>
-            
-            <Button Name="EnterButton" Grid.Column="1" Content="Enter" Grid.Row="1" Margin="20" Background="#5cbb4e" FontWeight="Bold" FontSize="14" Command="{Binding GETBYCRITERIA}" CommandParameter="{Binding}"/>
-           
+
+            <Button Name="EnterButton"
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    Margin="20,20,20,20"
+                    Content="Enter"
+                    Command="{Binding GETBYCRITERIA}"
+                    CommandParameter="{Binding}" />
+
+            <Button x:Name="ScanButton"
+                    Grid.Row="1"
+                    Margin="20,20,20,20"
+                    Content="Scan ⛶" Click="ScanButton_Click">
+                <Button.Resources>
+                    <SolidColorBrush x:Key="Button.HoverBackground" Color="#FF9BC9F5" />
+                    <SolidColorBrush x:Key="Button.PressedBackground" Color="#FF2F6FAE" />
+                    <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
+                </Button.Resources>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>
