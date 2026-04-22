@@ -60,4 +60,8 @@
     <!-- Makes it the default for ALL Buttons -->
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonDefault}" />
 
+    <!-- Style for TextBox -->
+    <Style x:Key="DefaultTextbox" TargetType="TextBox">
+        
+    </Style>
 </ResourceDictionary>

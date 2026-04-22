@@ -7,7 +7,7 @@
              xmlns:viewmodel="clr-namespace:QuickDoc.ViewModel"
              mc:Ignorable="d" 
              Background="White"
-             d:DesignHeight="650" d:DesignWidth="400">
+             d:DesignHeight="650" d:DesignWidth="500">
 
     <!-- Defines  -->
     <UserControl.Resources>

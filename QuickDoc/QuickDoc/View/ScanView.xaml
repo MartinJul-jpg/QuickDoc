@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="QuickDoc.View.ScanView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuickDoc.View"
+             mc:Ignorable="d" 
+             Background="White"
+             d:DesignHeight="650" d:DesignWidth="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Blue bar at the top -->
+        <Grid x:Name="PentairLogo" Grid.Row="0" Background="#014e99">
+            <Image Margin="0,20,20,20" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png" HorizontalAlignment="Right" Height="35"/>
+        </Grid>
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- Camera row -->
+            <UniformGrid Grid.Row="0" Grid.ColumnSpan="2">
+                <Image Source="/Images/NoCameraImage.png" />
+            </UniformGrid>
+
+            <!-- Scan input -->
+            <UniformGrid Grid.Row="1" Grid.ColumnSpan="2">
+                <TextBox TextWrapping="Wrap" Margin="100,30,100,30" FontSize="20" MinHeight="20" MinWidth="50"/>
+            </UniformGrid>
+
+            <!-- Button row -->
+            <UniformGrid Grid.Row="2" Grid.Column="1" >
+                <Button Margin="20" Content="Enter" Command="{Binding GETBYSCAN}" CommandParameter="{Binding Mode=OneWay}"/>
+            </UniformGrid>
+
+        </Grid>
+    </Grid>
+</UserControl>
