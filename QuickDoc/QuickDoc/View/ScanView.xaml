@@ -15,6 +15,23 @@
 
         <!-- Blue bar at the top -->
         <Grid x:Name="PentairLogo" Grid.Row="0" Background="#014e99">
+            <Button Content="↩"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    Margin="20"
+                    VerticalAlignment="Center"
+                    Width="40"
+                    Height="40"
+                    Background="#FF538CC5"
+                    Foreground="Black"
+                    Command="{Binding GOBACK}"
+                    CommandParameter="{Binding}">
+                <Button.Resources>
+                    <SolidColorBrush x:Key="Button.HoverBackground" Color="#FF9BC9F5" />
+                    <SolidColorBrush x:Key="Button.PressedBackground" Color="#FF2F6FAE" />
+                    <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
+                </Button.Resources>
+            </Button>
             <Image Margin="0,20,20,20" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png" HorizontalAlignment="Right" Height="35"/>
         </Grid>
         <Grid Grid.Row="1" >
@@ -35,7 +52,7 @@
 
             <!-- Scan input -->
             <UniformGrid Grid.Row="1" Grid.ColumnSpan="2">
-                <TextBox TextWrapping="Wrap" Margin="100,30,100,30" FontSize="20" MinHeight="20" MinWidth="50"/>
+                <TextBox TextWrapping="Wrap" Margin="100,30,100,30" FontSize="20" MinHeight="20" MinWidth="50" Text="{Binding Criteria.ScanCriteria}"/>
             </UniformGrid>
 
             <!-- Button row -->

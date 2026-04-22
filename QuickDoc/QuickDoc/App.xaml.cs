@@ -20,7 +20,7 @@ namespace QuickDoc
         protected override void OnStartup(StartupEventArgs e)
         {
             navigationStore = new NavigationStore();
-            navigationStore.CurrentView = new ScanView(navigationStore);
+            navigationStore.CurrentView = new SearchView(navigationStore);
 
             mainNodeVM = new MainNodeViewModel();
             mainNodeVM.NavigationStore = navigationStore;

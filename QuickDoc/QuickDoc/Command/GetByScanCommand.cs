@@ -11,12 +11,13 @@ namespace QuickDoc.Command
 
         public bool CanExecute(object? parameter)
         {
-            throw new NotImplementedException();
+            return true;
+            //throw new NotImplementedException();
         }
 
         public void Execute(object? parameter)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

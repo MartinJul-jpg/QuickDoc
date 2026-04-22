@@ -27,5 +27,10 @@ namespace QuickDoc.View
             this.navigationStore = navigationStore;
             InitializeComponent();
         }
+
+        private void ScanButton_Click(object sender, RoutedEventArgs e)
+        {
+            navigationStore.CurrentView = new ScanView(navigationStore);
+        }
     }
 }
