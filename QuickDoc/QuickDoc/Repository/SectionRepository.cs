@@ -38,7 +38,7 @@ namespace QuickDoc.Repository
             return sections.Where(x => x.ParentKey == unitNr).ToList();
         }
 
-        public List<Section> getSections(int sectionNr)
+        public List<Section> GetSections(int sectionNr)
         {
             // return a specific sections
             return sections = sections.Where(x => x.SectionNumber == sectionNr).ToList();
@@ -51,11 +51,7 @@ namespace QuickDoc.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT SC.SectionNumber, SC.OldSectionNumber, SC.Title, SC.UnitNumber,
-                                                SCD.STitle, SCD.SDocDescription, SCD.SFile   
-                                                FROM SECTION SC
-                                                LEFT JOIN SECTIONDOCUMENT SCD ON SCD.SectionNumber = SC.SectionNumber
-                                                WHERE SC.ProjectNumber = @projectNum", con);
+                SqlCommand cmd = new SqlCommand(@"EXEC sp_ReadSectionFromDatabase @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
 
                 using (SqlDataReader dr = cmd.ExecuteReader())

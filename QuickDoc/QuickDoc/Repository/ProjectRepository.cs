@@ -33,19 +33,14 @@ namespace QuickDoc.Repository
             }
         }
 
-        public void readFromDatabase(string projectNum, UnitRepository unitRepo)
+        public void ReadFromDatabase(string projectNum, UnitRepository unitRepo)
         {
             _project = null;
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@" SELECT PR.ProjectNumber, PR.ProjectDescription,
-                                                   PRD.PTitle, PRD.PDocDescription, PRD.PFile
-                                                   FROM PROJECT PR
-                                                   LEFT JOIN PROJECTDOCUMENT PRD 
-                                                   ON PR.ProjectNumber = PRD.ProjectNumber
-                                                   WHERE PR.ProjectNumber = @projectNum", con);
+                SqlCommand cmd = new SqlCommand(@" EXEC sp_ReadProjectFromDatabase @projectNum", con);
                 cmd.Parameters.AddWithValue("@projectNum", projectNum);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
