@@ -52,6 +52,14 @@ DROP PROCEDURE sp_ReadSectionFromDatabase
 
 GO
 
+IF EXISTS(
+SELECT * 
+FROM sys.objects 
+WHERE TYPE = 'P' AND NAME = 'sp_InsertNewSerialNumberIntoItem')
+DROP PROCEDURE sp_InsertNewSerialNumberIntoItem
+
+GO
+
 CREATE TABLE PROJECT( 
 ProjectNumber NVARCHAR(50),
 ProjectDescription NVARCHAR(100)
@@ -3178,3 +3186,15 @@ FROM SECTION SC
 LEFT JOIN SECTIONDOCUMENT SCD ON SCD.SectionNumber = SC.SectionNumber
 WHERE SC.ProjectNumber = @projectNum
 END;
+
+GO 
+
+CREATE PROC sp_InsertNewSerialNumberIntoItem
+@newSerialNumber NVARCHAR(50), 
+@matchingTagNumber NVARCHAR(50)
+AS
+BEGIN 
+UPDATE ITEM 
+SET SerialNumber = @newSerialNumber
+WHERE TagNumber = @matchingTagNumber 
+END; 
