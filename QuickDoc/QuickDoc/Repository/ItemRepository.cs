@@ -67,6 +67,7 @@ namespace QuickDoc.Repository
                         string Quantity = dr["Quantity"] == DBNull.Value ? "" : Convert.ToString(dr["Quantity"]);
                         string UnitOfMeasure = dr["UnitOfMeasure"] == DBNull.Value ? "" : Convert.ToString(dr["UnitOfMeasure"]);
                         string TagParentKey = dr["TagNumber"] == DBNull.Value ? "" : Convert.ToString(dr["TagNumber"]);
+                        string SerialNumber = dr["SerialNumber"] == DBNull.Value ? "" : Convert.ToString(dr["SerialNumber"]);
 
                         // Procurement
                         int ProcurementID = dr["ProcurementID"] == DBNull.Value ? 0 : Convert.ToInt32(dr["ProcurementID"]);
