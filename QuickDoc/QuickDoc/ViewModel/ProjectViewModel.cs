@@ -13,11 +13,7 @@ namespace QuickDoc.ViewModel
         public string ProjectNumber
         { 
             get { return project.ProjectNumber; } 
-            set { if (project.ProjectNumber == null)
-                {
-                    throw new NullReferenceException();
-                }
-                else { project.ProjectNumber = value; }  }
+            set { project.ProjectNumber = value; }
         }
         public string Description
         {
