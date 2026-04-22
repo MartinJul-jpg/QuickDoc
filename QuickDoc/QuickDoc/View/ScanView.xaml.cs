@@ -1,5 +1,4 @@
 ﻿using QuickDoc.Stores;
-using QuickDoc.View;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,21 +15,16 @@ using System.Windows.Shapes;
 namespace QuickDoc.View
 {
     /// <summary>
-    /// Interaction logic for SearchView.xaml
+    /// Interaction logic for ScanView.xaml
     /// </summary>
-    public partial class SearchView : UserControl
+    public partial class ScanView : UserControl
     {
         public NavigationStore navigationStore { get; set; }
 
-        public SearchView(NavigationStore navigationStore)
+        public ScanView(NavigationStore navigationStore)
         {
             this.navigationStore = navigationStore;
             InitializeComponent();
-        }
-
-        private void ScanButton_Click(object sender, RoutedEventArgs e)
-        {
-            navigationStore.CurrentView = new ScanView(navigationStore);
         }
     }
 }
