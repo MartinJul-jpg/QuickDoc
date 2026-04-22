@@ -16,7 +16,6 @@ namespace QuickDoc.Model
         public string UnitOfMeasure;
         public string SerialNumber;
         public string TagParentKey; // TagNumber
-        public string SerialNumber;
         public Procurement ItemProcurement;
         public List<Document> Documents;
 
@@ -31,7 +30,6 @@ namespace QuickDoc.Model
             UnitOfMeasure = unitOfMeasure;
             SerialNumber = serialNumber;
             TagParentKey = tagParentKey;
-            SerialNumber = serialNumber;
             Documents = new List<Document>();
         }
 
