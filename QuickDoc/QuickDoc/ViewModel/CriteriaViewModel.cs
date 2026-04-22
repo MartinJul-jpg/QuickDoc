@@ -7,71 +7,27 @@ namespace QuickDoc.ViewModel
 {
     public class CriteriaViewModel
     {
-        private string _projectCriteria;
-        public string ProjectCriteria
-        { 
-            get { return _projectCriteria; }
-            set
-            {
-                _projectCriteria = value;
-            }
-        }
-
-        private string _unitCriteria;
-        public string UnitCriteria
-        { 
-            get { return _unitCriteria; }
-            set
-            {
-                _unitCriteria = value;
-            }
-        }
-
-        private int _sectionCriteria;
-        public int SectionCriteria
-        { 
-            get { return _sectionCriteria; }
-            set
-            {
-                _sectionCriteria = value;
-            }
-        }
-
-        private string _tagCriteria;
-        public string TagCriteria
-        {
-            get { return _tagCriteria; }
-            set
-            {
-                _tagCriteria = value;
-            }
-        }
-
-        private string _itemCriteria;
-        public string ItemCriteria 
-        {
-            get { return _itemCriteria; }
-            set
-            {
-                _itemCriteria = value;
-            }
-        }
+        public string ProjectCriteria { get; set; }
+        public string UnitCriteria { get; set; }
+        public int SectionCriteria { get; set; }
+        public string TagCriteria { get; set; }
+        public string ItemCriteria { get; set; }
 
         public string ScanCriteria 
         {
             get 
             {
-                return $"{_projectCriteria};{_unitCriteria};{_sectionCriteria};{_tagCriteria};{_itemCriteria}";
+                return $"{ProjectCriteria};{UnitCriteria};{SectionCriteria};{TagCriteria};{ItemCriteria}";
             }
             set
             {
                 if ((value.Split(';') is string[] scanCriteria) && scanCriteria.Count() == 5)
                 {
-                    _projectCriteria = scanCriteria[0];
-                    _unitCriteria = scanCriteria[1];
-                    if (int.TryParse(scanCriteria[2], out int sectionNumber)) { _sectionCriteria = sectionNumber; }
-                    _tagCriteria = scanCriteria[3];
-                    _itemCriteria = scanCriteria[4];
+                    ProjectCriteria = scanCriteria[0];
+                    UnitCriteria = scanCriteria[1];
+                    if (int.TryParse(scanCriteria[2], out int sectionNumber)) { SectionCriteria = sectionNumber; }
+                    TagCriteria = scanCriteria[3];
+                    ItemCriteria = scanCriteria[4];
                 }
             } 
         }
