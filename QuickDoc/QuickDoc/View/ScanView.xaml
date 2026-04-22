@@ -57,7 +57,7 @@
 
             <!-- Button row -->
             <UniformGrid Grid.Row="2" Grid.Column="1" >
-                <Button Margin="20" Content="Enter" Command="{Binding GETBYSCAN}" CommandParameter="{Binding Mode=OneWay}"/>
+                <Button Margin="20" Content="Enter" Command="{Binding GETBYCRITERIA}" CommandParameter="{Binding Mode=OneWay}"/>
             </UniformGrid>
 
         </Grid>

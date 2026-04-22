@@ -82,7 +82,6 @@ namespace QuickDoc.ViewModel
         public ICommand GOINTO { get; }
         public ICommand GOBACK { get; }
         public ICommand GETBYCRITERIA { get; }
-        public ICommand GETBYSCAN { get; }
         public ICommand GOTOSCAN { get; }
 
         public MainNodeViewModel()
@@ -100,7 +99,6 @@ namespace QuickDoc.ViewModel
             GOINTO = new GoIntoCommand(this);
             GOBACK = new GoBackCommand();
             GETBYCRITERIA = new GetByCriteriaCommand();
-            GETBYSCAN = new GetByScanCommand();
             GOTOSCAN = new GoToScanCommand();
         }
 
@@ -363,26 +361,6 @@ namespace QuickDoc.ViewModel
                     }
                 }
             }
-        }
-        
-        public void GetByScan()
-        {
-            string[] scanCriteria = Criteria.ScanCriteria.Split(';');
-
-            string sectionString = scanCriteria[2];
-
-            Criteria.ProjectCriteria = scanCriteria[0];
-            Criteria.UnitCriteria = scanCriteria[1];
-
-            if (int.TryParse(sectionString, out int sectionNumber))
-            {
-                Criteria.SectionCriteria = sectionNumber;
-            }
-
-            Criteria.TagCriteria = scanCriteria[3];
-            Criteria.ItemCriteria = scanCriteria[4];
-
-            GetByCriteria();
         }
     }
 }
