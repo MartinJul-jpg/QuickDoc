@@ -80,6 +80,9 @@ namespace QuickDoc.ViewModel
         }
 
         public ICommand GOINTO { get; }
+        public ICommand GOBACK { get; }
+        public ICommand GETBYCRITERIA { get; }
+        public ICommand GETBYSCAN { get; }
 
         public MainNodeViewModel()
         {
@@ -94,10 +97,10 @@ namespace QuickDoc.ViewModel
             documents = new List<DocumentViewModel>();
 
             GOINTO = new GoIntoCommand(this);
+            GOBACK = new GoBackCommand();
+            GETBYCRITERIA = new GetByCriteriaCommand();
+            GETBYSCAN = new GetByScanCommand();
         }
-
-        public ICommand GOBACK { get; } = new GoBackCommand();
-        public ICommand GETBYCRITERIA { get; } = new GetByCriteriaCommand();
 
         public void GoInto()
         {
@@ -118,25 +121,15 @@ namespace QuickDoc.ViewModel
 
             switch (CurrentNode)
             {
-                case ProjectViewModel:
-                    foreach (var unit in (CurrentNode as ProjectViewModel).Units)
-                    {
-                        foreach (var document in unit.Documents)
-                        {
-                            Documents.Add(new DocumentViewModel(document));
-                        }
-                    }
-
-                    foreach (var document in (CurrentNode as ProjectViewModel).Documents)
-                    {
-                        Documents.Add(new DocumentViewModel(document));
-                    }
-
-                    break;
                 case UnitViewModel:
-                    foreach (var section in (CurrentNode as UnitViewModel).Sections)
+                    foreach (var section in (currentNode as UnitViewModel).Sections)
                     {
-                        foreach (var document in section.Documents)
+                        Children.Add(new SectionViewModel(section));
+                    }
+
+                    foreach (var section in Children)
+                    {
+                        foreach (var document in (section as SectionViewModel).Documents)
                         {
                             Documents.Add(new DocumentViewModel(document));
                         }
@@ -149,9 +142,14 @@ namespace QuickDoc.ViewModel
 
                     break;
                 case SectionViewModel:
-                    foreach (var tag in (CurrentNode as SectionViewModel).Tags)
+                    foreach (var tag in (currentNode as SectionViewModel).Tags)
                     {
-                        foreach (var document in tag.Documents)
+                        Children.Add(new TagViewModel(tag));
+                    }
+
+                    foreach (var tag in Children)
+                    {
+                        foreach (var document in (tag as TagViewModel).Documents)
                         {
                             Documents.Add(new DocumentViewModel(document));
                         }
@@ -164,9 +162,14 @@ namespace QuickDoc.ViewModel
 
                     break;
                 case TagViewModel:
-                    foreach (var item in (CurrentNode as TagViewModel).Items)
+                    foreach (var item in (currentNode as TagViewModel).Items)
                     {
-                        foreach (var document in item.Documents)
+                        Children.Add(new ItemViewModel(item));
+                    }
+
+                    foreach (var item in Children)
+                    {
+                        foreach (var document in (item as ItemViewModel).Documents)
                         {
                             Documents.Add(new DocumentViewModel(document));
                         }
@@ -354,13 +357,15 @@ namespace QuickDoc.ViewModel
                                     Documents.Add(new DocumentViewModel(document));
                                 }
                             }
-
                         }
-                        
                     }
                 }
             }
         }
+        
+        public void GetByScan()
+        {
 
+        }
     }
 }

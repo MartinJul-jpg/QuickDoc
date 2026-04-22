@@ -8,12 +8,6 @@ namespace QuickDoc.ViewModel
     public class TagViewModel : NodeViewModel
     {
         private Tag tag;
-
-        public int TagID
-        {
-            get { return tag.TagID; }
-            set { tag.TagID = value; }
-        }
         public string TagNumber
         {
             get { return tag.TagNumber; }
