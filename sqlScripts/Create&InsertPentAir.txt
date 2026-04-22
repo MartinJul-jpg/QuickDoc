@@ -3154,7 +3154,7 @@ CREATE PROCEDURE sp_ReadItemFromDatabase
 AS
 BEGIN
 SELECT IT.ItemVariantID, IT.ItemNumber, IT.ItemDescription, 
-IM.ItemID, IM.ProjectNumber, IM.ItemLineNumber, IM.UnitOfMeasure, IM.Quantity, IM.TagNumber,
+IM.ItemID, IM.ProjectNumber, IM.ItemLineNumber, IM.UnitOfMeasure, IM.Quantity, IM.TagNumber, IM.SerialNumber,
 PR.ProcurementID, PR.ProcurementStatus, PR.PurchaseOrderNumber,
 IMD.ITitle, IMD.IDocDescription, IMD.IFile
 FROM ITEMVARIANT IT
