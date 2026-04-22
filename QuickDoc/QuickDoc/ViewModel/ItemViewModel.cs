@@ -44,6 +44,12 @@ namespace QuickDoc.ViewModel
             get { return item.UnitOfMeasure; }
             set { item.UnitOfMeasure = value; }
         }
+        public string SerialNumber
+        {
+            get { return item.SerialNumber; }
+            set { item.SerialNumber = value; }
+        }
+
         public Procurement ItemProcurement
         {
             get { return item.ItemProcurement; }

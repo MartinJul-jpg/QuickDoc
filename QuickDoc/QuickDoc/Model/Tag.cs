@@ -6,7 +6,6 @@ namespace QuickDoc.Model
 {
     public class Tag
     {
-        public int TagID { get; set; }
         public string TagNumber { get; set; }
         public string UnionTagNumber { get; set; }
         public string Description { get; set; }
