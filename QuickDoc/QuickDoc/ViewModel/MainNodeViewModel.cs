@@ -106,6 +106,7 @@ namespace QuickDoc.ViewModel
         public ICommand GOBACK { get; }
         public ICommand GETBYCRITERIA { get; }
         public ICommand GOTOSCAN { get; }
+        public ICommand GETBYSCAN { get; }
 
         public MainNodeViewModel()
         {
@@ -123,6 +124,7 @@ namespace QuickDoc.ViewModel
             GOBACK = new GoBackCommand();
             GETBYCRITERIA = new GetByCriteriaCommand();
             GOTOSCAN = new GoToScanCommand();
+            GETBYSCAN = new GetByScanCommand();
         }
 
         public void GoInto()
@@ -229,6 +231,11 @@ namespace QuickDoc.ViewModel
                     }
                 }
             }
+        }
+
+        public void GetByScan()
+        {
+            GetByCriteria();
         }
     }
 }
