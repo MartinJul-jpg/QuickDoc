@@ -92,5 +92,23 @@ namespace QuickDoc.Repository
                 items = result;
             }
         }
+
+        public void UpdateSerialNumber(string tagNumber, string newSerialNumber, string projectNum)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                SqlCommand updatecmd = new SqlCommand(@"EXEC sp_InsertNewSerialNumberIntoItem @newSerialNumber, @matchingTagNumber", con);
+                
+                updatecmd.Parameters.AddWithValue("@newSerialNumber", newSerialNumber);
+                updatecmd.Parameters.AddWithValue("@matchingTagNumber", tagNumber);
+
+
+
+
+                con.Close();
+
+            }
+        }
     }
 }

@@ -107,6 +107,7 @@ namespace QuickDoc.ViewModel
         public ICommand GETBYCRITERIA { get; }
         public ICommand GOTOSCAN { get; }
         public ICommand GETBYSCAN { get; }
+        public ICommand WRITESERIALNUMBER { get; }
 
         public MainNodeViewModel()
         {
@@ -125,6 +126,7 @@ namespace QuickDoc.ViewModel
             GETBYCRITERIA = new GetByCriteriaCommand();
             GOTOSCAN = new GoToScanCommand();
             GETBYSCAN = new GetByScanCommand();
+            WRITESERIALNUMBER = new WriteToSerialCommand();
         }
 
         public void GoInto()
@@ -236,6 +238,13 @@ namespace QuickDoc.ViewModel
         public void GetByScan()
         {
             GetByCriteria();
+        } 
+
+        public void WriteToSerialNumber()
+        {
+            _itemRepo.UpdateSerialNumber();
         }
+
+        
     }
 }
