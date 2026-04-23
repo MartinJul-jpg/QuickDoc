@@ -1,7 +1,6 @@
 ﻿using QuickDoc.Command;
 using QuickDoc.Repository;
 using QuickDoc.Stores;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -42,6 +41,30 @@ namespace QuickDoc.ViewModel
             set 
             {
                 currentNode = value;
+
+                switch (currentNode)
+                {
+                    case ProjectViewModel:
+                        Children = (currentNode as ProjectViewModel).Units;
+                        Documents = (currentNode as ProjectViewModel).Documents;
+                        break;
+                    case UnitViewModel:
+                        Children = (currentNode as UnitViewModel).Sections;
+                        Documents = (currentNode as UnitViewModel).Documents;
+                        break;
+                    case SectionViewModel:
+                        Children = (currentNode as SectionViewModel).Tags;
+                        Documents = (currentNode as SectionViewModel).Documents;
+                        break;
+                    case TagViewModel:
+                        Children = (currentNode as TagViewModel).Items;
+                        Documents = (currentNode as TagViewModel).Documents;
+                        break;
+                    case ItemViewModel:
+                        Documents = (currentNode as ItemViewModel).Documents;
+                        break;
+                }
+
                 OnPropertyChanged("CurrentNode");
             }
         }
@@ -82,8 +105,8 @@ namespace QuickDoc.ViewModel
         public ICommand GOINTO { get; }
         public ICommand GOBACK { get; }
         public ICommand GETBYCRITERIA { get; }
-        public ICommand GETBYSCAN { get; }
         public ICommand GOTOSCAN { get; }
+        public ICommand GETBYSCAN { get; }
 
         public MainNodeViewModel()
         {
@@ -100,8 +123,8 @@ namespace QuickDoc.ViewModel
             GOINTO = new GoIntoCommand(this);
             GOBACK = new GoBackCommand();
             GETBYCRITERIA = new GetByCriteriaCommand();
-            GETBYSCAN = new GetByScanCommand();
             GOTOSCAN = new GoToScanCommand();
+            GETBYSCAN = new GetByScanCommand();
         }
 
         public void GoInto()
@@ -117,80 +140,10 @@ namespace QuickDoc.ViewModel
                 priorNode = priorNodeUnderConstruction;
             }
 
-            CurrentNode = SelectedChild;
             Children = new List<NodeViewModel>();
             Documents = new List<DocumentViewModel>();
 
-            switch (CurrentNode)
-            {
-                case UnitViewModel:
-                    foreach (var section in (currentNode as UnitViewModel).Sections)
-                    {
-                        Children.Add(new SectionViewModel(section));
-                    }
-
-                    foreach (var section in Children)
-                    {
-                        foreach (var document in (section as SectionViewModel).Documents)
-                        {
-                            Documents.Add(new DocumentViewModel(document));
-                        }
-                    }
-
-                    foreach (var document in (CurrentNode as UnitViewModel).Documents)
-                    {
-                        Documents.Add(new DocumentViewModel(document));
-                    }
-
-                    break;
-                case SectionViewModel:
-                    foreach (var tag in (currentNode as SectionViewModel).Tags)
-                    {
-                        Children.Add(new TagViewModel(tag));
-                    }
-
-                    foreach (var tag in Children)
-                    {
-                        foreach (var document in (tag as TagViewModel).Documents)
-                        {
-                            Documents.Add(new DocumentViewModel(document));
-                        }
-                    }
-
-                    foreach (var document in (CurrentNode as SectionViewModel).Documents)
-                    {
-                        Documents.Add(new DocumentViewModel(document));
-                    }
-
-                    break;
-                case TagViewModel:
-                    foreach (var item in (currentNode as TagViewModel).Items)
-                    {
-                        Children.Add(new ItemViewModel(item));
-                    }
-
-                    foreach (var item in Children)
-                    {
-                        foreach (var document in (item as ItemViewModel).Documents)
-                        {
-                            Documents.Add(new DocumentViewModel(document));
-                        }
-                    }
-
-                    foreach (var document in (CurrentNode as TagViewModel).Documents)
-                    {
-                        Documents.Add(new DocumentViewModel(document));
-                    }
-
-                    break;
-                case ItemViewModel:
-                    foreach (var document in (CurrentNode as ItemViewModel).Documents)
-                    {
-                        Documents.Add(new DocumentViewModel(document));
-                    }
-
-                    break;
-            }
+            CurrentNode = SelectedChild;
         }
 
         public void GoBack()
@@ -234,60 +187,23 @@ namespace QuickDoc.ViewModel
                     currentProjectNumber = Criteria.ProjectCriteria;
                 }
 
+                Children = new List<NodeViewModel>();
+                Documents = new List<DocumentViewModel>();
+
                 if ( !(unitFull || sectionFull || tagFull || itemFull) ) //Looking for a specific project
                 {
                     CurrentNode = new ProjectViewModel(_projectRepo.GetProject());
-                    Children = new List<NodeViewModel>();
-                    Documents = new List<DocumentViewModel>();
-
-                    foreach (var unit in (CurrentNode as ProjectViewModel).Units)
-                    {
-                        Children.Add(new UnitViewModel(unit));
-
-                        foreach (var document in unit.Documents)
-                        {
-                            Documents.Add(new DocumentViewModel(document));
-                        }
-                    }
-
-                    foreach (var document in (CurrentNode as ProjectViewModel).Documents)
-                    {
-                        Documents.Add(new DocumentViewModel(document));
-                    }
                 }
                 else if (tagFull || itemFull)
                 {
                     if (tagFull && !itemFull) //Looking for a specific tag
                     {
                         CurrentNode = new TagViewModel(_tagRepo.GetTag(Criteria.TagCriteria));
-                        Children = new List<NodeViewModel>();
-                        Documents = new List<DocumentViewModel>();
-
-                        foreach (var item in (CurrentNode as TagViewModel).Items)
-                        {
-                            Children.Add(new ItemViewModel(item));
-
-                            foreach (var document in (item.Documents))
-                            {
-                                Documents.Add(new DocumentViewModel(document));
-                            }
-                        }
-
-                        foreach (var document in (CurrentNode as TagViewModel).Documents)
-                        {
-                            Documents.Add(new DocumentViewModel(document));
-                        }
                     }
                     else if ( (!tagFull && itemFull) || (tagFull && itemFull) ) //Looking for an item type (also catches the silly event where someone fills out tag at the same time)
                     {
                         CurrentNode = new ItemViewModel(_itemRepo.GetItem(Criteria.ItemCriteria));
                         Children.Clear();
-                        Documents = new List<DocumentViewModel>();
-
-                        foreach (var document in (CurrentNode as ItemViewModel).Documents)
-                        {
-                            Documents.Add(new DocumentViewModel(document));
-                        }
                     }
                 }
                 else
@@ -295,93 +211,30 @@ namespace QuickDoc.ViewModel
                     if (unitFull && sectionFull) //Looking for a specific section
                     {
                         CurrentNode = new SectionViewModel(_sectionRepo.getSection(Criteria.SectionCriteria, Criteria.UnitCriteria, _unitRepo));
-                        Children = new List<NodeViewModel>();
-                        Documents = new List<DocumentViewModel>();
-
-                        foreach (var tag in (CurrentNode as SectionViewModel).Tags)
-                        {
-                            Children.Add(new TagViewModel(tag));
-
-                            foreach (var document in tag.Documents)
-                            {
-                                Documents.Add(new DocumentViewModel(document));
-                            }
-                        }
-
-                        foreach (var document in (CurrentNode as SectionViewModel).Documents)
-                        {
-                            Documents.Add(new DocumentViewModel(document));
-                        }
                     }
                     else if (unitFull && !sectionFull) //Looking for a specific unit
                     {
                         CurrentNode = new UnitViewModel(_unitRepo.GetUnit(Criteria.UnitCriteria));
-                        Children = new List<NodeViewModel>();
-                        Documents = new List<DocumentViewModel>();
-
-                        foreach (var section in (CurrentNode as UnitViewModel).Sections)
-                        {
-                            Children.Add(new SectionViewModel(section));
-
-                            foreach (var document in section.Documents)
-                            {
-                                Documents.Add(new DocumentViewModel(document));
-                            }
-                        }
-
-                        foreach (var document in (CurrentNode as UnitViewModel).Documents)
-                        {
-                            Documents.Add(new DocumentViewModel(document));
-                        }
                     }
                     else if (!unitFull && sectionFull) //Looking for several specific sections
                     {
-                        List<SectionViewModel> sections = new List<SectionViewModel>();
-                        foreach (var section in _sectionRepo.GetSections(Criteria.SectionCriteria))
+                        if (_sectionRepo.GetSections(criteria.SectionCriteria).Count != 0)
                         {
-                            sections.Add(new SectionViewModel(section));
+                            CurrentNode = new SectionViewModel(_sectionRepo.GetSections(Criteria.SectionCriteria).First());
                         }
-                        if (sections.Count == 0)
-                        {
-                            currentNode = new SectionViewModel(_sectionRepo.getSection(Criteria.SectionCriteria, Criteria.UnitCriteria, _unitRepo));
-                        } 
-
                         else
                         {
-                            CurrentNode = sections.First();
-                            Children.Clear();
-                            Documents = new List<DocumentViewModel>();
-
-                            foreach (SectionViewModel section in sections)
-                            {
-                                foreach (var document in section.Documents)
-                                {
-                                    Documents.Add(new DocumentViewModel(document));
-                                }
-                            }
+                            CurrentNode = new SectionViewModel(_sectionRepo.getSection(Criteria.SectionCriteria, Criteria.UnitCriteria, _unitRepo));
                         }
+                        
+                        Children.Clear();
                     }
                 }
             }
         }
-        
+
         public void GetByScan()
         {
-            string[] scanCriteria = Criteria.ScanCriteria.Split(';');
-
-            string sectionString = scanCriteria[2];
-
-            Criteria.ProjectCriteria = scanCriteria[0];
-            Criteria.UnitCriteria = scanCriteria[1];
-
-            if (int.TryParse(sectionString, out int sectionNumber))
-            {
-                Criteria.SectionCriteria = sectionNumber;
-            }
-
-            Criteria.TagCriteria = scanCriteria[3];
-            Criteria.ItemCriteria = scanCriteria[4];
-
             GetByCriteria();
         }
     }

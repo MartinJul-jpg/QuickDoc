@@ -20,16 +20,33 @@ namespace QuickDoc.ViewModel
             get { return project.Description; }
             set { project.Description = value; }
         }
-        public List<Unit> Units
+        public List<NodeViewModel> Units
         {
+            get 
+            { 
+                List<NodeViewModel> units = new List<NodeViewModel>();
 
-            get { return project.Units; }
-            set { project.Units = value; }
+                foreach (Unit unit in project.Units)
+                {
+                    units.Add(new UnitViewModel(unit));
+                }
+
+                return units; 
+            }
         }
-        public List<Document> Documents
+        public List<DocumentViewModel> Documents
         {
-            get { return project.Documents; }
-            set { project.Documents = value; }
+            get
+            {
+                List<DocumentViewModel> documents = new List<DocumentViewModel>();
+
+                foreach (Document document in project.Documents)
+                {
+                    documents.Add(new DocumentViewModel(document));
+                }
+
+                return documents;
+            }
         }
 
         public ProjectViewModel(Project project)
