@@ -133,6 +133,8 @@ namespace QuickDoc.ViewModel
 
         public void GoInto()
         {
+            goingBack = false;
+
             if (priorNode != null)
             {
                 MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(priorNode, CurrentNode, Children, Documents);
