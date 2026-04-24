@@ -10,6 +10,7 @@ namespace QuickDoc.ViewModel
     public class MainNodeViewModel : INotifyPropertyChanged
     {
         public MainNodeStateContainer priorNode;
+        private bool goingBack;
         private string currentProjectNumber;
 
         private ItemRepository _itemRepo;
@@ -42,27 +43,30 @@ namespace QuickDoc.ViewModel
             {
                 currentNode = value;
 
-                switch (currentNode)
+                if (!goingBack)
                 {
-                    case ProjectViewModel:
-                        Children = (currentNode as ProjectViewModel).Units;
-                        Documents = (currentNode as ProjectViewModel).Documents;
-                        break;
-                    case UnitViewModel:
-                        Children = (currentNode as UnitViewModel).Sections;
-                        Documents = (currentNode as UnitViewModel).Documents;
-                        break;
-                    case SectionViewModel:
-                        Children = (currentNode as SectionViewModel).Tags;
-                        Documents = (currentNode as SectionViewModel).Documents;
-                        break;
-                    case TagViewModel:
-                        Children = (currentNode as TagViewModel).Items;
-                        Documents = (currentNode as TagViewModel).Documents;
-                        break;
-                    case ItemViewModel:
-                        Documents = (currentNode as ItemViewModel).Documents;
-                        break;
+                    switch (currentNode)
+                    {
+                        case ProjectViewModel:
+                            Children = (currentNode as ProjectViewModel).Units;
+                            Documents = (currentNode as ProjectViewModel).Documents;
+                            break;
+                        case UnitViewModel:
+                            Children = (currentNode as UnitViewModel).Sections;
+                            Documents = (currentNode as UnitViewModel).Documents;
+                            break;
+                        case SectionViewModel:
+                            Children = (currentNode as SectionViewModel).Tags;
+                            Documents = (currentNode as SectionViewModel).Documents;
+                            break;
+                        case TagViewModel:
+                            Children = (currentNode as TagViewModel).Items;
+                            Documents = (currentNode as TagViewModel).Documents;
+                            break;
+                        case ItemViewModel:
+                            Documents = (currentNode as ItemViewModel).Documents;
+                            break;
+                    }
                 }
 
                 OnPropertyChanged("CurrentNode");
@@ -148,6 +152,8 @@ namespace QuickDoc.ViewModel
 
         public void GoBack()
         {
+            goingBack = true;
+
             if (priorNode != null)
             {
                 CurrentNode = priorNode.CurrentNode;
@@ -166,6 +172,8 @@ namespace QuickDoc.ViewModel
 
         public void GetByCriteria()
         {
+            goingBack = false;
+
             priorNode = null;
 
             bool projectFull = !string.IsNullOrEmpty(Criteria.ProjectCriteria);
