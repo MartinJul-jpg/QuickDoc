@@ -43,7 +43,11 @@ namespace QuickDoc.ViewModel
             {
                 currentNode = value;
 
-                if (!goingBack)
+                if (goingBack)
+                {
+                    goingBack = false;
+                }
+                else
                 {
                     switch (currentNode)
                     {
@@ -133,8 +137,6 @@ namespace QuickDoc.ViewModel
 
         public void GoInto()
         {
-            goingBack = false;
-
             if (priorNode != null)
             {
                 MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(priorNode, CurrentNode, Children, Documents);
@@ -174,8 +176,6 @@ namespace QuickDoc.ViewModel
 
         public void GetByCriteria()
         {
-            goingBack = false;
-
             priorNode = null;
 
             bool projectFull = !string.IsNullOrEmpty(Criteria.ProjectCriteria);
