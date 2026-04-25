@@ -48,10 +48,21 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        public override List<NodeViewModel> GetChildren()
+        {
+            return Sections;
+        }
+
+        public override List<DocumentViewModel> GetDocuments()
+        {
+            return Documents;
+        }
+
         public UnitViewModel(Unit unit)
         {
             this.unit = unit;
         }
+
         public override string ToString()
         {
             return $"{UnitNumber} - {Description}";

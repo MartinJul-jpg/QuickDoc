@@ -77,6 +77,16 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        public override List<NodeViewModel> GetChildren()
+        {
+            return Items;
+        }
+
+        public override List<DocumentViewModel> GetDocuments()
+        {
+            return Documents;
+        }
+
         public TagViewModel(Tag tag)
         {
             this.tag = tag;
