@@ -72,7 +72,7 @@ namespace QuickDoc.ViewModel
 
         public override List<NodeViewModel> GetChildren()
         {
-            return null;
+            return new List<NodeViewModel>();
         }
 
         public override List<DocumentViewModel> GetDocuments()

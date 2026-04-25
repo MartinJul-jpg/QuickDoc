@@ -56,7 +56,6 @@ namespace QuickDoc.ViewModel
                     {
                         gettingNodeType = false;
                     }
-                    else if (currentNode is ItemViewModel) { }
                     else
                     {
                         Children = currentNode.GetChildren();
