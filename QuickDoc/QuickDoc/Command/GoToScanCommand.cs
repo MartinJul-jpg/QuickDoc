@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace QuickDoc.Command
 {
-    internal class GetByScanCommand : ICommand
+    internal class GoToScanCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {
@@ -17,29 +17,14 @@ namespace QuickDoc.Command
 
         public bool CanExecute(object parameter)
         {
-            bool check = true;
-
-            if (parameter is MainNodeViewModel mnvm)
-            {
-
-                if (string.IsNullOrEmpty(mnvm.Criteria.ProjectCriteria))
-
-                {
-                    check = false;
-                }
-            }
-
-            CommandManager.InvalidateRequerySuggested();
-
-            return check;
+            return true;
         }
 
         public void Execute(object parameter)
         {
             if (parameter is MainNodeViewModel mnvm)
             {
-                mnvm.GetByScan();
-                mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
+                mnvm.NavigationStore.CurrentView = new ScanView(mnvm.NavigationStore);
             }
         }
     }

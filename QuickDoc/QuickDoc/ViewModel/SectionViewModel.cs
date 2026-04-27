@@ -25,15 +25,43 @@ namespace QuickDoc.ViewModel
             get { return section.Title; }
             set { section.Title = value; }
         }
-        public List<Document> Documents
+        public List<NodeViewModel> Tags
         {
-            get { return section.Documents; }
-            set { section.Documents = value; }
+            get
+            {
+                List<NodeViewModel> tags = new List<NodeViewModel>();
+
+                foreach (Tag tag in section.Tags)
+                {
+                    tags.Add(new TagViewModel(tag));
+                }
+
+                return tags;
+            }
         }
-        public List<Tag> Tags
+        public List<DocumentViewModel> Documents
         {
-            get { return section.Tags; }
-            set { section.Tags = value; }
+            get
+            {
+                List<DocumentViewModel> documents = new List<DocumentViewModel>();
+
+                foreach (Document document in section.Documents)
+                {
+                    documents.Add(new DocumentViewModel(document));
+                }
+
+                return documents;
+            }
+        }
+
+        public override List<NodeViewModel> GetChildren()
+        {
+            return Tags;
+        }
+
+        public override List<DocumentViewModel> GetDocuments()
+        {
+            return Documents;
         }
 
         public SectionViewModel(Section section)

@@ -48,15 +48,43 @@ namespace QuickDoc.ViewModel
             get { return tag.BelongsTo; }
             set { tag.BelongsTo = value; }
         }
-        public List<Item> Items
+        public List<NodeViewModel> Items
         {
-            get { return tag.Items; }
-            set { tag.Items = value; }
+            get
+            {
+                List<NodeViewModel> items = new List<NodeViewModel>();
+
+                foreach (Item item in tag.Items)
+                {
+                    items.Add(new ItemViewModel(item));
+                }
+
+                return items;
+            }
         }
-        public List<Document> Documents
+        public List<DocumentViewModel> Documents
         {
-            get { return tag.Documents; }
-            set { tag.Documents = value; }
+            get
+            {
+                List<DocumentViewModel> documents = new List<DocumentViewModel>();
+
+                foreach (Document document in tag.Documents)
+                {
+                    documents.Add(new DocumentViewModel(document));
+                }
+
+                return documents;
+            }
+        }
+
+        public override List<NodeViewModel> GetChildren()
+        {
+            return Items;
+        }
+
+        public override List<DocumentViewModel> GetDocuments()
+        {
+            return Documents;
         }
 
         public TagViewModel(Tag tag)

@@ -6,6 +6,8 @@ namespace QuickDoc.ViewModel
 {
     public abstract class NodeViewModel
     {
-        //are you feeling it now mr crabz
+        public abstract List<NodeViewModel> GetChildren();
+
+        public abstract List<DocumentViewModel> GetDocuments();
     }
 }

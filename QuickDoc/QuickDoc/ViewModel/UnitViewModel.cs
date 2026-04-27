@@ -19,22 +19,50 @@ namespace QuickDoc.ViewModel
             get { return unit.Description; }
             set { unit.Description = value; }
         }
-        public List<Section> Sections
+        public List<NodeViewModel> Sections
         {
-            get { return unit.Sections; }
-            set { unit.Sections = value; }
+            get
+            {
+                List<NodeViewModel> sections = new List<NodeViewModel>();
+
+                foreach (Section section in unit.Sections)
+                {
+                    sections.Add(new SectionViewModel(section));
+                }
+
+                return sections;
+            }
+        }
+        public List<DocumentViewModel> Documents
+        {
+            get
+            {
+                List<DocumentViewModel> documents = new List<DocumentViewModel>();
+
+                foreach (Document document in unit.Documents)
+                {
+                    documents.Add(new DocumentViewModel(document));
+                }
+
+                return documents;
+            }
         }
 
-        public List<Document> Documents
+        public override List<NodeViewModel> GetChildren()
         {
-            get { return unit.Documents; }
-            set { unit.Documents = value; }
+            return Sections;
+        }
+
+        public override List<DocumentViewModel> GetDocuments()
+        {
+            return Documents;
         }
 
         public UnitViewModel(Unit unit)
         {
             this.unit = unit;
         }
+
         public override string ToString()
         {
             return $"{UnitNumber} - {Description}";

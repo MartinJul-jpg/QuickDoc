@@ -20,7 +20,7 @@ namespace QuickDoc.Repository
             ConnectionString = config.GetConnectionString("MyDBConnection");
         }
 
-        // To Find a specific item
+        // To find an item type
         public Item GetItem(string itemNumber)
         {
             Item item;
