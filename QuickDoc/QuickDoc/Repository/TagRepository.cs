@@ -26,7 +26,7 @@ namespace QuickDoc.Repository
             bool exists = tags.Any(x => x.TagNumber == tagNumber); 
             if (exists == false)
             {
-                return new Tag(null, null, null, null, null, null, null, null, 0);
+                return new Tag(null, null, null, null, null, null, null, null, 0, null);
             }
             else
             {
@@ -35,10 +35,10 @@ namespace QuickDoc.Repository
             
         }
 
-        public List<Tag> GetSectionsChildren(int sectionNr)
+        public List<Tag> GetSectionsChildren(int sectionNr, string unitnr)
         {
-            return tags.Where(x => x.SectionParentKey == sectionNr).ToList();
-        }
+            return tags.Where(x => x.SectionParentKey == sectionNr && x.UnitGrandpa == unitnr).ToList();
+        } 
 
         public void ReadFromDatabase(string projectNum, ItemRepository ItemRepo)
         {
@@ -62,13 +62,15 @@ namespace QuickDoc.Repository
                         string customerTag = dr["CustomerTag"] == DBNull.Value ? "" : Convert.ToString(dr["CustomerTag"]);
                         string vendorTag = dr["VendorTag"] == DBNull.Value ? "" : Convert.ToString(dr["VendorTag"]);
                         string belongsTo = dr["BelongsTo"] == DBNull.Value ? "" : Convert.ToString(dr["BelongsTo"]);
-                        int sectionNr = (int)dr["SectionNumber"];
+                        int sectionNr = dr["SectionNumber"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SectionNumber"]);
+                        string unitNr = dr["UnitNumber"] == DBNull.Value ? "" : Convert.ToString(dr["UnitNumber"]);
+                        
                         //FILE
                         string title = dr["TTitle"] == DBNull.Value ? "" : Convert.ToString(dr["TTitle"]);
                         string fileDescription = dr["TDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["TDocDescription"]);
                         string filepath = dr["TFile"] == DBNull.Value ? "" : Convert.ToString(dr["TFile"]);
 
-                        Tag tag = new Tag(tagNum, unionTag, description, lineNum, haffmanTag, vendorTag, customerTag, belongsTo, sectionNr);
+                        Tag tag = new Tag(tagNum, unionTag, description, lineNum, haffmanTag, vendorTag, customerTag, belongsTo, sectionNr, unitNr);
                         //For Children
 
                         ResultChildren = ItemRepo.GetTagsChildren(tagNum);
