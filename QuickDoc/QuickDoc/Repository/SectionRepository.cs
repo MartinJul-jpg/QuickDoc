@@ -72,7 +72,7 @@ namespace QuickDoc.Repository
 
                         Section section = new Section(SectionNumber, OldSectionNumber, Title, ParentKey);
 
-                        ResultChildren = tagRepo.GetSectionsChildren(SectionNumber);
+                        ResultChildren = tagRepo.GetSectionsChildren(SectionNumber, ParentKey);
 
                         if (!(title == "" && description == "" && filepath == ""))
                         {

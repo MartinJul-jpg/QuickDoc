@@ -43,7 +43,12 @@
 
                 <StackPanel Margin="20,15,20,15">
                     <Label Content="Section" HorizontalAlignment="Left"/>
-                    <TextBox TextWrapping="Wrap" Text="{Binding Criteria.SectionCriteria, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBox TextWrapping="Wrap"
+                             Text="{Binding Criteria.SectionCriteria,
+                                            UpdateSourceTrigger=PropertyChanged,
+                                            StringFormat={}{0:#}}"
+                             VerticalAlignment="Top"
+                             FontSize="16"/>
                 </StackPanel>
 
                 <StackPanel Margin="20,15,20,15">
