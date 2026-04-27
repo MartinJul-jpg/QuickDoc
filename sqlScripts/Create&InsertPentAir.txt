@@ -3120,7 +3120,7 @@ CREATE PROCEDURE sp_ReadTagFromDatabase
 AS 
 BEGIN
 SELECT TG.TagNumber, TG.UnionTagNumber, TG.TagLineNumber, TG.TagDescription, TG.HaffmanTag, TG.CustomerTag, TG.VendorTag, TG.BelongsTo, TG.SectionNumber, 
-TGD.TTitle, TGD.TDocDescription, TGD.TFile
+TGD.TTitle, TGD.TDocDescription, TGD.TFile, TG.UnitNumber
 FROM TAG TG
 INNER JOIN TAGDOCUMENT TGD 
 	ON TG.ProjectNumber = TGD.ProjectNumber 
