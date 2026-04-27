@@ -49,6 +49,16 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        public override List<NodeViewModel> GetChildren()
+        {
+            return Units;
+        }
+
+        public override List<DocumentViewModel> GetDocuments()
+        {
+            return Documents;
+        }
+
         public ProjectViewModel(Project project)
         {
             this.project = project;

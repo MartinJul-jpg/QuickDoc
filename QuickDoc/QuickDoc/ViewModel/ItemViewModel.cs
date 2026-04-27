@@ -70,6 +70,16 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        public override List<NodeViewModel> GetChildren()
+        {
+            return new List<NodeViewModel>();
+        }
+
+        public override List<DocumentViewModel> GetDocuments()
+        {
+            return Documents;
+        }
+
         public ItemViewModel(Item item)
         {
             this.item = item;
