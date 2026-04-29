@@ -10,7 +10,7 @@ namespace QuickDoc.ViewModel
     public class MainNodeViewModel : INotifyPropertyChanged
     {
         private bool goingBack;
-        private bool gettingNodeType;
+        private bool gettingNodeTypeOrItem;
         private string currentProjectNumber;
 
         private ItemRepository _itemRepo;
@@ -52,9 +52,9 @@ namespace QuickDoc.ViewModel
                 {
                     Documents = currentNode.GetDocuments();
 
-                    if (gettingNodeType)
+                    if (gettingNodeTypeOrItem)
                     {
-                        gettingNodeType = false;
+                        gettingNodeTypeOrItem = false;
                     }
                     else
                     {
@@ -174,9 +174,9 @@ namespace QuickDoc.ViewModel
 
             bool projectFull = !string.IsNullOrEmpty(Criteria.ProjectCriteria);
             bool unitFull = !string.IsNullOrEmpty(Criteria.UnitCriteria);
+            bool sectionFull = Criteria.SectionCriteria != 0;
             bool tagFull = !string.IsNullOrEmpty(Criteria.TagCriteria);
             bool itemFull = !string.IsNullOrEmpty(Criteria.ItemCriteria);
-            bool sectionFull = Criteria.SectionCriteria != 0;
 
             if (projectFull)
             {
@@ -204,11 +204,17 @@ namespace QuickDoc.ViewModel
                     {
                         CurrentNode = new TagViewModel(_tagRepo.GetTag(Criteria.TagCriteria));
                     }
-                    else if ( (!tagFull && itemFull) || (tagFull && itemFull) ) //Looking for an item type (also catches the silly event where someone fills out tag at the same time)
+                    else if (!tagFull && itemFull) //Looking for an item type
                     {
-                        gettingNodeType = true;
+                        gettingNodeTypeOrItem = true;
 
-                        CurrentNode = new ItemViewModel(_itemRepo.GetItem(Criteria.ItemCriteria));
+                        CurrentNode = new ItemViewModel(_itemRepo.GetItemOfType(Criteria.ItemCriteria));
+                    }
+                    else if (tagFull && itemFull) //Looking for a specific item
+                    {
+                        gettingNodeTypeOrItem = true;
+
+                        CurrentNode = new ItemViewModel(_itemRepo.GetItem(Criteria.TagCriteria, Criteria.ItemCriteria));
                     }
                 }
                 else
@@ -223,7 +229,7 @@ namespace QuickDoc.ViewModel
                     }
                     else if (!unitFull && sectionFull) //Looking for several specific sections, in other words a section type
                     {
-                        gettingNodeType = true;
+                        gettingNodeTypeOrItem = true;
 
                         if (_sectionRepo.GetSections(criteria.SectionCriteria).Count != 0)
                         {
