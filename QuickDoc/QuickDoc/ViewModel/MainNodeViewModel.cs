@@ -109,6 +109,8 @@ namespace QuickDoc.ViewModel
         public ICommand GETBYCRITERIA { get; }
         public ICommand GOTOSCAN { get; }
         public ICommand GETBYSCAN { get; }
+        public ICommand UPDATESERIAL { get; }
+        public ICommand GOINTOSERIAL { get; }
 
         public MainNodeViewModel()
         {
@@ -127,6 +129,8 @@ namespace QuickDoc.ViewModel
             GETBYCRITERIA = new GetByCriteriaCommand();
             GOTOSCAN = new GoToScanCommand();
             GETBYSCAN = new GetByScanCommand();
+            UPDATESERIAL = new UpdateSerialCommand(this);
+            GOINTOSERIAL = new GoIntoSerialCommand();
         }
 
         public void GoInto()
@@ -247,6 +251,13 @@ namespace QuickDoc.ViewModel
         public void GetByScan()
         {
             GetByCriteria();
+        } 
+
+        public void UpdateSerialNumber(NodeViewModel nvm)
+        {
+            _itemRepo.UpdateSerialNumber((nvm as ItemViewModel ).ItemID, (nvm as ItemViewModel).SerialNumber);
         }
+
+        
     }
 }
