@@ -62,12 +62,22 @@
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonDefault}" />
 
 
+    <!-- Style for Border -->
+    <Style x:Key="BorderDefault" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#014e99"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="CornerRadius" Value="8"/>
+    </Style>
+
+    <!-- Makes it the default for ALL Borders -->
+    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderDefault}" />
+
     <!-- Style for TextBox -->
     <Style x:Key="DefaultTextbox" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="Padding" Value="2"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="3,1,1,1"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -77,9 +87,9 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
-                            Height="35">
+                            Height="30">
                         <ScrollViewer x:Name="PART_ContentHost"
-                                      FontSize="12"/>
+                                      FontSize="12" FontFamily="Comic Sans MS" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

@@ -14,7 +14,10 @@
         </Grid.RowDefinitions>
 
         <!-- Blue bar at the top -->
-        <Grid x:Name="PentairLogo" Grid.Row="0" Background="#014e99">
+        <Grid x:Name="PentairLogo" Grid.Row="0" Background="WhiteSmoke">
+            <Grid.Effect>
+                <DropShadowEffect/>
+            </Grid.Effect>
             <Image Margin="0,20,20,20" Source="pack://siteoforigin:,,,/Images/Pentair_Schroff_Logo.png" HorizontalAlignment="Right" Height="35"/>
         </Grid>
 
@@ -33,7 +36,7 @@
             <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,92" Grid.RowSpan="2">
                 <StackPanel Margin="20,15,20,15">
                     <Label Content="Project" HorizontalAlignment="Left"/>
-                    <TextBox TextWrapping="Wrap" Text="{Binding Criteria.ProjectCriteria, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding Criteria.ProjectCriteria, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" FontSize="16"/>
                 </StackPanel>
 
                 <StackPanel Margin="20,15,20,15">
