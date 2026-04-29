@@ -9,7 +9,6 @@ namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
-        public MainNodeStateContainer priorNode;
         private bool goingBack;
         private bool gettingNodeType;
         private string currentProjectNumber;
@@ -20,6 +19,7 @@ namespace QuickDoc.ViewModel
         private UnitRepository _unitRepo;
         private ProjectRepository _projectRepo;
 
+        public MainNodeStateContainer priorNode;
         public NavigationStore NavigationStore { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
