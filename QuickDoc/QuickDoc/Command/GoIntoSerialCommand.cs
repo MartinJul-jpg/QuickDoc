@@ -1,5 +1,5 @@
-﻿using QuickDoc.ViewModel;
-using QuickDoc.View;
+﻿using QuickDoc.View;
+using QuickDoc.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,13 +7,9 @@ using System.Windows.Input;
 
 namespace QuickDoc.Command
 {
-    public class WriteToSerialCommand : ICommand
+    public class GoIntoSerialCommand : ICommand
     {
-        private MainNodeViewModel _mainNodeViewModel;
-        public WriteToSerialCommand(MainNodeViewModel mvn)
-        {
-            _mainNodeViewModel = mvn;
-        }
+        private MainNodeViewModel mvm;
         public event EventHandler? CanExecuteChanged;
 
         public bool CanExecute(object? parameter)
@@ -25,8 +21,9 @@ namespace QuickDoc.Command
         {
             if (parameter is NodeViewModel nvm)
             {
-                _mainNodeViewModel.WriteToSerialNumber(nvm);
-                
+                mvm.CurrentNode = nvm;
+                mvm.GoInto();
+                mvm.NavigationStore.CurrentView = new NodeView(mvm.NavigationStore);
             }
         }
     }
