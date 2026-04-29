@@ -9,7 +9,8 @@ namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
-        public MainNodeStateContainer priorNode;
+        private bool goingBack;
+        private bool gettingNodeType;
         private string currentProjectNumber;
 
         private ItemRepository _itemRepo;
@@ -18,6 +19,7 @@ namespace QuickDoc.ViewModel
         private UnitRepository _unitRepo;
         private ProjectRepository _projectRepo;
 
+        public MainNodeStateContainer priorNode;
         public NavigationStore NavigationStore { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -42,27 +44,27 @@ namespace QuickDoc.ViewModel
             {
                 currentNode = value;
 
-                switch (currentNode)
+                if (goingBack)
                 {
-                    case ProjectViewModel:
-                        Children = (currentNode as ProjectViewModel).Units;
-                        Documents = (currentNode as ProjectViewModel).Documents;
-                        break;
-                    case UnitViewModel:
-                        Children = (currentNode as UnitViewModel).Sections;
-                        Documents = (currentNode as UnitViewModel).Documents;
-                        break;
-                    case SectionViewModel:
-                        Children = (currentNode as SectionViewModel).Tags;
-                        Documents = (currentNode as SectionViewModel).Documents;
-                        break;
-                    case TagViewModel:
-                        Children = (currentNode as TagViewModel).Items;
-                        Documents = (currentNode as TagViewModel).Documents;
-                        break;
-                    case ItemViewModel:
-                        Documents = (currentNode as ItemViewModel).Documents;
-                        break;
+                    goingBack = false;
+                }
+                else
+                {
+                    Documents = currentNode.GetDocuments();
+
+                    if (gettingNodeType)
+                    {
+                        gettingNodeType = false;
+                    }
+                    else
+                    {
+                        Children = currentNode.GetChildren();
+
+                        foreach (NodeViewModel child in Children)
+                        {
+                            Documents.Concat<DocumentViewModel>(child.GetDocuments());
+                        }
+                    }
                 }
 
                 OnPropertyChanged("CurrentNode");
@@ -150,6 +152,8 @@ namespace QuickDoc.ViewModel
 
         public void GoBack()
         {
+            goingBack = true;
+
             if (priorNode != null)
             {
                 CurrentNode = priorNode.CurrentNode;
@@ -204,8 +208,9 @@ namespace QuickDoc.ViewModel
                     }
                     else if ( (!tagFull && itemFull) || (tagFull && itemFull) ) //Looking for an item type (also catches the silly event where someone fills out tag at the same time)
                     {
+                        gettingNodeType = true;
+
                         CurrentNode = new ItemViewModel(_itemRepo.GetItem(Criteria.ItemCriteria));
-                        Children.Clear();
                     }
                 }
                 else
@@ -218,8 +223,10 @@ namespace QuickDoc.ViewModel
                     {
                         CurrentNode = new UnitViewModel(_unitRepo.GetUnit(Criteria.UnitCriteria));
                     }
-                    else if (!unitFull && sectionFull) //Looking for several specific sections
+                    else if (!unitFull && sectionFull) //Looking for several specific sections, in other words a section type
                     {
+                        gettingNodeType = true;
+
                         if (_sectionRepo.GetSections(criteria.SectionCriteria).Count != 0)
                         {
                             CurrentNode = new SectionViewModel(_sectionRepo.GetSections(Criteria.SectionCriteria).First());
@@ -228,8 +235,6 @@ namespace QuickDoc.ViewModel
                         {
                             CurrentNode = new SectionViewModel(_sectionRepo.getSection(Criteria.SectionCriteria, Criteria.UnitCriteria, _unitRepo));
                         }
-                        
-                        Children.Clear();
                     }
                 }
             }

@@ -17,12 +17,14 @@ namespace QuickDoc.Model
 
         public int SectionParentKey; // SectionNumber
 
+        public string UnitGrandpa; // Matching specific UnitNumber for specific section
+
         public List<Item> Items { get; set; }
         public List<Document> Documents { get; set; }
 
         public Tag(string tagNumber, string unionTagNumber, string description, string lineNumber, 
             string haffmanTag, string vendorTag, string customerTag, 
-            string belongsTo, int sectionParentKey) // Big LINE //How long? just to suffer
+            string belongsTo, int sectionParentKey, string unitgrandparent) // Big LINE //How long? just to suffer
         {
             TagNumber = tagNumber;
             UnionTagNumber = unionTagNumber;
@@ -33,6 +35,7 @@ namespace QuickDoc.Model
             CustomerTag = customerTag;
             BelongsTo = belongsTo;
             SectionParentKey = sectionParentKey;
+            UnitGrandpa = unitgrandparent;
             Documents = new List<Document>();
             Items = new List<Item>();
         }

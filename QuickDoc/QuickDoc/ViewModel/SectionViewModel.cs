@@ -54,6 +54,16 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        public override List<NodeViewModel> GetChildren()
+        {
+            return Tags;
+        }
+
+        public override List<DocumentViewModel> GetDocuments()
+        {
+            return Documents;
+        }
+
         public SectionViewModel(Section section)
         {
             this.section = section;
