@@ -93,15 +93,15 @@ namespace QuickDoc.Repository
             }
         }
 
-        public void UpdateSerialNumber(string tagNumber, string newSerialNumber, string projectNum)
+        public void UpdateSerialNumber(int itemid, string newSerialNumber)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand updatecmd = new SqlCommand(@"EXEC sp_InsertNewSerialNumberIntoItem @newSerialNumber, @matchingTagNumber", con);
+                SqlCommand updatecmd = new SqlCommand(@"EXEC sp_InsertNewSerialNumberIntoItem @newSerialNumber, @ItemID", con);
                 
                 updatecmd.Parameters.AddWithValue("@newSerialNumber", newSerialNumber);
-                updatecmd.Parameters.AddWithValue("@matchingTagNumber", tagNumber);
+                updatecmd.Parameters.AddWithValue("@ItemID", itemid);
 
 
 
