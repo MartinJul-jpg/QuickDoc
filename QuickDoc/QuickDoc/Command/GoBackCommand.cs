@@ -24,7 +24,7 @@ namespace QuickDoc.Command
         {
             if (parameter is MainNodeViewModel mnvm)
             {
-                if (mnvm.priorNode != null)
+                if (mnvm.PriorNode != null)
                 {
                     mnvm.GoBack();
                     mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);

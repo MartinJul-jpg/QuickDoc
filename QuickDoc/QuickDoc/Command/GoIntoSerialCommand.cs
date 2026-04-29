@@ -9,21 +9,43 @@ namespace QuickDoc.Command
 {
     public class GoIntoSerialCommand : ICommand
     {
-        private MainNodeViewModel mvm;
-        public event EventHandler? CanExecuteChanged;
+        private MainNodeViewModel mnvm;
 
-        public bool CanExecute(object? parameter)
+        public event EventHandler CanExecuteChanged
         {
-            return true;
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public GoIntoSerialCommand(MainNodeViewModel mnvm)
+        {
+            this.mnvm = mnvm;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            bool check = true;
+
+            if (parameter is NodeViewModel nvm)
+            {
+                if (nvm == null)
+                {
+                    check = false;
+                }
+            }
+
+            CommandManager.InvalidateRequerySuggested();
+
+            return check;
         }
 
         public void Execute(object? parameter)
         {
             if (parameter is NodeViewModel nvm)
             {
-                mvm.CurrentNode = nvm;
-                mvm.GoInto();
-                mvm.NavigationStore.CurrentView = new NodeView(mvm.NavigationStore);
+                mnvm.SelectedChild = nvm;
+                mnvm.GoInto();
+                //mnvm.NavigationStore.CurrentView = new SpecificItemView(mnvm.NavigationStore);
             }
         }
     }
