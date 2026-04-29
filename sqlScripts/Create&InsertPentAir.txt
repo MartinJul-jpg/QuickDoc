@@ -3190,11 +3190,11 @@ END;
 GO 
 
 CREATE PROC sp_InsertNewSerialNumberIntoItem
-@newSerialNumber NVARCHAR(50), 
-@matchingTagNumber NVARCHAR(50)
+@newSerialNumber NVARCHAR(50),  
+@ItemID int
 AS
 BEGIN 
 UPDATE ITEM 
 SET SerialNumber = @newSerialNumber
-WHERE TagNumber = @matchingTagNumber 
+WHERE ITEMID = @ItemID 
 END; 
