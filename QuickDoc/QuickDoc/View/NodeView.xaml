@@ -130,18 +130,16 @@
                                  HorizontalContentAlignment="Stretch">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Border BorderThickness="2" BorderBrush="DarkSlateBlue" Width="280">
-                                        <StackPanel Margin="5">
-                                            <Button Command="{Binding DataContext.GOINTOSERIAL, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
-                                                <Button.Resources>
-                                                    <SolidColorBrush x:Key="Button.HoverBackground" Color="#FF9BC9F5" />
-                                                    <SolidColorBrush x:Key="Button.PressedBackground" Color="#FF2F6FAE" />
-                                                    <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
-                                                </Button.Resources>
-                                                <TextBlock Text="{Binding}" Margin="5" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                            </Button>
-                                        </StackPanel>
-                                    </Border>
+                                    <StackPanel Margin="5">
+                                        <Button Command="{Binding DataContext.GOINTOSERIAL, RelativeSource={RelativeSource AncestorType=local:NodeView}}" CommandParameter="{Binding}">
+                                            <Button.Resources>
+                                                <SolidColorBrush x:Key="Button.HoverBackground" Color="#FF9BC9F5" />
+                                                <SolidColorBrush x:Key="Button.PressedBackground" Color="#FF2F6FAE" />
+                                                <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
+                                            </Button.Resources>
+                                            <TextBlock Text="{Binding}" Margin="5" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

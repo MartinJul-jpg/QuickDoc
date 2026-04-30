@@ -71,7 +71,7 @@
 
             <Border BorderBrush="#014e99" BorderThickness="2" Margin="20">
                 <StackPanel>
-                    <TextBlock Text="Serial number:" Margin="20,20,20,0" FontSize="16"/>
+                    <TextBlock Text="Serial number:" Margin="20,10,20,0" FontSize="16"/>
                     <StackPanel Orientation="Horizontal" Margin="20,0,20,20" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBox MinWidth="250" VerticalContentAlignment="Center" Text="{Binding CurrentNode.SerialNumber, UpdateSourceTrigger=LostFocus}"/>
                         <Button Padding="20" Command="{Binding UPDATESERIAL}" CommandParameter="{Binding}" Content=" 💾 " Height="40" Width="40"/>
