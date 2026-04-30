@@ -45,7 +45,7 @@ namespace QuickDoc.Command
 
                 if (tagFull && itemFull)
                 {
-                    mnvm.NavigationStore.CurrentView = new SpecificItemView(mnvm.NavigationStore);
+                    //mnvm.NavigationStore.CurrentView = new SpecificItemView(mnvm.NavigationStore);
                 }
                 else
                 {
