@@ -70,8 +70,8 @@ namespace QuickDoc.Repository
                         string Description = dr["ItemDescription"] == DBNull.Value ? "" : Convert.ToString(dr["ItemDescription"]);
                         string Quantity = dr["Quantity"] == DBNull.Value ? "" : Convert.ToString(dr["Quantity"]);
                         string UnitOfMeasure = dr["UnitOfMeasure"] == DBNull.Value ? "" : Convert.ToString(dr["UnitOfMeasure"]);
-                        string TagParentKey = dr["TagNumber"] == DBNull.Value ? "" : Convert.ToString(dr["TagNumber"]);
                         string SerialNumber = dr["SerialNumber"] == DBNull.Value ? "" : Convert.ToString(dr["SerialNumber"]);
+                        string TagParentKey = dr["TagNumber"] == DBNull.Value ? "" : Convert.ToString(dr["TagNumber"]);
 
                         // Procurement
                         int ProcurementID = dr["ProcurementID"] == DBNull.Value ? 0 : Convert.ToInt32(dr["ProcurementID"]);
@@ -82,7 +82,7 @@ namespace QuickDoc.Repository
                         string description = dr["IDocDescription"] == DBNull.Value ? "" : Convert.ToString(dr["IDocDescription"]);
                         string filepath = dr["IFile"] == DBNull.Value ? "" : Convert.ToString(dr["IFile"]);
 
-                        Item item = new Item(ItemID, ItemVariantID, ItemNumber, LineNumber, Description, Quantity, UnitOfMeasure, null, TagParentKey); //serialnumber needs to be handled
+                        Item item = new Item(ItemID, ItemVariantID, ItemNumber, LineNumber, Description, Quantity, UnitOfMeasure, SerialNumber, TagParentKey); //serialnumber needs to be handled
                         item.ItemProcurement = new Procurement(ProcurementID, purchaseOrderNumber, procurementStatus);
                         
                         if ( !(title == "" && description == "" && filepath == "") )
