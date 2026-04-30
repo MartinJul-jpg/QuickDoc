@@ -33,7 +33,7 @@ namespace QuickDoc.Command
             {
                 mnvm.SelectedChild = nvm;
                 mnvm.GoInto();
-                //mnvm.NavigationStore.CurrentView = new SpecificItemView(mnvm.NavigationStore);
+                mnvm.NavigationStore.CurrentView = new SpecificItemView(mnvm.NavigationStore);
             }
         }
     }
