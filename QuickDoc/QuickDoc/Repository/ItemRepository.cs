@@ -107,9 +107,7 @@ namespace QuickDoc.Repository
                 updatecmd.Parameters.AddWithValue("@newSerialNumber", newSerialNumber);
                 updatecmd.Parameters.AddWithValue("@ItemID", itemid);
 
-
-
-
+                updatecmd.ExecuteNonQuery();
                 con.Close();
 
             }
