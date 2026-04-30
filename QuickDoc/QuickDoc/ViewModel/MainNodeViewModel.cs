@@ -10,7 +10,7 @@ namespace QuickDoc.ViewModel
     public class MainNodeViewModel : INotifyPropertyChanged
     {
         private bool goingBack;
-        private bool gettingNodeType;
+        private bool gettingNodeTypeOrItem;
         private string currentProjectNumber;
 
         private ItemRepository _itemRepo;
@@ -19,7 +19,7 @@ namespace QuickDoc.ViewModel
         private UnitRepository _unitRepo;
         private ProjectRepository _projectRepo;
 
-        public MainNodeStateContainer priorNode;
+        public MainNodeStateContainer PriorNode;
         public NavigationStore NavigationStore { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -52,9 +52,9 @@ namespace QuickDoc.ViewModel
                 {
                     Documents = currentNode.GetDocuments();
 
-                    if (gettingNodeType)
+                    if (gettingNodeTypeOrItem)
                     {
-                        gettingNodeType = false;
+                        gettingNodeTypeOrItem = false;
                     }
                     else
                     {
@@ -109,6 +109,8 @@ namespace QuickDoc.ViewModel
         public ICommand GETBYCRITERIA { get; }
         public ICommand GOTOSCAN { get; }
         public ICommand GETBYSCAN { get; }
+        public ICommand GOINTOSERIAL { get; }
+        public ICommand UPDATESERIAL { get; }
 
         public MainNodeViewModel()
         {
@@ -127,56 +129,64 @@ namespace QuickDoc.ViewModel
             GETBYCRITERIA = new GetByCriteriaCommand();
             GOTOSCAN = new GoToScanCommand();
             GETBYSCAN = new GetByScanCommand();
+            GOINTOSERIAL = new GoIntoSerialCommand(this);
+            UPDATESERIAL = new UpdateSerialCommand();
         }
 
         public void GoInto()
         {
-            if (priorNode != null)
+            if (PriorNode != null)
             {
-                MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(priorNode, CurrentNode, Children, Documents);
-                priorNode = priorNodeUnderConstruction;
+                MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(PriorNode, CurrentNode, Children, Documents);
+                PriorNode = priorNodeUnderConstruction;
             }
             else
             {
                 MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(CurrentNode, Children, Documents);
-                priorNode = priorNodeUnderConstruction;
+                PriorNode = priorNodeUnderConstruction;
             }
 
             Children = new List<NodeViewModel>();
             Documents = new List<DocumentViewModel>();
 
+            if (SelectedChild is ItemViewModel)
+            {
+                gettingNodeTypeOrItem = true;
+            }
+
             CurrentNode = SelectedChild;
+            SelectedChild = null;
         }
 
         public void GoBack()
         {
             goingBack = true;
 
-            if (priorNode != null)
+            if (PriorNode != null)
             {
-                CurrentNode = priorNode.CurrentNode;
-                Children = priorNode.Children;
-                Documents = priorNode.Documents;
-                priorNode = priorNode.PriorNode;
+                CurrentNode = PriorNode.CurrentNode;
+                Children = PriorNode.Children;
+                Documents = PriorNode.Documents;
+                PriorNode = PriorNode.PriorNode;
             }
             else
             {
                 CurrentNode = null;
                 Children = new List<NodeViewModel>();
                 Documents = new List<DocumentViewModel>();
-                priorNode = null;
+                PriorNode = null;
             }
         }
 
         public void GetByCriteria()
         {
-            priorNode = null;
+            PriorNode = null;
 
             bool projectFull = !string.IsNullOrEmpty(Criteria.ProjectCriteria);
             bool unitFull = !string.IsNullOrEmpty(Criteria.UnitCriteria);
+            bool sectionFull = Criteria.SectionCriteria != 0;
             bool tagFull = !string.IsNullOrEmpty(Criteria.TagCriteria);
             bool itemFull = !string.IsNullOrEmpty(Criteria.ItemCriteria);
-            bool sectionFull = Criteria.SectionCriteria != 0;
 
             if (projectFull)
             {
@@ -204,11 +214,17 @@ namespace QuickDoc.ViewModel
                     {
                         CurrentNode = new TagViewModel(_tagRepo.GetTag(Criteria.TagCriteria));
                     }
-                    else if ( (!tagFull && itemFull) || (tagFull && itemFull) ) //Looking for an item type (also catches the silly event where someone fills out tag at the same time)
+                    else if (!tagFull && itemFull) //Looking for an item type
                     {
-                        gettingNodeType = true;
+                        gettingNodeTypeOrItem = true;
 
-                        CurrentNode = new ItemViewModel(_itemRepo.GetItem(Criteria.ItemCriteria));
+                        CurrentNode = new ItemViewModel(_itemRepo.GetItemOfType(Criteria.ItemCriteria));
+                    }
+                    else if (tagFull && itemFull) //Looking for a specific item
+                    {
+                        gettingNodeTypeOrItem = true;
+
+                        CurrentNode = new ItemViewModel(_itemRepo.GetItem(Criteria.TagCriteria, Criteria.ItemCriteria));
                     }
                 }
                 else
@@ -223,7 +239,7 @@ namespace QuickDoc.ViewModel
                     }
                     else if (!unitFull && sectionFull) //Looking for several specific sections, in other words a section type
                     {
-                        gettingNodeType = true;
+                        gettingNodeTypeOrItem = true;
 
                         if (_sectionRepo.GetSections(criteria.SectionCriteria).Count != 0)
                         {
@@ -241,6 +257,11 @@ namespace QuickDoc.ViewModel
         public void GetByScan()
         {
             GetByCriteria();
+        } 
+
+        public void UpdateSerialNumber()
+        {
+            _itemRepo.UpdateSerialNumber((CurrentNode as ItemViewModel).ItemID, (CurrentNode as ItemViewModel).SerialNumber);
         }
     }
 }

@@ -25,19 +25,7 @@ namespace QuickDoc.Command
 
         public bool CanExecute(object parameter)
         {
-            bool check = true;
-
-            if (parameter is NodeViewModel nvm)
-            {
-                if (nvm == null)
-                {
-                    check = false;
-                }
-            }
-
-            CommandManager.InvalidateRequerySuggested();
-
-            return check;
+            return true;
         }
 
         public void Execute(object parameter)

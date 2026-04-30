@@ -39,7 +39,18 @@ namespace QuickDoc.Command
             if (parameter is MainNodeViewModel mnvm)
             {
                 mnvm.GetByCriteria();
-                mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
+
+                bool tagFull = !string.IsNullOrEmpty(mnvm.Criteria.TagCriteria);
+                bool itemFull = !string.IsNullOrEmpty(mnvm.Criteria.ItemCriteria);
+
+                if (tagFull && itemFull)
+                {
+                    //mnvm.NavigationStore.CurrentView = new SpecificItemView(mnvm.NavigationStore);
+                }
+                else
+                {
+                    mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
+                }
             }
         }
     }

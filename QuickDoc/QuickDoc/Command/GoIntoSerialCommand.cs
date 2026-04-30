@@ -7,12 +7,19 @@ using System.Windows.Input;
 
 namespace QuickDoc.Command
 {
-    public class GoBackCommand : ICommand
+    public class GoIntoSerialCommand : ICommand
     {
+        private MainNodeViewModel mnvm;
+
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public GoIntoSerialCommand(MainNodeViewModel mnvm)
+        {
+            this.mnvm = mnvm;
         }
 
         public bool CanExecute(object parameter)
@@ -20,20 +27,13 @@ namespace QuickDoc.Command
             return true;
         }
 
-        public void Execute(object parameter)
+        public void Execute(object? parameter)
         {
-            if (parameter is MainNodeViewModel mnvm)
+            if (parameter is NodeViewModel nvm)
             {
-                if (mnvm.PriorNode != null)
-                {
-                    mnvm.GoBack();
-                    mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
-                }
-                else
-                {
-                    mnvm.GoBack();
-                    mnvm.NavigationStore.CurrentView = new SearchView(mnvm.NavigationStore);
-                }
+                mnvm.SelectedChild = nvm;
+                mnvm.GoInto();
+                //mnvm.NavigationStore.CurrentView = new SpecificItemView(mnvm.NavigationStore);
             }
         }
     }

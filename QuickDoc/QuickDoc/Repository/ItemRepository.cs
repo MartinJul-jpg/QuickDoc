@@ -21,9 +21,8 @@ namespace QuickDoc.Repository
         }
 
         // To find an item type
-        public Item GetItem(string itemNumber)
+        public Item GetItemOfType(string itemNumber)
         {
-            Item item;
             bool exists = items.Any(x => x.ItemNumber == itemNumber);
             if (exists == false)
             {
@@ -31,6 +30,11 @@ namespace QuickDoc.Repository
             }
             return items.Where(x => x.ItemNumber == itemNumber).First();
         }
+        public Item GetItem(string tagNumber, string itemNumber)
+        {
+            return items.Where<Item>(item => item.TagParentKey == tagNumber && item.ItemNumber == itemNumber).First();
+        }
+
         // To find which tags own the item
         public List<Item> GetTagsChildren(string TagNumber)
         {
@@ -90,6 +94,24 @@ namespace QuickDoc.Repository
                     }
                 }
                 items = result;
+            }
+        }
+
+        public void UpdateSerialNumber(int itemid, string newSerialNumber)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                SqlCommand updatecmd = new SqlCommand(@"EXEC sp_InsertNewSerialNumberIntoItem @newSerialNumber, @ItemID", con);
+                
+                updatecmd.Parameters.AddWithValue("@newSerialNumber", newSerialNumber);
+                updatecmd.Parameters.AddWithValue("@ItemID", itemid);
+
+
+
+
+                con.Close();
+
             }
         }
     }
