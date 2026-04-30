@@ -20,10 +20,11 @@ namespace QuickDoc
         protected override void OnStartup(StartupEventArgs e)
         {
             navigationStore = new NavigationStore();
-            navigationStore.CurrentView = new SearchView(navigationStore);
+            navigationStore.CurrentView = new SpecificItemView();
 
             mainNodeVM = new MainNodeViewModel();
             mainNodeVM.NavigationStore = navigationStore;
+            mainNodeVM.CurrentNode = new ItemViewModel(new Item(2, 2, "2546", "35005", "Test item", "25", "Meter", "6515489525", "Test"));
 
             // Create and show the main window
             MainWindow mainWindow = new MainWindow(navigationStore)
