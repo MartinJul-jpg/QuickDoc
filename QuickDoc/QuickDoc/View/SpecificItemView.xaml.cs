@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuickDoc.Stores;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,8 +19,11 @@ namespace QuickDoc.View
     /// </summary>
     public partial class SpecificItemView : UserControl
     {
-        public SpecificItemView()
+        public NavigationStore navigationStore { get; set; }
+
+        public SpecificItemView(NavigationStore navigationStore)
         {
+            this.navigationStore = navigationStore;
             InitializeComponent();
         }
     }
