@@ -49,7 +49,7 @@ namespace QuickDoc.Repository
         // FIND A SPECIFIC CHILD
         public Section GetSpecificChild(string unitNr, int sectionNr)
         {
-            if (units.Count == 0)
+            if (units.Count == 0 || units.Where(x => x.UnitNumber == unitNr).ToList().Count == 0)
             {
                 return new Section(0, 0, null, null);
             }

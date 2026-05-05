@@ -40,7 +40,7 @@ namespace QuickDoc.Repository
 
         public List<Section> GetSections(int sectionNr)
         {
-            // return a specific sections
+            // return specific sections
             return sections = sections.Where(x => x.SectionNumber == sectionNr).ToList();
         }
 
