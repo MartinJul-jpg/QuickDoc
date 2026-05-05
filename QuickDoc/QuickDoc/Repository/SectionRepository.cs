@@ -41,7 +41,7 @@ namespace QuickDoc.Repository
         public List<Section> GetSections(int sectionNr)
         {
             // return specific sections
-            return sections = sections.Where(x => x.SectionNumber == sectionNr).ToList();
+            return sections.Where(x => x.SectionNumber == sectionNr).ToList();
         }
 
         public void ReadFromDatabase(string projectNum , TagRepository tagRepo)
