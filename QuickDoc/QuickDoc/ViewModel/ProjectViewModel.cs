@@ -22,7 +22,7 @@ namespace QuickDoc.ViewModel
         }
         public List<NodeViewModel> Units
         {
-            get 
+            get
             { 
                 List<NodeViewModel> units = new List<NodeViewModel>();
 

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuickDoc"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="500">
+        Icon="pack://siteoforigin:,,,/Images/PentairLogoNoTitle.png"
+        Title="QuickDoc" Height="650" Width="500">
     <Grid>
         <ContentControl Content="{Binding NavigationStore.CurrentView}"/>
     </Grid>
