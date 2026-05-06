@@ -29,7 +29,8 @@ namespace QuickDoc
             MainWindow mainWindow = new MainWindow(navigationStore)
             {
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                DataContext = mainNodeVM
+                DataContext = mainNodeVM,
+                Name = "QuickDoc"
             };
             mainWindow.Show();
 

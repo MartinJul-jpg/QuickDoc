@@ -205,8 +205,8 @@
     <!-- Window -->
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
             <RowDefinition/>
-            <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="PentairLogo" Grid.Row="0" Background="WhiteSmoke">
@@ -236,6 +236,10 @@
                     <SolidColorBrush x:Key="Button.DefaultBackground" Color="#FF538CC5"/>
                 </Button.Resources>
             </Button>
+            <StackPanel Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Label Content="Project:" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Width="120"/>
+                <Label Content="{Binding currentProjectNumber}" VerticalAlignment="Top" FontSize="14" Width="120"/>
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1">

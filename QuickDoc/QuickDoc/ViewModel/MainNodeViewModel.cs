@@ -11,7 +11,7 @@ namespace QuickDoc.ViewModel
     {
         private bool goingBack;
         private bool gettingNodeTypeOrItem;
-        private string currentProjectNumber;
+        public string currentProjectNumber { get; set; }
 
         private ItemRepository _itemRepo;
         private TagRepository _tagRepo;
