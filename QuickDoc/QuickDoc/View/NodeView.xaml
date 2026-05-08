@@ -209,6 +209,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <!-- Page top bar with Pentair logo -->
         <Grid x:Name="PentairLogo" Grid.Row="0" Background="WhiteSmoke">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>

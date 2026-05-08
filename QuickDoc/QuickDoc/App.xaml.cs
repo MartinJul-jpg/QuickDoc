@@ -19,6 +19,7 @@ namespace QuickDoc
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Creates MainNodeViewModel and navigationStore
             navigationStore = new NavigationStore();
             navigationStore.CurrentView = new SearchView(navigationStore);
 
@@ -34,6 +35,7 @@ namespace QuickDoc
             };
             mainWindow.Show();
 
+            // Runs itself
             base.OnStartup(e);
         }
     }

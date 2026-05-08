@@ -13,7 +13,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <!-- Blue bar at the top -->
+        <!-- Page top bar with Pentair logo -->
         <Grid x:Name="PentairLogo" Grid.Row="0" Background="WhiteSmoke">
             <Grid.Effect>
                 <DropShadowEffect/>
