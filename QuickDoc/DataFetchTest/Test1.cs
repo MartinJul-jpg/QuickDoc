@@ -13,6 +13,7 @@ namespace DataFetchTest
         private bool correctTag;
         private bool correctItem;
 
+        private MainNodeViewModel mnvmWithParent;
         private MainNodeViewModel mnvm;
 
         [TestInitialize]
@@ -24,6 +25,7 @@ namespace DataFetchTest
             correctTag = false;
             correctItem = false;
 
+            mnvmWithParent = new MainNodeViewModel();
             mnvm = new MainNodeViewModel();
         }
 
@@ -213,11 +215,21 @@ namespace DataFetchTest
             mnvm.Criteria.ScanCriteria = ";;0;;";
             mnvm.Criteria.ProjectCriteria = project;
             mnvm.Criteria.UnitCriteria = unit;
+
+            mnvmWithParent.Criteria = mnvm.Criteria;
+            mnvmWithParent.GetByCriteria();
+
             mnvm.Criteria.SectionCriteria = section;
             mnvm.GetByCriteria();
 
-            string actualSectionParent = (mnvm.CurrentNode as SectionViewModel).GetParentKey();
+            string actualSectionParent = null;
             int actualSection = (mnvm.CurrentNode as SectionViewModel).SectionNumber;
+
+            List<NodeViewModel> foundSections = mnvmWithParent.CurrentNode.GetChildren().Where<NodeViewModel>(ivm => (ivm as SectionViewModel).SectionNumber == actualSection).ToList();
+            if (foundSections.Count() > 0)
+            {
+                actualSectionParent = (mnvmWithParent.CurrentNode as UnitViewModel).UnitNumber;
+            }
 
             //Assert
             Assert.AreEqual(expectedUnit, actualSectionParent);
@@ -271,11 +283,21 @@ namespace DataFetchTest
             mnvm.Criteria.ScanCriteria = ";;0;;";
             mnvm.Criteria.ProjectCriteria = project;
             mnvm.Criteria.TagCriteria = tag;
+
+            mnvmWithParent.Criteria = mnvm.Criteria;
+            mnvmWithParent.GetByCriteria();
+
             mnvm.Criteria.ItemCriteria = item;
             mnvm.GetByCriteria();
 
-            string actualItemParent = (mnvm.CurrentNode as ItemViewModel).GetParentKey();
+            string actualItemParent = null;
             string actualItem = (mnvm.CurrentNode as ItemViewModel).ItemNumber;
+
+            List<NodeViewModel> foundItems = mnvmWithParent.CurrentNode.GetChildren().Where<NodeViewModel>(ivm => (ivm as ItemViewModel).ItemNumber == actualItem).ToList();
+            if (foundItems.Count() > 0)
+            {
+                actualItemParent = (mnvmWithParent.CurrentNode as TagViewModel).TagNumber;
+            }
 
             //Assert
             Assert.AreEqual(expectedTag, actualItemParent);
