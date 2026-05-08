@@ -54,11 +54,6 @@ namespace QuickDoc.ViewModel
             }
         }
 
-        public string GetParentKey()
-        {
-            return section.ParentKey;
-        }
-
         public override List<NodeViewModel> GetChildren()
         {
             return Tags;
