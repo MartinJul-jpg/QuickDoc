@@ -80,6 +80,11 @@ namespace QuickDoc.ViewModel
             return Documents;
         }
 
+        public string GetParentKey()
+        {
+            return item.TagParentKey;
+        }
+
         public ItemViewModel(Item item)
         {
             this.item = item;

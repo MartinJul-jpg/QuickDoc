@@ -32,7 +32,24 @@ namespace QuickDoc.Repository
         }
         public Item GetItem(string tagNumber, string itemNumber)
         {
-            return items.Where<Item>(item => item.TagParentKey == tagNumber && item.ItemNumber == itemNumber).First();
+            if (items.Count == 0)
+            {
+                return new Item(0, 0, null, null, null, null, null, null, null);
+            }
+            else
+            {
+                List<Item> foundItems = items.Where<Item>(item => item.TagParentKey == tagNumber && item.ItemNumber == itemNumber).ToList();
+
+                if (foundItems.Count == 0)
+                {
+                    return new Item(0, 0, null, null, null, null, null, null, null);
+                }
+                else
+                {
+                    return foundItems.First();
+                }
+            }
+
         }
 
         // To find which tags own the item
