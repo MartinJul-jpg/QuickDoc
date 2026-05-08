@@ -8,6 +8,7 @@
         Icon="pack://siteoforigin:,,,/Images/PentairLogoNoTitle.png"
         Title="QuickDoc" Height="650" Width="500">
     <Grid>
+        <!-- Shows view based on the NavigationStore's currentView -->
         <ContentControl Content="{Binding NavigationStore.CurrentView}"/>
     </Grid>
 </Window>

@@ -9,6 +9,7 @@
              Background="White"
              d:DesignHeight="650" d:DesignWidth="500">
     <UserControl.Resources>
+        <!-- Datatemplate if the CurrentNode is an ItemViewModel -->
         <DataTemplate DataType="{x:Type vm:ItemViewModel}">
             <StackPanel>
                 <Border BorderBrush="#014e99" BorderThickness="2" Margin="20">
@@ -58,7 +59,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <!-- Blue bar at the top -->
+        <!-- Page top bar with Pentair logo -->
         <Grid x:Name="PentairLogo" Grid.Row="0" Background="WhiteSmoke">
             <Grid.Effect>
                 <DropShadowEffect/>
@@ -89,8 +90,10 @@
 
         <StackPanel Grid.Row="1">
 
+            <!-- Presenter that shows datatemplate to fix databinding errors -->
             <ContentPresenter Content="{Binding CurrentNode}" />
 
+            <!-- Documents at bottom of page -->
             <Border BorderBrush="#014e99" BorderThickness="2" Margin="20">
                 <StackPanel Margin="10">
                     <TextBlock Text="Documents:" FontSize="16"/>
