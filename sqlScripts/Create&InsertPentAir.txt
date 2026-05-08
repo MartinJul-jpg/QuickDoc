@@ -3111,7 +3111,27 @@ VALUES
 GO
 
 INSERT INTO TAGDOCUMENT(TTitle, TDocDescription, TFile, TagNumber,ProjectNumber) VALUES 
-('testTitle', 'testDesc', 'pathToTestfile', 'A-12300-01', 'P-0368486') ;
+('testTitle', 'testDesc', 'pathToTestfile', 'A-12300-01', 'P-0368486') ; 
+
+GO 
+
+INSERT INTO ITEMVARIANTDOCUMENT(ITitle, IDocDescription, IFILE, ItemVariantID)  VALUES
+('itemTitle', 'itemDesc', 'path/to/item', 1); 
+
+GO 
+
+INSERT INTO PROJECTDOCUMENT(PTitle, PDocDescription, PFile, ProjectNumber) VALUES 
+('ProjectDoc title', 'ProjectDoc desc', 'Path/To/File', 'P-0368486'); 
+
+GO
+
+INSERT INTO UNITDOCUMENT(UTitle, UDocDescription, UFile, ProjectNumber, UnitNumber) VALUES 
+('Unit doc title', 'Unit doc desc', 'Path/To/File', 'P-0368486', '120')
+
+GO 
+
+INSERT INTO SECTIONDOCUMENT(STitle, SDocDescription, SFile, ProjectNumber, UnitNumber, SectionNumber) VALUES 
+('Section Doc title', 'Section doc desc', 'Path/to/file', 'P-0368486', '120', 120)
 
 GO
 
@@ -3122,8 +3142,8 @@ BEGIN
 SELECT TG.TagNumber, TG.UnionTagNumber, TG.TagLineNumber, TG.TagDescription, TG.HaffmanTag, TG.CustomerTag, TG.VendorTag, TG.BelongsTo, TG.SectionNumber, 
 TGD.TTitle, TGD.TDocDescription, TGD.TFile, TG.UnitNumber
 FROM TAG TG
-INNER JOIN TAGDOCUMENT TGD 
-	ON TG.ProjectNumber = TGD.ProjectNumber 
+LEFT JOIN TAGDOCUMENT TGD 
+	ON TG.ProjectNumber = TGD.ProjectNumber AND TG.TagNumber = TGD.TagNumber 
 WHERE TG.ProjectNumber = @projectNum
 END;
 
