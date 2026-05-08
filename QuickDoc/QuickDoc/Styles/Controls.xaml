@@ -16,7 +16,6 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="bdr"
                             CornerRadius="10"
-                            Margin="3"
                             BorderThickness="1"
                             BorderBrush="Black"
                             Background="{TemplateBinding Background}">
@@ -65,8 +64,8 @@
     <!-- Style for Border -->
     <Style x:Key="BorderDefault" TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="#014e99"/>
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="CornerRadius" Value="10"/>
     </Style>
 
     <!-- Makes it the default for ALL Borders -->
