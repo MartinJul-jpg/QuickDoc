@@ -166,6 +166,8 @@ namespace DataFetchTest
 
             //Assert
             Assert.AreEqual(expectedProject, actualProject);
+
+            GoingIntoFirst();
         }
 
         public void LookingForSpecificUnit(string project, string unit)
@@ -192,6 +194,8 @@ namespace DataFetchTest
 
             //Assert
             Assert.AreEqual(expectedUnit, actualUnit);
+
+            GoingIntoFirst();
         }
 
         public void LookingForSpecificSection(string project, string unit, int section)
@@ -234,6 +238,8 @@ namespace DataFetchTest
             //Assert
             Assert.AreEqual(expectedUnit, actualSectionParent);
             Assert.AreEqual(expectedSection, actualSection);
+
+            GoingIntoFirst();
         }
 
         public void LookingForSpecificTag(string project, string tag)
@@ -260,6 +266,8 @@ namespace DataFetchTest
 
             //Assert
             Assert.AreEqual(expectedTag, actualTag);
+
+            GoingIntoFirst();
         }
         
         public void LookingForSpecificItem(string project, string tag, string item)
@@ -302,6 +310,8 @@ namespace DataFetchTest
             //Assert
             Assert.AreEqual(expectedTag, actualItemParent);
             Assert.AreEqual(expectedItem, actualItem);
+
+            GoingIntoFirst();
         }
 
         public void LookingForSectionType(string project, int section)
@@ -328,6 +338,8 @@ namespace DataFetchTest
 
             //Assert
             Assert.AreEqual(expectedSection, actualSection);
+
+            GoingIntoFirst();
         }
 
         public void LookingForItemType(string project, string item)
@@ -354,6 +366,30 @@ namespace DataFetchTest
 
             //Assert
             Assert.AreEqual(expectedItem, actualItem);
+
+            GoingIntoFirst();
+        }
+
+        public void GoingIntoFirst()
+        {
+            List<NodeViewModel> children = mnvm.CurrentNode.GetChildren();
+
+            if (children.Count > 0)
+            {
+                //Arrange
+                NodeViewModel expectedParent = mnvm.CurrentNode;
+
+                //Act
+                mnvm.SelectedChild = children.First();
+                mnvm.GoInto();
+
+                NodeViewModel actualParent = mnvm.PriorNode.CurrentNode;
+
+                //Assert
+                Assert.AreEqual(expectedParent, actualParent);
+                
+                GoingIntoFirst();
+            }
         }
     }
 }
