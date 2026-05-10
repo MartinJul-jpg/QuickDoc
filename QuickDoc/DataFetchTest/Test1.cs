@@ -15,6 +15,7 @@ namespace DataFetchTest
 
         private MainNodeViewModel mnvmWithParent;
         private MainNodeViewModel mnvm;
+        private MainNodeViewModel mnvmUpdateSerial;
 
         [TestInitialize]
         public void TestInitialize()
@@ -27,6 +28,7 @@ namespace DataFetchTest
 
             mnvmWithParent = new MainNodeViewModel();
             mnvm = new MainNodeViewModel();
+            mnvmUpdateSerial = new MainNodeViewModel();
         }
 
         [TestMethod]
@@ -311,6 +313,7 @@ namespace DataFetchTest
             Assert.AreEqual(expectedTag, actualItemParent);
             Assert.AreEqual(expectedItem, actualItem);
 
+            UpdatingSerial();
             GoingIntoFirst();
         }
 
@@ -412,6 +415,31 @@ namespace DataFetchTest
                 Assert.AreEqual(expectedParent, actualParent);
 
                 GoingBack();
+            }
+        }
+
+        public void UpdatingSerial()
+        {
+            if (correctProject && correctTag && correctItem)
+            {
+                Random rnd = new Random();
+                string testSerialNumber = $"test{rnd.Next(1, 10)}";
+
+                //Arrange
+                string expectedSerialNumber = testSerialNumber;
+                
+                CriteriaViewModel currentCriteria = mnvm.Criteria;
+                (mnvm.CurrentNode as ItemViewModel).SerialNumber = expectedSerialNumber;
+
+                //Act
+                mnvm.UpdateSerialNumber();
+                mnvmUpdateSerial.Criteria = currentCriteria;
+                mnvmUpdateSerial.GetByCriteria();
+
+                string actualSerialNumber = (mnvmUpdateSerial.CurrentNode as ItemViewModel).SerialNumber;
+
+                //Assert
+                Assert.AreEqual(expectedSerialNumber, actualSerialNumber);
             }
         }
     }
