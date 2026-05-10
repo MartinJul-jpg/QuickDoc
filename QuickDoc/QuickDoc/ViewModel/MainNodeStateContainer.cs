@@ -4,7 +4,10 @@ namespace QuickDoc.ViewModel
 {
     public class MainNodeStateContainer
     {
+        // Can contain a reference to an instance of itself, is used to keep track of prior states ad infinitum. (but sensibly lol)
         public MainNodeStateContainer PriorNode { get; set; }
+
+        // These three properties represent a snapshot in time of MainNodeViewModel
         public NodeViewModel CurrentNode { get; set; }
         public List<NodeViewModel> Children { get; set; }
         public List<DocumentViewModel> Documents { get; set; }
