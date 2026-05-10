@@ -390,6 +390,29 @@ namespace DataFetchTest
                 
                 GoingIntoFirst();
             }
+            else
+            {
+                GoingBack();
+            }
+        }
+
+        public void GoingBack()
+        {
+            if (mnvm.PriorNode != null)
+            {
+                //Arrange
+                NodeViewModel expectedParent = mnvm.PriorNode.CurrentNode;
+
+                //Act
+                mnvm.GoBack();
+
+                NodeViewModel actualParent = mnvm.CurrentNode;
+
+                //Assert
+                Assert.AreEqual(expectedParent, actualParent);
+
+                GoingBack();
+            }
         }
     }
 }
