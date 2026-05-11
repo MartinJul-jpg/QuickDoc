@@ -17,6 +17,7 @@ namespace QuickDoc.Command
             remove { CommandManager.RequerySuggested -= value; }
         }
 
+        // Has a custom constructor that takes a MainNodeViewModel, normally this would be provided in the commandparameter. 
         public GoIntoSerialCommand(MainNodeViewModel mnvm)
         {
             this.mnvm = mnvm;
@@ -27,12 +28,18 @@ namespace QuickDoc.Command
             return true;
         }
 
+        // Calls the method, GoInto(), in MainViewModel that has the responsibility to change the ViewModels (contents) that live there. 
+        // Secondly changes the view, in this case to SpecificItemView, the views whose contents bind to the ViewModels that live in the MainViewModel.  
+        // The parameter given here is, necessarily but differently, the child node that has to do with the button being clicked. 
         public void Execute(object? parameter)
         {
             if (parameter is NodeViewModel nvm)
             {
+                // Sets SelectedChild to be the child node in question. 
                 mnvm.SelectedChild = nvm;
+                // The call. 
                 mnvm.GoInto();
+                // The view change. 
                 mnvm.NavigationStore.CurrentView = new SpecificItemView(mnvm.NavigationStore);
             }
         }

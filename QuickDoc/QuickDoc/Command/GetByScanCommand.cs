@@ -15,6 +15,7 @@ namespace QuickDoc.Command
             remove { CommandManager.RequerySuggested -= value; }
         }
 
+        // Grays out the command bound button when the part in the string where project is located is empty. 
         public bool CanExecute(object parameter)
         {
             bool check = true;
@@ -34,6 +35,8 @@ namespace QuickDoc.Command
             return check;
         }
 
+        // Calls the method, GetByScan() which in turn calls GetByCriteria(), in MainViewModel that has the responsibility to change the ViewModels (contents) that live there. 
+        // Secondly changes the view, the views whose contents bind to the ViewModels that live in the MainViewModel.  
         public void Execute(object parameter)
         {
             if (parameter is MainNodeViewModel mnvm)
