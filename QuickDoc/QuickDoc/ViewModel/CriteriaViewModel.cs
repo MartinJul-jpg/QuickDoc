@@ -6,12 +6,15 @@ namespace QuickDoc.ViewModel
 {
     public class CriteriaViewModel
     {
+        // These 5 properties represent the 5 boxes of different criteria you can enter info into. 
         public string ProjectCriteria { get; set; }
         public string UnitCriteria { get; set; }
         public int SectionCriteria { get; set; }
         public string TagCriteria { get; set; }
         public string ItemCriteria { get; set; }
 
+        // This property represents the box that one would like to write a bar-code into. 
+        // It has no backing field and merely reflects what is present in the 5 criteria. 
         public string ScanCriteria 
         {
             get 

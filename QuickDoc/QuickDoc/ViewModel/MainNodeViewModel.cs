@@ -9,9 +9,10 @@ namespace QuickDoc.ViewModel
 {
     public class MainNodeViewModel : INotifyPropertyChanged
     {
+        // Indicates GOINGBACK is ongoing. Checked when CurrentNode is being set. 
         private bool goingBack;
+        // When looking for a type, section or item, or an item in general. Checked when CurrentNode is being set. 
         private bool gettingNodeTypeOrItem;
-        public string currentProjectNumber { get; set; }
 
         private ItemRepository _itemRepo;
         private TagRepository _tagRepo;
@@ -19,12 +20,15 @@ namespace QuickDoc.ViewModel
         private UnitRepository _unitRepo;
         private ProjectRepository _projectRepo;
 
+        // Contains an object representing the prior state of this object. 
         public MainNodeStateContainer PriorNode;
+        public string CurrentProjectNumber { get; set; }
         public NavigationStore NavigationStore { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        // Represents input boxes, we databind these. 
         private CriteriaViewModel criteria;
         public CriteriaViewModel Criteria
         {
@@ -36,7 +40,9 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        // Where we put the thing we're, looking for, entering, at any given time, be it a project, unit, section, tag or item. 
         private NodeViewModel currentNode;
+        // This set updates Documents and Children to the currently relevant contents determined by the ingoing inhabitant of currentNode. 
         public NodeViewModel CurrentNode
         {
             get { return currentNode; }
@@ -104,6 +110,7 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        // Commands, we command bind to these. Represents buttons. 
         public ICommand GOINTO { get; }
         public ICommand GOBACK { get; }
         public ICommand GETBYCRITERIA { get; }
@@ -124,6 +131,9 @@ namespace QuickDoc.ViewModel
             children = new List<NodeViewModel>();
             documents = new List<DocumentViewModel>();
 
+            // Most commands get datacontext as commandparameter, which is this object, usually.
+            // GoInto and GoIntoSerial get the clicked child as commandparameter instead,
+            // but they still need some references from in here to gray out buttons or update the NavigationStore. 
             GOINTO = new GoIntoCommand(this);
             GOBACK = new GoBackCommand();
             GETBYCRITERIA = new GetByCriteriaCommand();
@@ -133,8 +143,11 @@ namespace QuickDoc.ViewModel
             UPDATESERIAL = new UpdateSerialCommand();
         }
 
+        // Handles this object's state when entering a node's child. 
         public void GoInto()
         {
+            // If the current state has a prior state or not,
+            // makes a new object representing the current state (and its potential prior state) and sets it to be the prior state. 
             if (PriorNode != null)
             {
                 MainNodeStateContainer priorNodeUnderConstruction = new MainNodeStateContainer(PriorNode, CurrentNode, Children, Documents);
@@ -146,9 +159,11 @@ namespace QuickDoc.ViewModel
                 PriorNode = priorNodeUnderConstruction;
             }
 
+            // Cleans up. 
             Children = new List<NodeViewModel>();
             Documents = new List<DocumentViewModel>();
 
+            // Notifies the CurrentNode setter whether we're about to make an Item the primary subject. 
             if (SelectedChild is ItemViewModel)
             {
                 gettingNodeTypeOrItem = true;
@@ -158,10 +173,13 @@ namespace QuickDoc.ViewModel
             SelectedChild = null;
         }
 
+        // Handles this object's state when going back. 
         public void GoBack()
         {
+            // Notifies the CurrentNode setter that we're currently in the midst of going back. 
             goingBack = true;
 
+            // Sets the current state using the prior state's information. 
             if (PriorNode != null)
             {
                 CurrentNode = PriorNode.CurrentNode;
@@ -169,6 +187,8 @@ namespace QuickDoc.ViewModel
                 Documents = PriorNode.Documents;
                 PriorNode = PriorNode.PriorNode;
             }
+            // Cleans up in case we're going back and there is no prior state in prep for entering SearchView. 
+            // (which does not center around CurrentNode being the primary subject)
             else
             {
                 CurrentNode = null;
@@ -178,6 +198,7 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        // asd
         public void GetByCriteria()
         {
             PriorNode = null;
@@ -190,7 +211,7 @@ namespace QuickDoc.ViewModel
 
             if (projectFull)
             {
-                if ( !(currentProjectNumber == Criteria.ProjectCriteria) )
+                if ( !(CurrentProjectNumber == Criteria.ProjectCriteria) )
                 {
                     _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
                     _tagRepo.ReadFromDatabase(Criteria.ProjectCriteria, _itemRepo);
@@ -198,7 +219,7 @@ namespace QuickDoc.ViewModel
                     _unitRepo.ReadFromDatabase(Criteria.ProjectCriteria, _sectionRepo);
                     _projectRepo.ReadFromDatabase(Criteria.ProjectCriteria, _unitRepo);
 
-                    currentProjectNumber = Criteria.ProjectCriteria;
+                    CurrentProjectNumber = Criteria.ProjectCriteria;
                 }
 
                 Children = new List<NodeViewModel>();
