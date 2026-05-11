@@ -38,8 +38,23 @@ namespace QuickDoc.Command
         {
             if (parameter is MainNodeViewModel mnvm)
             {
+                // The call. 
                 mnvm.GetByScan();
-                mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
+
+                // Shorthand Bools. 
+                bool tagFull = !string.IsNullOrEmpty(mnvm.Criteria.TagCriteria);
+                bool itemFull = !string.IsNullOrEmpty(mnvm.Criteria.ItemCriteria);
+
+                // Only when looking for a specific concrete item do we enter the view equipped to handle extra features relevant in that case. 
+                if (tagFull && itemFull)
+                {
+                    mnvm.NavigationStore.CurrentView = new SpecificItemView(mnvm.NavigationStore);
+                }
+                // Switches to NodeView. Currently you would either be in the SearchView or ScanView. 
+                else
+                {
+                    mnvm.NavigationStore.CurrentView = new NodeView(mnvm.NavigationStore);
+                }
             }
         }
     }
