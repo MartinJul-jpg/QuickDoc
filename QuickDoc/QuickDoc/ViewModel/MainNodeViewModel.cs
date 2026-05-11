@@ -198,19 +198,25 @@ namespace QuickDoc.ViewModel
             }
         }
 
-        // asd
+        // Handles this object's state when looking for a node or any of a type. 
         public void GetByCriteria()
         {
+            // Cleans up. 
             PriorNode = null;
 
+            // Shorthand bools whether the 5 boxes have contents or not. 
             bool projectFull = !string.IsNullOrEmpty(Criteria.ProjectCriteria);
             bool unitFull = !string.IsNullOrEmpty(Criteria.UnitCriteria);
             bool sectionFull = Criteria.SectionCriteria != 0;
             bool tagFull = !string.IsNullOrEmpty(Criteria.TagCriteria);
             bool itemFull = !string.IsNullOrEmpty(Criteria.ItemCriteria);
 
+            // The most outer if statement, it evaluates whether there is anything in the project box.
+            // (has actually been made redundant by GetByCriteriaCommand's CanExecute() since)
             if (projectFull)
             {
+                // In case the projectNumber has not changed since last this method ran, there is no need to populate the repositories again,
+                // they would be filled with something identical. (regardless of whether UpdateSerial was run in the meantime as well)
                 if ( !(CurrentProjectNumber == Criteria.ProjectCriteria) )
                 {
                     _itemRepo.ReadFromDatabase(Criteria.ProjectCriteria);
@@ -222,25 +228,32 @@ namespace QuickDoc.ViewModel
                     CurrentProjectNumber = Criteria.ProjectCriteria;
                 }
 
+                // Clean up. 
                 Children = new List<NodeViewModel>();
                 Documents = new List<DocumentViewModel>();
 
+                // If every box, besides project, is empty. 
                 if ( !(unitFull || sectionFull || tagFull || itemFull) ) //Looking for a specific project
                 {
                     CurrentNode = new ProjectViewModel(_projectRepo.GetProject());
                 }
+                // If any of tag or item isn't empty. 
                 else if (tagFull || itemFull)
                 {
+                    // Tag, (which is unique within a single project, and we load single projects in at a time),
+                    // is all you need to identify a specific concrete tag. 
                     if (tagFull && !itemFull) //Looking for a specific tag
                     {
                         CurrentNode = new TagViewModel(_tagRepo.GetTag(Criteria.TagCriteria));
                     }
+                    // Item(Number) alone can not pinpoint a specific item, only its type. 
                     else if (!tagFull && itemFull) //Looking for an item type
                     {
                         gettingNodeTypeOrItem = true;
 
                         CurrentNode = new ItemViewModel(_itemRepo.GetItemOfType(Criteria.ItemCriteria));
                     }
+                    // Both tag and item can pinpoint a specific concrete item. Tags contain items of different types, tag is unique, thence you can find an item. 
                     else if (tagFull && itemFull) //Looking for a specific item
                     {
                         gettingNodeTypeOrItem = true;
@@ -248,16 +261,22 @@ namespace QuickDoc.ViewModel
                         CurrentNode = new ItemViewModel(_itemRepo.GetItem(Criteria.TagCriteria, Criteria.ItemCriteria));
                     }
                 }
+                // This block only runs in case tag and item are empty.
+                // Which means the unit and section could be anything, but they won't be considered unless tag and item are both empty. 
                 else
                 {
+                    // Both unit and section can pinpoint a specific concrete section.
+                    // Units contain sections of different types, units are effectively unique, thence you can find a section. 
                     if (unitFull && sectionFull) //Looking for a specific section
                     {
                         CurrentNode = new SectionViewModel(_sectionRepo.getSection(Criteria.SectionCriteria, Criteria.UnitCriteria, _unitRepo));
                     }
+                    // Unit, within a single project, their number can identify a specific concrete unit. 
                     else if (unitFull && !sectionFull) //Looking for a specific unit
                     {
                         CurrentNode = new UnitViewModel(_unitRepo.GetUnit(Criteria.UnitCriteria));
                     }
+                    // Section(Number) alone can not pinpoint a specific section, only its type. 
                     else if (!unitFull && sectionFull) //Looking for several specific sections, in other words a section type
                     {
                         gettingNodeTypeOrItem = true;
@@ -275,11 +294,13 @@ namespace QuickDoc.ViewModel
             }
         }
 
+        // In order to keep the red thread GETBYSCAN is considered its own line of calls. 
         public void GetByScan()
         {
             GetByCriteria();
         } 
 
+        // Tells itemRepo to CRUD, specifically Update, when Updating an item node. 
         public void UpdateSerialNumber()
         {
             _itemRepo.UpdateSerialNumber((CurrentNode as ItemViewModel).ItemID, (CurrentNode as ItemViewModel).SerialNumber);
