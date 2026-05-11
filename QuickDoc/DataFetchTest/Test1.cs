@@ -17,6 +17,7 @@ namespace DataFetchTest
         private MainNodeViewModel mnvm;
         private MainNodeViewModel mnvmUpdateSerial;
 
+        // Cleans up. 
         [TestInitialize]
         public void TestInitialize()
         {
@@ -31,6 +32,9 @@ namespace DataFetchTest
             mnvmUpdateSerial = new MainNodeViewModel();
         }
 
+        // Sets representative input fields to be used with different methods. 
+        // Sets flags to reflect the correctness of the fields. 
+        // This particular test takes correct input. 
         [TestMethod]
         public void CorrectInput()
         {
@@ -49,6 +53,7 @@ namespace DataFetchTest
             RunGetByCriteriaTests(project, unit, section, tag, item);
         }
 
+        // This test takes correct input except project being incorrect. 
         [TestMethod]
         public void IncorrectProjectInput()
         {
@@ -134,6 +139,7 @@ namespace DataFetchTest
             RunGetByCriteriaTests(project, unit, section, tag, item);
         }
 
+        // Runs various tests representing different permutations of filled input. 
         public void RunGetByCriteriaTests(string project, string unit, int section, string tag, string item)
         {
             LookingForSpecificProject(project);
@@ -145,6 +151,7 @@ namespace DataFetchTest
             LookingForItemType(project, item);
         }
 
+        // Checks whether the input project string matches the string ProjectNumber in the found node placed in CurrentNode after GetByCriteria is run. 
         public void LookingForSpecificProject(string project)
         {
             //Arrange
@@ -172,6 +179,7 @@ namespace DataFetchTest
             GoingIntoFirst();
         }
 
+        // Checks whether the input unit string matches the string UnitNumber in the found node placed in CurrentNode after GetByCriteria is run. 
         public void LookingForSpecificUnit(string project, string unit)
         {
             //Arrange
@@ -200,6 +208,8 @@ namespace DataFetchTest
             GoingIntoFirst();
         }
 
+        // Checks whether the input section int matches the int SectionNumber in the found node placed in CurrentNode after GetByCriteria is run. 
+        // Furthermore checks whether its expected parent contains it. 
         public void LookingForSpecificSection(string project, string unit, int section)
         {
             //Arrange
@@ -244,6 +254,7 @@ namespace DataFetchTest
             GoingIntoFirst();
         }
 
+        // Checks whether the input tag string matches the string TagNumber in the found node placed in CurrentNode after GetByCriteria is run. 
         public void LookingForSpecificTag(string project, string tag)
         {
             //Arrange
@@ -271,7 +282,9 @@ namespace DataFetchTest
 
             GoingIntoFirst();
         }
-        
+
+        // Checks whether the input item string matches the string ItemNumber in the found node placed in CurrentNode after GetByCriteria is run. 
+        // Furthermore checks whether its expected parent contains it. 
         public void LookingForSpecificItem(string project, string tag, string item)
         {
             //Arrange
@@ -317,6 +330,7 @@ namespace DataFetchTest
             GoingIntoFirst();
         }
 
+        // Checks whether the input section int matches the int SectionNumber in the found node placed in CurrentNode after GetByCriteria is run. 
         public void LookingForSectionType(string project, int section)
         {
             //Arrange
@@ -345,6 +359,7 @@ namespace DataFetchTest
             GoingIntoFirst();
         }
 
+        // Checks whether the input item string matches the string ItemNumber in the found node placed in CurrentNode after GetByCriteria is run. 
         public void LookingForItemType(string project, string item)
         {
             //Arrange
@@ -373,6 +388,7 @@ namespace DataFetchTest
             GoingIntoFirst();
         }
 
+        // Checks whether PriorNode correctly points at the prior state when GoingInto. 
         public void GoingIntoFirst()
         {
             List<NodeViewModel> children = mnvm.CurrentNode.GetChildren();
@@ -399,6 +415,7 @@ namespace DataFetchTest
             }
         }
 
+        // Checks whether CurrentNode was updated correctly to the prior state contained in PriorNode after GoingBack. 
         public void GoingBack()
         {
             if (mnvm.PriorNode != null)
@@ -418,6 +435,8 @@ namespace DataFetchTest
             }
         }
 
+        // Checks whether SerialNumber persists in the database,
+        // this is achieved by running UpdateSerialNumber() and then checking a newly populated repository afterwards. 
         public void UpdatingSerial()
         {
             if (correctProject && correctTag && correctItem)
