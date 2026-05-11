@@ -20,6 +20,8 @@ namespace QuickDoc.Command
             return true;
         }
 
+        // No calls to MainViewModel as there are no changes that need to be made in the ViewModels that live there. 
+        // Merely enters the ScanView, which is an alternate kind of search window. 
         public void Execute(object parameter)
         {
             if (parameter is MainNodeViewModel mnvm)

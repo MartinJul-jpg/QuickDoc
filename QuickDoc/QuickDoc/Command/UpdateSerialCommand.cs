@@ -16,6 +16,7 @@ namespace QuickDoc.Command
             return true;
         }
 
+        // Calls UpdateSerialNumber from the MainViewModel, there lives the information needed when updating serial numbers. 
         public void Execute(object? parameter)
         {
             if (parameter is MainNodeViewModel mnvm)
