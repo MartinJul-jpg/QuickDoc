@@ -239,7 +239,7 @@
             </Button>
             <StackPanel Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Label Content="Project:" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Width="120"/>
-                <Label Content="{Binding currentProjectNumber}" VerticalAlignment="Top" FontSize="14" Width="120"/>
+                <Label Content="{Binding CurrentProjectNumber}" VerticalAlignment="Top" FontSize="14" Width="120"/>
             </StackPanel>
         </Grid>
 
